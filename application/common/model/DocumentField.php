@@ -12,7 +12,7 @@ class DocumentField extends Model
     protected $updateTime = 'update_at';
 
     public $rule = [
-        0 => ['name' => '中文', 'regular'=> '/[\x{4e00}-\x{9fa5}]/'],
+        0 => ['name' => '中文', 'regular'=> '/[\u4e00-\u9fa5]/'],
         1 => ['name' => '正整数', 'regular'=> '/^[0-9]*[1-9][0-9]*$/'],
         2 => ['name' => '英文字符串', 'regular'=> '/^[A-Za-z]+$/'],
         3 => ['name' => 'E-mail地址', 'regular'=> '/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/'],
