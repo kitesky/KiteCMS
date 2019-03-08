@@ -1,0 +1,125 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/block/index')}">{:lang('Block')}</a></li>
+      <li class=""><a href="{:url('admin/block/create')}">{:lang('Create')}</a></li>
+      <li class=""><a href="{:url('admin/block/category')}">{:lang('Category')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{:lang('Category')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-4">
+              <select name="cid" class="form-control">
+                <option>--{:lang('Select')}--</option>
+                {volist name="category" id="vo"}
+                <option {eq name="info.cid" value="$vo.id"}selected{/eq} value="{$vo.id}">
+                    {$vo.name}
+                </option>
+                {/volist}
+              </select>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Name')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-6">
+              <input type="hidden" name="id" value="{$info.id}">
+              <input type="text" name="name" value="{$info.name}" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Variable')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-6">
+              <input type="text" name="variable" value="{$info.variable}" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Content')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              <textarea class="form-control input-sm" name="content" rows="10" placeholder="">{$info.content}</textarea>
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Status')}</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" {eq name="info.status" value="1"}checked{/eq} name="status" value="1"> {:lang('Visible')}
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" {eq name="info.status" value="0"}checked{/eq} name="status" value="0"> {:lang('Hidden')}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/block/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

@@ -1,0 +1,282 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="{:url('admin/site/uploadFile')}">{:lang('File upload')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Upload driver')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-6">
+                                <select name="upload_type" class="form-control">
+                                    <option {eq name="upload_type" value="local"}selected{/eq} value="local">{:lang('Local upload')} </option>
+                                    <option {eq name="upload_type" value="alioss"}selected{/eq} value="alioss">AliOSS</option>
+                                    <option {eq name="upload_type" value="qiniuoss"}selected{/eq} value="qiniuoss">QiqiuOSS</option>
+                                </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Image extension')} </label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_image_ext" value="{$upload_image_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:jpg,png,gif</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_image_size" value="{$upload_image_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Video extension')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_video_ext" value="{$upload_video_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:rm,rmvb,wmv,3gp,mp4,mov,avi,flv</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_video_size" value="{$upload_video_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Attachment extension')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_attach_ext" value="{$upload_attach_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:doc,xls,rar,zip</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_attach_size" value="{$upload_attach_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#tab_1" data-toggle="tab">{:lang('Local upload')}</a></li>
+                          <li><a href="#tab_2" data-toggle="tab">AliOSS</a></li>
+                          <li><a href="#tab_3" data-toggle="tab">QiqiuOSS</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="tab_1">
+                                <div class="form-group">
+                                  <label>{:lang('Storage path')}</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="upload_path" value="{$upload_path}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <div class="tab-pane" id="tab_2">
+                                <div class="form-group">
+                                  <label>AccessKey ID</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_key" value="{$alioss_key}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Access Key Secret</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_secret" value="{$alioss_secret}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>EndPoint</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_endpoint" value="{$alioss_endpoint}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Bucket</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_bucket" value="{$alioss_bucket}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <div class="tab-pane" id="tab_3">
+                                <div class="form-group">
+                                  <label>AK</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_ak" value="{$qiniu_ak}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>SK</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_sk" value="{$qiniu_sk}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Bucket</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_bucket" value="{$qiniu_bucket}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Domain</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_domain" value="{$qiniu_domain}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                  <p class="help-block"></p>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+
+    // 选择上传方式
+    (function (){
+        var type = $('[name="upload_type"]');
+        var selected = $('option:selected').val();
+        setActive(selected)
+
+        type.change(function(){
+            setActive(type.val());
+
+        })
+
+        function setActive(selected) {
+            switch(selected){
+                case 'local':
+                    $('[href="#tab_1"]').tab('show');
+                break;
+                case 'alioss':
+                    $('[href="#tab_2"]').tab('show');
+                break;
+                case 'qiniuoss':
+                    $('[href="#tab_3"]').tab('show');
+                break;
+            }
+        }
+    }());
+
+
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/site/uploadFile')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

@@ -1,0 +1,239 @@
+{extend name="default:base" /}
+{block name="title"}列表页{/block}
+{block name='keywords'}{/block}
+{block name='description'}{/block}
+{block name="content"}
+<div class="inner-content">
+    <div class="container">
+        <div class="section-head">
+            <ul class="bcrumbs">
+                {kite:crumb var="vo"}
+                <li><a href="{$vo.url}">{$vo.title}</a></li>
+                {/kite:crumb}
+            </ul>
+            <div class="clearfix"></div>
+
+            <h2>{$catinfo.title}</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+
+                <div class="margin-top-60 margin-bottom-60">
+                    <ul class="nav nav-pills">
+                    {foreach $filter as $key=>$vo }
+                      <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                          {$vo.name} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          {foreach $vo.select as $k=>$v }
+                          <li role="presentation"><a style="margin-left:20px;text-align:left;color:{eq name='v.active' value='active'}red{/eq}" href="{$v.url}">{$v.value}</a></li>
+                          {/foreach}
+                        </ul>
+                      </li>
+                    {/foreach}
+                    </ul>
+                    <!-- 横向导航
+                    <ul>
+                    {foreach $filter as $key=>$vo }
+                        <li>
+                            <span style="width:100px;height:20px;display:inline-block ">{$vo.name} </span>
+                            {foreach $vo.select as $k=>$v }
+                                <a style="margin-left:20px;text-align:left;color:{eq name='v.active' value='active'}red{/eq}" href="{$v.url}">{$v.value} </a> 
+                            {/foreach}
+                        </li>
+                    {/foreach}
+                    </ul>
+                    -->
+                </div>
+
+                {volist name="doclist" id="vo"}
+                <article class="style2">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <a href="{$vo.url}">
+                                <div class="article-thumb">
+                                    <img src="{$vo.image|thumb=350,230}" class="img-responsive" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="post-excerpt">
+                                <div class="small-title cat">{$catinfo.title}</div>
+                                <h3><a href="{$vo.url}">{$vo.title}</a></h3>
+                                <div class="meta">
+                                    <span>{$vo.create_at}</span>
+                                    <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                </div>
+                                <p>{$vo.description}</p>
+                                <a href="{$vo.url}" class="small-title rmore">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {/volist}
+
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    {$docpage}
+                </div>
+            </div>
+
+            <aside class="col-md-4">
+                <div class="side-widget">
+                    <h4> 关注我们</h4>
+                    <div class="side-social">
+                        <a href="#"><i class="fa fa-weibo"></i> 2,279 <span>fans</span></a>
+                        <a href="#"><i class="fa fa-qq"></i> 1,928 <span>followers</span></a>
+                        <a href="#"><i class="fa fa-wechat"></i> 829 <span>followers</span></a>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="side-widget">
+                    <h4><i class="fa fa-fire"></i> 热门</h4>
+                    {kite:doclist var='vo' hot_flag="1" order='pv desc' limit='3'}
+                    <article class="style4">
+                        <a href="{$vo.url}">
+                            <div class="overlay overlay-02"></div>
+                            <div class="post-thumb">
+                                <div class="small-title cat">{$vo.category.title}</div>
+                                <div class="post-excerpt">
+                                    <div class="meta">
+                                        <span class="date">{$vo.create_at}</span>
+                                    </div>
+                                    <h3 class="text-white">{$vo.title}</h3>
+                                </div>
+                                <img src="{$vo.image|thumb=350,220}" class="bg-img img-full" alt="">
+                            </div>
+                        </a>
+                    </article>
+                    {/kite:doclist}
+                </div>
+
+                <div class="clearfix"></div>
+                
+                <div class="side-widget">
+                    <div role="tabpanel">
+                        <!-- Nav tabs  nav-justified-->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#popular" aria-controls="popular" role="tab" data-toggle="tab">最新</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#commented" aria-controls="commented" role="tab" data-toggle="tab">热门</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#viewed" aria-controls="viewed" role="tab" data-toggle="tab">推荐</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active fade in" id="popular">
+                                <div class="mini-posts">
+                                    {kite:doclist var='vo' order='pv desc' limit='5'}
+                                    <article class="style2">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                                <a href="{$vo.url}">
+                                                    <div class="article-thumb">
+                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                                <div class="post-excerpt no-padding">
+                                                    <div class="meta">
+                                                        <span>{$vo.create_at}</span>
+                                                    </div>
+                                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                    <div class="meta">
+                                                        <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    {/kite:doclist}
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade in" id="commented">
+                                <div class="mini-posts">
+                                    {kite:doclist var='vo' hot_flag='1' order='pv desc' limit='5'}
+                                    <article class="style2">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                                <a href="{$vo.url}">
+                                                    <div class="article-thumb">
+                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                                <div class="post-excerpt no-padding">
+                                                    <div class="meta">
+                                                        <span>{$vo.create_at}</span>
+                                                    </div>
+                                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                    <div class="meta">
+                                                        <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    {/kite:doclist}
+                                </div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade in" id="viewed">
+                                <div class="mini-posts">
+                                    {kite:doclist var='vo' recommend_flag='1' order='pv desc' limit='5'}
+                                    <article class="style2">
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                                <a href="{$vo.url}">
+                                                    <div class="article-thumb">
+                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                                <div class="post-excerpt no-padding">
+                                                    <div class="meta">
+                                                        <span>{$vo.create_at}</span>
+                                                    </div>
+                                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                    <div class="meta">
+                                                        <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    {/kite:doclist}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- TABS -->
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="side-widget">
+                    <div class="ad-banner">
+                        <span>Advertisement</span>
+                        <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+{/block}

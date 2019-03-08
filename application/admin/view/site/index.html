@@ -1,0 +1,113 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Sites')}</a></li>
+      <li class=""><a href="{:url('admin/site/create')}">{:lang('Create')}</a></li>
+    </ul>
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">{:lang('Filter')}</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form action="{:url('admin/site/index')}" method="get" class="form-inline">
+              <div class="form-group">
+                <input type="text" name="q" value="{$search.q}" class="form-control" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary btn-flat"> <i class="fa fa-search"></i> {:lang('Search')}</button>
+            </form>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane active table-responsive no-padding">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>{:lang('Name')}</th>
+                    <th>{:lang('Alias')}</th>
+                    <th>{:lang('Url')}</th>
+                    <th>{:lang('Creation date')}</th>
+                    <th>{:lang('Action')}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {volist name="list" id="vo"}
+                <tr id = "tr_{$vo.id}">
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.alias}</td>
+                    <td>{$vo.domain}</td>
+                    <td>{$vo.create_at}</td>
+                    <td>
+                        <a href="{:url('admin/site/edit', ['id' => $vo['id']])}"></i> {:lang('Edit')}</a>
+                        <a onclick="remove('{$vo.id}')" href="#"> {:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+            </tbody>
+        </table>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-6">
+            <div class="text-right"> {$page} </div>
+          </div>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function remove(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+          if (result.value) {
+            $.ajax({
+                url:"{:Url('admin/site/remove')}",
+                data:{'id':id},
+                type:'post',
+                dataType:'json',
+                success: function(xhr){
+                    if(xhr.code == 200){
+                        swal(xhr.msg, "","success").then(function(value){
+                            $("#tr_" + id).remove();
+                        });
+                    }else{
+                        swal(xhr.msg, "", "error");
+                    }
+                }
+            })
+          }
+        })
+    }
+</script>
+{/block}

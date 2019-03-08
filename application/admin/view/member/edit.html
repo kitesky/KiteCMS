@@ -1,0 +1,156 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/member/index')}">{:lang('Member')}</a></li>
+      <li class=""><a href="{:url('admin/member/create')}">{:lang('Create')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Account')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                {$info.username}
+                                <input type="hidden" name="mid" value="{$info.mid}">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Password')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="password" name="password" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Confirm password')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="password" name="repassword" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Email')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="email" value="{$info.email}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Phone')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="phone" value="{$info.phone}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Group')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                  <select name="group_id" class="form-control">
+                                    {volist name="memberList" id="vo"}
+                                    <option {eq name="info.group_id" value="$vo.group_id"}selected{/eq} value="{$vo.group_id}">
+                                        {$vo.group_name}
+                                    </option>
+                                    {/volist}
+                                  </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Score')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                  <input type="text" name="score" value="{$info.score}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Creation date')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                  {$vo.create_at}
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/member/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

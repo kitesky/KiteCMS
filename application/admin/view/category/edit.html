@@ -1,0 +1,236 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/category/index')}">{:lang('Category')}</a></li>
+      <li class=""><a href="{:url('admin/category/create')}">{:lang('Create')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Name')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="hidden" name="id" value="{$info.id}">
+                              <input type="text" name="title" value="{$info.title}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Category')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <select name="pid" class="form-control input-sm">
+                                <option value="0">{:lang('Not specified')}</option>
+                                {volist name="category" id="vo"}
+                                <option {eq name="vo.id" value="$info.pid"}selected{/eq} value="{$vo.id}">
+                                    {eq name="vo.pid" value="0"}
+                                        <{$vo.title}>
+                                    {else/}
+                                        {$vo.html} {$vo.title}
+                                    {/eq}
+                                </option>
+                                {/volist}
+                              </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Model')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <select name="model_id" class="form-control input-sm">
+                                {volist name="model" id="vo"}
+                                <option {eq name="vo.id" value="$info.model_id"}selected{/eq} value="{$vo.id}">
+                                    {$vo.name}
+                                </option>
+                                {/volist}
+                              </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Alias')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="alias" value="{$info.alias}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Keywords')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="keywords" value="{$info.keywords}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Description')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="description" rows="3" placeholder="">{$info.description}</textarea>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Content')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea id="editor" name="content" rows="2">{$info.content}</textarea>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Category templete')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                  <select name="list_tpl" class="form-control input-sm">
+                                    <option value="">--{:lang('Select')}--</option>
+                                    {volist name="list_tpl" id="vo"}
+                                    <option {eq name="info.list_tpl" value="$vo.name"}selected{/eq} value="{$vo.name}">
+                                        {$vo.path}
+                                    </option>
+                                    {/volist}
+                                  </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Document templete')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                  <select name="detail_tpl" class="form-control input-sm">
+                                    <option value="">--{:lang('Select')}--</option>
+                                    {volist name="detail_tpl" id="vo"}
+                                    <option {eq name="info.detail_tpl" value="$vo.name"}selected{/eq} value="{$vo.name}">
+                                        {$vo.path}
+                                    </option>
+                                    {/volist}
+                                  </select>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Status')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="info.status" value="0"}checked{/eq} name="status" value="0"> {:lang('Hidden')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="info.status" value="1"}checked{/eq} name="status" value="1"> {:lang('Visible')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>权重排序</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="weighing" value="{$info.weighing}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                              <p class="help-block">权重数值越大越靠后</p>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor', {
+    toolbars: [
+        ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'forecolor', 'backcolor', 'link', 'unlink', 'indent', 'horizontal','justifyleft', 'justifyright', 'justifycenter', 'justifyjustify', 'template', 'simpleupload'],
+    ],
+    initialFrameWidth: '100%',
+    initialFrameHeight:150,
+    scaleEnabled:true,
+    serverUrl: '{:url("admin/ueditor/index")}',
+});
+</script>
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/category/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

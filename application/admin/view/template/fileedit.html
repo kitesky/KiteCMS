@@ -1,0 +1,102 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}
+<link href="/static/codemirror/codemirror.css" rel="stylesheet" />
+<link href="/static/codemirror/theme/monokai.css" rel="stylesheet" type="text/css">
+{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/template/filelist')}">{:lang('Template file')}</a></li>
+      <li class="active"><a href="">{:lang('Edit')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{$name}</label>
+              <div class="row">
+              <div class="col-md-12">
+              <input type="hidden" value="{$path}" name="path">
+               
+              <textarea id="html" class="form-control" name="html">{$html}</textarea>
+              </div>
+              </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script src="/static/codemirror/codemirror.js"></script>
+<!-- 因为HTML混合语言依赖Javascript、XML、CSS语言支持，所以都要引入 -->
+<script type="text/javascript" src="/static/codemirror/mode/javascript.js"></script>
+<script type="text/javascript" src="/static/codemirror/mode/xml.js"></script>
+<script type="text/javascript" src="/static/codemirror/mode/css.js"></script>
+<script type="text/javascript" src="/static/codemirror/mode/htmlmixed.js"></script>
+<script type="text/javascript" src="/static/codemirror/mode/php.js"></script>
+<script type="text/javascript" src="/static/codemirror/addon/active-line.js"></script>
+<script type="text/javascript">
+
+    var editor = CodeMirror.fromTextArea(document.getElementById('html'), {
+        lineNumbers: true,     // 显示行数
+        indentUnit: 4,         // 缩进单位为4
+        styleActiveLine: true, // 当前行背景高亮
+        matchBrackets: true,   // 括号匹配
+        mode: 'htmlmixed',     // HMTL混合模式
+        lineWrapping: true,    // 自动换行
+        theme: 'monokai',      // 使用monokai模版
+    });
+
+    function operate(){
+        editor.save();
+        //$("#html").val(editor.getValue());
+        $.ajax({
+            url:"{:url('admin/template/fileedit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

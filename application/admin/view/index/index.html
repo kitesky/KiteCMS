@@ -1,0 +1,168 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+<div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">{:lang('Statistics')}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-sm-4 col-xs-6">
+              <div class="description-block border-right">
+                <h5 class="description-header">{$statistics.document_count}</h5>
+                <span class="description-text">{:lang('Document total')}</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 col-xs-6">
+              <div class="description-block border-right">
+                <h5 class="description-header">{$statistics.comments_count}</h5>
+                <span class="description-text">{:lang('Comments total')}</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 col-xs-6">
+              <div class="description-block">
+                <h5 class="description-header">{$statistics.member_count}</h5>
+                <span class="description-text">{:lang('Member total')}</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+
+<div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">{:lang('Server')}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <div class="row">
+            <div class="col-sm-6 col-xs-12">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                          <td width="120">{:lang('System')}</td>
+                          <td>{$system.PHP_OS}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Software')}</td>
+                          <td>{$system.SERVER_SOFTWARE}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Database')}</td>
+                          <td>{$system.mysql_version}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('PHP')}</td>
+                          <td>{$system.php_version}</td>
+                        </tr>
+                        <!--
+                        <tr>
+                          <td>zend版本</td>
+                          <td>{$system.zend_version}</td>
+                        </tr>
+                        -->
+                        <tr>
+                          <td>GD2</td>
+                          <td>{$system.gd2}</td>
+                        </tr>
+                        <!--
+                        <tr>
+                          <td>安全模式</td>
+                          <td>{$system.safe_mode}</td>
+                        </tr>
+                        -->
+                        <!--
+                        <tr>
+                          <td>memory_limit</td>
+                          <td>{$system.memory_limit}</td>
+                        </tr>
+                        <tr>
+                          <td>文件上传</td>
+                          <td>{$system.file_uploads}</td>
+                        </tr> -->
+                        <tr>
+                          <td>{:lang('Max upload')}</td>
+                          <td>{$system.max_upload}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                          <td width="120">{:lang('Client IP')}</td>
+                          <td>{$system.client_ip}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Server IP')}</td>
+                          <td>{$system.SERVER_ADDR}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Server name')}</td>
+                          <td>{$system.SERVER_NAME}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Document root')}</td>
+                          <td>{$system.DOCUMENT_ROOT}</td>
+                        </tr>
+                        <tr>
+                          <td>{:lang('Server port')}</td>
+                          <td>{$system.SERVER_PORT}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+<div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">{:lang('Devoloper')}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                  <td width="120">{:lang('Website')}</td>
+                  <td>{$devoloper.website}</td>
+                </tr>
+                <tr>
+                  <td>{:lang('Community')}</td>
+                  <td>{$devoloper.community}</td>
+                </tr>
+                <tr>
+                  <td>{:lang('Version')}</td>
+                  <td>{$devoloper.version}</td>
+                </tr>
+                <tr>
+                  <td>{:lang('Devoloper')}</td>
+                  <td>{$devoloper.devoloper}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}{/block}

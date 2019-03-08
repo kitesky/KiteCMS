@@ -1,0 +1,184 @@
+{extend name="default:base" /}
+{block name="title"}首页 - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{/block}
+{block name='description'}{/block}
+{block name="slider"}
+    <!-- SLIDER -->
+    {include file="default:slider" /}
+    <!-- SLIDER END -->
+{/block}
+
+{block name="content"}
+<div class="container">
+
+    <div class="row">
+    
+        <div class="col-md-8">
+
+            <!-- HOME SECTION -->
+            <div class="info-content margin-top-60">
+                <h4 class="margin-bottom-15"><b>焦点</b></h4>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        {kite:doclist var='vo' top_flag='1' limit='1'}
+                        <article class="style3 style-alt">
+                            <a href="{$vo.url}">
+                                <div class="overlay overlay-02"></div>
+                                <div class="post-thumb">
+                                    <div class="small-title cat">{$vo.category.title}</div>
+                                    <div class="post-excerpt">
+                                        <div class="meta">
+                                            <!-- <span class="date">{$vo.create_at}</span> -->
+                                        </div>
+                                        <h4 class="h1 text-white">{$vo.title}</h4>
+                                        <div class="meta">
+                                            <!-- <span class="author"><img src="__STATIC__/default/img/avatar/1.jpg" class="img-circle" alt=""> by Babs C.</span> -->
+                                            <!-- <span class="comment"><i class="fa fa-comment-o"></i> 5</span> -->
+                                            <!-- <span class="views"><i class="fa fa-eye"></i> 682 views</span> -->
+                                        </div>
+                                    </div>
+                                    <img src="{$vo.image|thumb=500,400}" class="img-responsive" alt="">
+                                </div>
+                            </a>
+                        </article>
+                        {/kite:doclist}
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                        {kite:doclist var='vo' focus_flag='1' limit='2'}
+                        <article class="style4 style-alt margin-bottom-10">
+                            <a href="{$vo.url}">
+                                <div class="overlay overlay-02"></div>
+                                <div class="post-thumb">
+                                    <div class="small-title cat">{$vo.category.title}</div>
+                                    <div class="post-excerpt">
+                                        <div class="meta">
+                                            <!-- <span class="date">{$vo.create_at}</span> -->
+                                        </div>
+                                        <h5 class="text-white">{$vo.title}</h5>
+                                    </div>
+                                    <img src="{$vo.image|thumb=250,200}" class="img-responsive" alt="">
+                                </div>
+                            </a>
+                        </article>
+                        {/kite:doclist}
+                    </div>
+                </div>
+            </div>
+            <!-- // HOME SECTION -->
+
+            <!-- HOME SECTION -->
+            <h4 class="margin-bottom-15"><b>推荐</b></h4>
+            <div class="row padding-bottom-30">
+                <div>
+                    {kite:doclist var='vo' order='id desc' limit='6'}
+                    <div class="col-md-4 col-sm-4">
+                        <article class="style2 style-alt">
+                            <div class="margin-bottom-15">
+                                <a href="{$vo.url}">
+                                    <div class="article-thumb">
+                                        <img src="{$vo.image|thumb=250,250}" class="img-responsive" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                <div class="post-excerpt no-padding">
+                                    <div class="meta">
+                                        <!-- <span>{$vo.create_at}</span> -->
+                                    </div>
+                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {/kite:doclist}
+                </div>
+            </div>
+            <!-- // HOME SECTION -->
+            
+            <!-- HOME SECTION-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="margin-bottom-15"><b>热门</b></h4>
+                    {kite:doclist var='vo' cid='0' hot_flag = '1' order='id desc' limit='6'}
+                    <article class="style2">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <a href="{$vo.url}">
+                                    <div class="article-thumb">
+                                        <img src="{$vo.image|thumb=350,230}" class="img-responsive" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="post-excerpt">
+                                    <div class="small-title cat">{$vo.category.title}</div>
+                                    <h4><a href="{$vo.url}">{$vo.title}</a></h4>
+                                    <div class="meta">
+                                        <span>{$vo.create_at}</span>
+                                        <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                    </div>
+                                    <p>{$vo.description}</p>
+                                    <a href="{$vo.url}" class="small-title rmore">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {/kite:doclist}
+                </div>
+            </div>
+            <!-- // HOME SECTION -->
+        </div>
+
+        <!-- ASIDE 1  -->
+        <aside class="col-md-4 padding-top-60">
+            <div class="side-widget">
+                <h4>关注我们</h4>
+                <div class="side-social">
+                    <a href="#"><i class="fa fa-weibo"></i> 2,279 <span>fans</span></a>
+                    <a href="#"><i class="fa fa-qq"></i> 1,928 <span>followers</span></a>
+                    <a href="#"><i class="fa fa-wechat"></i> 829 <span>followers</span></a>
+                </div>
+            </div>
+            <div class="side-widget">
+                <h4>最高人气</h4>
+                <div class="mini-posts">
+                    {kite:doclist var='vo' order='pv desc' limit='5'}
+                    <article class="style2">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <a href="{$vo.url}">
+                                    <div class="article-thumb">
+                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <div class="post-excerpt no-padding">
+                                    <div class="meta">
+                                        <span>{$vo.create_at}</span>
+                                    </div>
+                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                    <div class="meta">
+                                        <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {/kite:doclist}
+                </div>
+            </div>
+            <div class="side-widget">
+                <div class="ad-banner">
+                    <span>Advertisement</span>
+                    <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
+                </div>
+            </div>
+        </aside>
+        <!-- // ASIDE 1  -->
+
+    </div>
+
+</div>
+{/block}

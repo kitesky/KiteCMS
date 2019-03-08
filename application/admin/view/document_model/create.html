@@ -1,0 +1,187 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}
+<link rel="stylesheet" href="/static/sortable/sortable.css">
+{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/document_model/index')}">{:lang('Document model')}</a></li>
+      <li class="active"><a href="{:url('admin/document_model/create')}">{:lang('Create')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{:lang('Name')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-2">
+              <input type="text" name="name" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Sort')}</label>
+              <div class="row">
+              <div class="col-md-2">
+              <input type="text" name="weighing" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('System field')}</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        {notempty name="allField"}
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs" id="tab">
+                              {volist name="allField" id="cate"}
+                              <li class=""><a href="#tab_{$cate.id}" data-toggle="tab">{$cate.name}</a></li>
+                              {/volist}
+                            </ul>
+                            <div class="tab-content" id="content">
+                              {volist name="allField" id="cate"}
+                              <div class="tab-pane" id="tab_{$cate.id}">
+                                    <div class="dd">
+                                        <ul class="dd-list" id="list_{$cate.id}">
+                                        {volist name="cate.field" id="vo"}
+                                        <li class="dd-item" data-id="{$vo.id}">
+                                          <div class=" dd-handle">{$vo.name} / {$vo.variable} / {$vo.type}</div>
+                                        </li>
+                                        {/volist}
+                                        </ul>
+                                    </div>
+                              </div>
+                              <!-- /.tab-pane -->
+                              {/volist}
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        {else /}
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#" data-toggle="tab">{:lang('Category')}</a></li>
+                             </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+                                    <div class="dd">
+                                        <ul class="dd-list" id="list_02">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/notempty}
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-md-6">
+                        <div class="box box-solid">
+                            <div class="box-header with-border">
+                              {:lang('Model field')}
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="dd">
+                                    <ul class="dd-list" id="list_02">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script src="/static/sortable/sortable.js"></script>
+<script type="text/javascript">
+    // TAB默认选中第一个
+    $("#tab li").each(function(){
+        var ll = $(this).hasClass('active');
+        if (ll == false) {
+            $("#tab li:first").addClass("active");
+            $("#content div:first").addClass("active");
+        }
+    })
+
+    // 实例化所有字段分类
+    $("#content ul").each(function(){
+        var id = $(this).attr('id');
+        var foo = document.getElementById(id);
+        Sortable.create(foo, { 
+            group: "om",
+            scroll:true,
+            sort: false,
+        });
+    })
+
+    var bar = document.getElementById("list_02");
+    var list2 = Sortable.create(bar, {
+        group: "om", 
+        scroll:true,
+        sort: true,
+    });
+
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/document_model/create')}",
+            data:{
+                'id':$("[name='id']").val(),
+                'name':$("[name='name']").val(),
+                'weighing':$("[name='weighing']").val(),
+                'fieldIds':list2.toArray(),
+            },
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

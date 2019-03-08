@@ -1,0 +1,72 @@
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="{:url('admin/index/index')}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>C</b>MS</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>KITE</b>CMS</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <li><a target="_blank" href="{$site_url}"><i class="fa fa-fw fa-home"></i> 前台预览</a></li>
+            <li class="dropdown notifications-menu">
+              <!-- Menu toggle button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-fw fa-globe"></i>
+                    {notempty name="site_name"}
+                        {$site_name}
+                    {else /}
+                        {:lang('sites')}
+                    {/notempty}
+                  <span class="caret"></span>
+                </a>
+              <ul class="dropdown-menu">
+                <li class="header">{:lang('select')}:</li>
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                  {volist name="site_list" id="vo"}
+                  <li><a onclick="changeSite('{$vo.id}')" href="javascript:void(0);">{$vo.name}</a></li>
+                  {/volist}
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-fw fa-user"></i>{$username}<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- Menu Body -->
+                  <li class="user-body">
+                    <div class="row">
+                      <div class="col-xs-4 text-center">
+                        <a href="{:url('admin/user/edit', ['id' => $uid])}">{:lang('Profile')}</a>
+                      </div>
+                      <div class="col-xs-4 text-center">
+                        <a href="{:url('admin/user/edit', ['id' => $uid])}">{:lang('Password')}</a>
+                      </div>
+                      <div class="col-xs-4 text-center">
+                        <a href="{:url('admin/passport/logout')}">{:lang('Logout')}</a>
+                      </div>
+                    </div>
+                    <!-- /.row -->
+                  </li>
+                </ul>
+            </li>
+
+        </ul>
+      </div>
+    </nav>
+  </header>

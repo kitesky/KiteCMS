@@ -1,0 +1,249 @@
+{extend name="public:base" /}
+{block name="title"}我的发布 - 会员中心{/block}
+<!-- 自定义css -->
+{block name="css"}{/block}
+{block name="content"}
+
+    <section class="content-header">
+        <h1>我的发布</h1>
+    </section>
+    <section class="content">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-default btn-xs" data-widget="collapse" data-toggle="tooltip" data-original-title="Collapse">
+                                  <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <h3 class="box-title">内容信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>文档标题 <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="title" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>内容信息</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea id="editor" name="content"></textarea>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-default btn-xs" data-widget="collapse" data-toggle="tooltip" data-original-title="Collapse">
+                                  <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <h3 class="box-title">自定义信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" id="extra">
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+                    <div class="box-footer">
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> 保存</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-default btn-xs" data-widget="collapse" data-toggle="tooltip" data-original-title="Collapse">
+                                  <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <h3 class="box-title">内容信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>栏目 <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <select name="cid" class="form-control">
+                                <option>请选择栏目</option>
+                                {volist name="category" id="vo"}
+                                <option value="{$vo.id}">
+                                    {eq name="vo.pid" value="0"}
+                                        <{$vo.title}>
+                                    {else/}
+                                        {$vo.html} {$vo.title}
+                                    {/eq}
+                                </option>
+                                {/volist}
+                              </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>文档封面图</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="layui-upload-drag" id="image">
+                                  <input type="hidden" name="image">
+                                  <div class="layui-upload-list" id="preview">
+                                  <p>点击上传</p>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <p class="help-block">默认提取第n张作为封面</p>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <div class="pull-right box-tools">
+                                <button type="button" class="btn btn-default btn-xs" data-widget="collapse" data-toggle="tooltip" data-original-title="Collapse">
+                                  <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <h3 class="box-title">搜索引擎优化</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>SEO关键字</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <input type="text" name="keywords" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>SEO描述</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="description" rows="3" placeholder=""></textarea>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </section>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script>
+layui.use('upload', function(){
+  var $ = layui.jquery
+  ,upload = layui.upload;
+  //拖拽上传
+  upload.render({
+    elem: "#image"
+    ,accept: 'image'
+    ,multiple: false
+    ,number: 1
+    ,url: "{:url('member/upload/uploadFile')}"
+    ,done: function(res){
+      if (res.code == 200) {
+        $("[name='image']").val(res.data.url);
+        $("#preview").html("<img class=\'layui-upload-img img-responsive\' src=\'"+res.data.url+"\'>");
+      } else {
+        swal({
+          position: 'center',
+          type: 'error',
+          title: res.msg,
+          showConfirmButton: false,
+          toast:false,
+          timer: 2000
+        });
+      }
+    }
+  });
+  
+});
+</script>
+
+<script src="/static/ueditor/ueditor.config.js"></script>
+<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor', {
+    toolbars: [
+        ['fullscreen', 'source', 'undo', 'redo', 'selectall', '|', 'removeformat', 'formatmatch', 'autotypeset', 'cleardoc', '|', 'template', 'indent', 'horizontal','justifyleft', 'justifyright', 'justifycenter', 'justifyjustify', 'insertcode'],
+        ['fontfamily', 'fontsize', '|', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'link', 'unlink', 'inserttable', 'deletetable', 'simpleupload', 'insertimage']
+    ],
+    initialFrameWidth: '100%',
+    initialFrameHeight:300,
+    scaleEnabled:true,
+    serverUrl: '{:url("member/ueditor/index")}',
+});
+</script>
+<script type="text/javascript">
+    (function(){
+        var obj = $("[name='cid']");
+        obj.change(function(){
+            var cid = obj.val();
+            $.ajax({
+                url:"{:url('member/document/createInput')}",
+                data:{'cid':cid},
+                type:'post',
+                dataType:'json',
+                success:function(xhr){
+                    $("#extra").html(xhr);
+                }
+            });
+            
+            
+        })
+    }())
+
+    function operate(){
+        $.ajax({
+            url:"{:url('member/document/create')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

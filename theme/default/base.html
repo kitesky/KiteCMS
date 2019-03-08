@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="{block name='keywords'}{/block}">
+    <meta name="description" content="{block name='description'}{/block}">
+
+    <title>{block name="title"}{/block}</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="__STATIC__/default/img/favicon.ico">
+
+    <!-- ICON CSS -->
+    <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/default/js/slick/slick.css">
+    <link rel="stylesheet" href="__STATIC__/default/css/animate.css">
+    <link rel="stylesheet" href="__STATIC__/default/css/style.css">
+
+    <!-- MODERNIZR -->
+    <script src="__STATIC__/default/js/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+
+<div class="wrapper">
+    {include file="default:header" /}
+
+    {block name="slider"}{/block}
+
+    {block name="content"}{/block}
+
+    {include file="default:footer" /}
+
+    {block name="js"}{/block}
+</div>
+
+<!-- jQuery -->
+<script src="__STATIC__/jquery/jquery.min.js"></script>
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+<script src="__STATIC__/default/js/slick/slick.min.js"></script>
+<script src="__STATIC__/default/js/theme.js"></script>
+<script src="__STATIC__/sweetalert/promise.min.js"></script>
+<script src="__STATIC__/sweetalert/sweetalert.min.js"></script>
+<script src="__STATIC__/cxselect/jquery.cxselect.js"></script>
+
+</body>
+</html>

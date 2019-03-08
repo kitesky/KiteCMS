@@ -1,0 +1,20 @@
+    <div class="container-fluid no-padding">
+        <div class="home-slider-wrap">
+            <div class="home-slider">
+                {kite:slider var="vo" cid="1" limit="3" order="id desc"}
+                <div>
+                    <a href="{$vo.url}">
+                    <article class="style3 single text-center no-margin">
+                            <div class="overlay overlay-02"></div>
+                            <div class="post-thumb">
+                                <img src="{$vo.image|thumb=1980,420}" class="bg-img img-responsive" alt="">
+                            </div>
+                    </article>
+                    </a>
+                </div>
+                {/kite:slider}
+            </div>
+            <div class="hs-prev"><i class="fa fa-angle-left"></i></div>
+            <div class="hs-next"><i class="fa fa-angle-right"></i></div>
+        </div>
+    </div>

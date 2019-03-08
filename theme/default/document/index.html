@@ -1,0 +1,474 @@
+{extend name="default:base" /}
+{block name="title"}详情页{/block}
+{block name='keywords'}{/block}
+{block name='description'}{/block}
+{block name="content"}
+<style>
+p img{background-size:contain|cover;width:100%;}
+</style>
+    <div class="inner-content">
+        <div class="container">
+        <div class="section-head">
+            <ul class="bcrumbs">
+                {kite:crumb var="vo"}
+                <li><a href="{$vo.url}">{$vo.title}</a></li>
+                {/kite:crumb}
+            </ul>
+            <div class="clearfix"></div>
+
+            <h2></h2>
+        </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="blog-single">
+                        <h3 class="h1">{$docinfo.title}{kite:block var="block2" /}</h3>
+
+                        <div class="single-meta">
+                            <div class="meta pull-left">
+                                <!-- <span class="author"><img src="__STATIC__/default/img/avatar/1.jpg" class="img-circle" alt=""/> by Babs C.</span> -->
+                                <span class="date"> {$docinfo.create_at} </span>
+                                <span class="comment"> {$catinfo.title} </span>
+                                <span class="comment"><i class="fa fa-comment-o"></i> {$docinfo.comments_total} </span>
+                                <span class="views"><i class="fa fa-eye"></i> {$docinfo.pv} </span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        {notempty name="name"}
+                        <blockquote>
+                            <i class="fa fa-quote-right"></i>
+                            <p class="lead">{$docinfo.description}</p>
+                            <i class="fa fa-quote-left"></i>
+                        </blockquote>
+                        {else /}
+
+                        {/notempty}
+
+                        {$docinfo.content}
+
+                        <!-- 幻灯片 -->
+                        <!-- 
+                        <div class="img-right caption">
+
+                            <div class="post-single-slider-wrap">
+                            <div class="post-single-slider">
+                                {volist name="docinfo.album" id="vo"}
+                                <div class="item">
+                                    <img src="{$vo}" class="img-responsive"/>
+                                </div>
+                                {/volist}
+                            </div>
+                            </div>
+                        </div>
+                         -->
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                    <div class="text-center">
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" onclick="documentLike('like',{$docinfo.id});" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i> <span id="like">{$docinfo.like}</span></button>
+                          <button type="button" onclick="documentLike('unlike',{$docinfo.id});" class="btn btn-default"><i class="fa fa-thumbs-o-down"></i> <span id="unlike">{$docinfo.unlike}</span></button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <!--
+                    <div class="tags margin-top-60">
+                        <span>Tags:</span> &nbsp;
+                        <a href="#">Fashion</a>
+                        <a href="#">Shoes</a>
+                        <a href="#">Entertainment</a>
+                        <a href="#">Finance</a>
+                        <a href="#">Mobile</a>
+                    </div>
+                    -->
+
+                    <!--
+                    <div class="about-author">
+                        <img src="__STATIC__/default/img/avatar/1-big.png" alt=""/>
+
+                        <h5>Zack Onisko</h5>
+                        <p>The meeting came at a crucial moment, with six weeks before Election Day. The night's potential impact had the senior advisers to both campaigns losing sleep</p>
+
+                        <div class="social">
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-google-plus"></i></a>
+                            <a href=""><i class="fa fa-envelope-o"></i></a>
+                            <a href=""><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div> -->
+
+
+                    <div class="post-nav margin-top-60">
+                        <div class="row">
+                            <div class="col-md-6 text-right">
+                                <a href="{$prev.url}"><i class="fa fa-angle-left"></i></a>
+                                <span class="small-title">上一条</span>
+                                <h3><a href="{$prev.url}">{$prev.title}</a></h3>
+                            </div>
+
+                            <div class="col-md-6 text-left">
+                                <a href="{$next.url}"><i class="fa fa-angle-right"></i></a>
+                                <span class="small-title">下一条</span>
+                                <h3><a href="{$next.url}">{$next.title}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="related-posts">
+                        <h5>相关内容</h5>
+
+                        <div class="row">
+                            {kite:doclist var='vo' order='id desc' limit='3'}
+                            <div class="col-md-4 col-sm-4">
+                                <article class="style2 style-alt">
+                                    <div class="margin-bottom-15">
+                                        <a href="{$vo.url}">
+                                            <div class="article-thumb">
+                                                <img src="{$vo.image|thumb=220,140}" class="img-responsive" alt="">
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <div class="post-excerpt no-padding">
+                                            <div class="meta">
+                                                <!-- <span>{$vo.create_at}</span> -->
+                                            </div>
+                                            <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            {/kite:doclist}
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="comment-form">
+                        <h5>发布评论</h5>
+                        <form id="form">
+                            <input type="hidden" name="document_id" value="{$docinfo.id}">
+                            <textarea  name="content" placeholder="评论内容..."></textarea>
+                            {:token('__hash__')}
+                            <button onclick="post();" type="button">提交</button>
+                        </form>
+                    </div>
+
+                    <div class="comments">
+                        <h5>文档评论 {$docinfo.comments_total}</h5>
+
+                        <ul>
+                        {volist name="commlist" id="vo"}
+                            <li style="padding-left:{gt name='vo.level' value='1'}{$vo.level}em{/gt};">
+                                <div class="comment-content">
+                                    <img src="{$vo.avatar|thumb=40,40}"/>
+
+                                    <div class="comment-title">{$vo.username} <span>{$vo.create_at}</span></div>
+                                    <p>{$vo.content}</p>
+
+                                    <div class="comment-meta">
+                                        <span><a href="javascript:;" onclick="commentsLike('like',{$vo.id})"><i class="fa fa-thumbs-o-up"></i><span id="comments_like_{$vo.id}"> {$vo.like}</span></a></span>
+                                        <span><a href="javascript:;" onclick="commentsLike('unlike',{$vo.id})"><i class="fa fa-thumbs-o-down"></i><span id="comments_unlike_{$vo.id}">{$vo.unlike}</a></span>
+                                        <span><a href="javascript:;" onclick="reply({$vo.id})"><i class="fa fa-reply"></i> 回复</a></span>
+                                    </div>
+                                </div>
+                                <div class="comment-form" id="reply_{$vo.id}" style="display:none;">
+                                    <h5>回复评论</h5>
+                                    <form id="form_{$vo.id}">
+                                        <input type="hidden" name="document_id" value="{$docinfo.id}">
+                                        <input type="hidden" name="pid" value="{$vo.id}">
+                                        {:token('__hash__')}
+                                        <textarea name="content" placeholder="评论内容..."></textarea>
+                                        <button id="submit_{$vo.id}" type="button">提交</button>
+                                    </form>
+                                </div>
+                            </li>
+                         {/volist}
+                        </ul>
+                    </div>
+                    
+                    {$commpage}
+
+                </div>
+
+                <aside class="col-md-4">
+                    <div class="side-widget">
+                        <div class="ad-banner">
+                            <span>Advertisement</span>
+                            <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    
+                    <div class="side-widget">
+                        <div role="tabpanel">
+                            <!-- Nav tabs   nav-justified -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#popular" aria-controls="popular" role="tab" data-toggle="tab">最新</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#commented" aria-controls="commented" role="tab" data-toggle="tab">热门</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#viewed" aria-controls="viewed" role="tab" data-toggle="tab">推荐</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active fade in" id="popular">
+                                    <div class="mini-posts">
+                                        {kite:doclist var='vo' order='pv desc' limit='5'}
+                                        <article class="style2">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <a href="{$vo.url}">
+                                                        <div class="article-thumb">
+                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <div class="post-excerpt no-padding">
+                                                        <div class="meta">
+                                                            <span>{$vo.create_at}</span>
+                                                        </div>
+                                                        <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                        <div class="meta">
+                                                            <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        {/kite:doclist}
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade in" id="commented">
+                                    <div class="mini-posts">
+                                        {kite:doclist var='vo' hot_flag='1' order='pv desc' limit='5'}
+                                        <article class="style2">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <a href="{$vo.url}">
+                                                        <div class="article-thumb">
+                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <div class="post-excerpt no-padding">
+                                                        <div class="meta">
+                                                            <span>{$vo.create_at}</span>
+                                                        </div>
+                                                        <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                        <div class="meta">
+                                                            <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        {/kite:doclist}
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade in" id="viewed">
+                                    <div class="mini-posts">
+                                        {kite:doclist var='vo' recommend_flag='1' order='pv desc' limit='5'}
+                                        <article class="style2">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <a href="{$vo.url}">
+                                                        <div class="article-thumb">
+                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <div class="post-excerpt no-padding">
+                                                        <div class="meta">
+                                                            <span>{$vo.create_at}</span>
+                                                        </div>
+                                                        <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                                        <div class="meta">
+                                                            <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        {/kite:doclist}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- TABS -->
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </aside>
+
+                </div>
+        </div>
+    </div>
+{/block}
+{block name="js"}
+<script type="text/javascript">
+
+function documentLike(type,id) {
+    $.ajax({
+        url:"{:url('index/document/like')}",
+        data:{'type':type,'id':id},
+        type:'post',
+        dataType:'json',
+        success:function(xhr){
+            if(xhr.code == 200){
+                swal({
+                  position: 'center',
+                  type: 'success',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:true,
+                  timer: 2000
+                }).then(function(){
+                    if (type == 'like') {
+                        $('#like').html(xhr.data.like);
+                    } else {
+                        $('#unlike').html(xhr.data.unlike);
+                    }
+                });
+            } else{
+                swal({
+                  position: 'center',
+                  type: 'error',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:true,
+                  timer: 2000
+                });
+            }
+        }
+        });
+}
+
+function commentsLike(type,id) {
+    $.ajax({
+        url:"{:url('index/comments/like')}",
+        data:{'type':type,'id':id},
+        type:'post',
+        dataType:'json',
+        success:function(xhr){
+            if(xhr.code == 200){
+                swal({
+                  position: 'center',
+                  type: 'success',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:true,
+                  timer: 2000
+                }).then(function(){
+                    if (type == 'like') {
+                        $('#comments_like_'+id).html(xhr.data.like);
+                    } else {
+                        $('#comments_unlike_'+id).html(xhr.data.unlike);
+                    }
+                });
+            } else{
+                swal({
+                  position: 'center',
+                  type: 'error',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:true,
+                  timer: 2000
+                });
+            }
+        }
+        });
+}
+
+function post(){
+    $.ajax({
+        url:"{:url('index/comments/add')}",
+        data:$("#form").serialize(),
+        type:'post',
+        dataType:'json',
+        success:function(xhr){
+            if(xhr.code == 200){
+                swal({
+                  position: 'center',
+                  type: 'success',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:false,
+                  timer: 2000
+                });
+            } else{
+                swal({
+                  position: 'center',
+                  type: 'error',
+                  title: xhr.msg,
+                  showConfirmButton: false,
+                  toast:false,
+                  timer: 2000
+                });
+            }
+        }
+        });
+}
+
+function reply(id){
+    var a = $("#reply_"+id);
+    var display = a.css('display');
+    // 如果当前显示状态 再次点击隐藏
+    if (display == "block") {
+        a.css("display", "none");
+    } else {
+        $(".reply").css("display", "none");
+        a.css("display", "block");
+    }
+    
+    $("#submit_"+id).click(function(){
+        $.ajax({
+            url:"{:url('index/comments/add')}",
+            data:$("#form_"+id).serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    });
+
+}
+</script>
+{/block}

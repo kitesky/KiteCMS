@@ -1,0 +1,87 @@
+    <header class="header header1">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="search-bar">
+                    <form action="{:url('index/search/index')}" method="get">
+                        <input type="search" name="q" placeholder="输入关键词...">
+                        <div class="search-close"><i class="fa fa-times"></i></div>
+                    </form>
+                </div>
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{kite:siteinfo var='url' /}"><img src="{kite:siteinfo var='logo' /}" class="img-responsive" alt=""/></a>
+                </div>
+
+                <div class="search-trigger pull-right"></div>
+
+                <a href="{:url('member/member/login')}"> <div class="login pull-right"></div></a>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <!--
+                    <ul class="nav navbar-nav">
+                        {kite:catlist var="vo" pid="0"}
+                        {notempty name="vo.child"}
+                        <li class="dropdown dropdown-v1">
+                            <a href="{$vo.url}" class="dropdown-toggle" data-toggle="dropdown">{$vo.title} <span class="fa fa-angle-down"></span></a>
+                            <ul class="dropdown-menu">
+                                {volist name="vo.child" id="child"}
+                                {notempty name="child.child"}
+                                <li class="dropdown-parent">
+                                    <a href="{$child.url}">{$child.title}</a>
+                                    <ul class="dropdown-menu">
+                                        {volist name="child.child" id="childchild"}
+                                        <li><a href="{$childchild.url}">{$childchild.title}</a></li>
+                                        {/volist}
+                                    </ul>
+                                </li>
+                                {else /}
+                                <li><a href="{$child.url}">{$child.title}</a></li>
+                                {/notempty}
+                                {/volist}
+                            </ul>
+                        </li>
+                        {else /}
+                        <li><a href="{$vo.url}">{$vo.title}</a></li>
+                        {/notempty}
+                        {/kite:catlist}
+                    </ul>
+                    -->
+                    <ul class="nav navbar-nav">
+                        {kite:navbar var="vo" cid="1"}
+                        {notempty name="vo.child"}
+                        <li class="dropdown dropdown-v1">
+                            <a href="{$vo.url}" class="dropdown-toggle" data-toggle="dropdown">{$vo.name} <span class="fa fa-angle-down"></span></a>
+                            <ul class="dropdown-menu">
+                                {volist name="vo.child" id="child"}
+                                {notempty name="child.child"}
+                                <li class="dropdown-parent">
+                                    <a href="{$child.url}">{$child.name}</a>
+                                    <ul class="dropdown-menu">
+                                        {volist name="child.child" id="childchild"}
+                                        <li><a href="{$childchild.url}">{$childchild.name}</a></li>
+                                        {/volist}
+                                    </ul>
+                                </li>
+                                {else /}
+                                <li><a href="{$child.url}">{$child.name}</a></li>
+                                {/notempty}
+                                {/volist}
+                            </ul>
+                        </li>
+                        {else /}
+                        <li><a href="{$vo.url}">{$vo.name}</a></li>
+                        {/notempty}
+                        {/kite:navbar}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </header>

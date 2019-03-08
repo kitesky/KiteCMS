@@ -1,0 +1,57 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Template file')}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active table-responsive no-padding">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="5">{$template}/</th>
+                    </tr>
+                    <tr>
+                        <th>{:lang('File')}</th>
+                        <th>{:lang('File size')}(Byte)</th>
+                        <th>{:lang('Mtime')}</th>
+                        <th>{:lang('Atime')}</th>
+                        <th>{:lang('Action')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr>
+                        <td>{$vo.path}</td>
+                        <td>{$vo.filesize}</td>
+                        <td>{$vo.filemtime}</td>
+                        <td>{$vo.fileatime}</td>
+                        </td>
+                        <td>
+                            <a href="{:url('admin/template/fileedit', ['path' => base64_encode($vo.fullpath), 'name' =>base64_encode($vo.path)])}"> {:lang('Edit')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div>
+
+
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}{/block}

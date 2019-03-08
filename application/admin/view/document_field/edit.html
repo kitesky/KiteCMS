@@ -1,0 +1,250 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/document_field/index')}">{:lang('Document field')}</a></li>
+      <li class=""><a href="{:url('admin/document_field/create')}">{:lang('Create')}</a></li>
+      <li class=""><a href="{:url('admin/document_field/category')}">{:lang('Category')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Name')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-8">
+                              <input type="text" name="name" value="{$info.name}" class="form-control input-sm" placeholder="">
+                              <input type="hidden" name="id" value="{$info.id}">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Variable name')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-8">
+                              <input type="text" name="variable" value="{$info.variable}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Type')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-4">
+                              <select name="type" class="form-control input-sm">
+                                {volist name="type" id="vo"}
+                                <option {eq name="info.type" value="$key"}selected{/eq} value="{$key}">
+                                    {$vo}
+                                </option>
+                                {/volist}
+                              </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group" id="option">
+                              <label>{:lang('Option')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                              <textarea class="form-control input-sm" name="option" rows="3" placeholder="">{$info.option}</textarea>
+                              </div>
+                              </div>
+                              <p class="help-block">
+                                <ul class="list-unstyled">
+                                <li>{:lang('Example')}：</li>
+                                <li>1=option 1</li>
+                                <li>2=option 2</li>
+                                </ul>
+                              </p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Validate')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" name="regular" value="{$info.regular}" class="form-control input-sm">
+                                    <span class="input-group-addon">{:lang('Regular expression')}</span>
+                                    <select id="rule" class="form-control input-sm">
+                                        <option value="empty"> --{:lang('Select')}-- </option>
+                                        {volist name="rule" id="vo"}
+                                        <option {eq name="info.regular" value="$vo.regular"}selected{/eq} value="{$vo.regular}">
+                                            {$vo.name}
+                                        </option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Notification')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                              <input type="text" name="msg" value="{$info.msg}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Category')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-4">
+                              <select name="cid" class="form-control input-sm">
+                                <option>--{:lang('Select')}--</option>
+                                {volist name="category" id="vo"}
+                                <option {eq name="info.cid" value="$vo.id"}selected{/eq} value="{$vo.id}">
+                                    {$vo.name}
+                                </option>
+                                {/volist}
+                              </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Require')}</label>
+                              <div class="row">
+                              <div class="col-md-4">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" {eq name="info.is_require" value="1"}checked{/eq} name="is_require" value="1"> {:lang('Yes')}
+                                    </label>
+                                    <label>
+                                        <input type="radio" {eq name="info.is_require" value="0"}checked{/eq} name="is_require" value="0"> {:lang('No')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group" id="is_filter">
+                              <label>{:lang('Filter')}</label>
+                              <div class="row">
+                              <div class="col-md-4">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" {eq name="info.is_filter" value="1"}checked{/eq} name="is_filter" value="1"> {:lang('Yes')}
+                                    </label>
+                                    <label>
+                                        <input type="radio" {eq name="info.is_filter" value="0"}checked{/eq} name="is_filter" value="0"> {:lang('No')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Sort')}</label>
+                              <div class="row">
+                              <div class="col-md-4">
+                              <input type="text" name="weighing" value="{$info.weighing}" class="form-control input-sm" placeholder="">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    // 选项属性
+    (function (){
+        var type = $('[name="type"]');
+        var selected = $('option:selected').val();
+        setActive(selected)
+        type.change(function(){
+            setActive(type.val());
+
+        })
+
+        function setActive(selected) {
+            var arr = new Array('radio','checkbox','select','district');
+            for(var i = 0; i < arr.length; i++){
+                
+                if(selected == arr[i]){
+                    $('#option').show();
+                    $('#is_filter').show();
+                    return false;
+                } else {
+                    $('#option').hide();
+                    $('#is_filter').hide();
+                }
+            }
+        }
+
+        // 选择正则
+        $("#rule").change(function(){
+            var v = $(this).val();
+            if (v == 'empty') {
+                $("[name='regular']").val('');
+            } else {
+                $("[name='regular']").val(v);
+            }
+            console.log();
+        })
+    }());
+
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/document_field/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

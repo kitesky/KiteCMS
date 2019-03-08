@@ -1,0 +1,189 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="box box-primary">
+    <div class="box-body">{$site_name}</div>
+  </div>
+
+
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Administrator')}</a></li>
+      <li class=""><a href="{:url('admin/user/create')}">{:lang('Create')}</a></li>
+    </ul>
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">{:lang('Filter')}</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form action="{:url('admin/user/index')}" method="get" class="form-inline">
+              <div class="form-group">
+                <input type="text" name="q" value="{$search.q}" class="form-control" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary btn-flat"> <i class="fa fa-search"></i> {:lang('Search')}</button>
+            </form>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active table-responsive no-padding">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th><input id="checkAll" type="checkbox"></th>
+                        <th>#UID</th>
+                        <th>{:lang('Name')}</th>
+                        <th>{:lang('Role')}</th>
+                        <th>{:lang('Phone')}</th>
+                        <th>{:lang('Email')}</th>
+                        <th>{:lang('Status')}</th>
+                        <th>{:lang('Action')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr id = "tr_{$vo.uid}">
+                        <td><input name="ids[]" value="{$vo.uid}" type="checkbox"></td>
+                        <td>{$vo.uid}</td>
+                        <td>{$vo.username}</td>
+                        <td>
+                            {volist name="vo.role" id="r"}
+                                <{$r.role_name}> 
+                            {/volist}
+                        </td>
+                        <td>{$vo.phone}</td>
+                        <td>{$vo.email}</td>
+                        <td>
+                            {switch vo.status}
+                                {case 0}<small class="label bg-light-blue">{:lang('Enabled')}</small>{/case}
+                                {case 1}<small class="label bg-red">{:lang('Disabled')}</small>{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                        <td>
+                            <a href="{:url('admin/user/edit', ['id' => $vo['uid']])}"></i> {:lang('Edit')}</a>
+                            <a href="{:url('admin/user/auth', ['id' => $vo['uid']])}"></i> {:lang('Authorize')}</a>
+                            <a onclick="remove('{$vo.uid}')" href="#"> {:lang('Delete')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <form method="post" class="form-inline">
+                <div class="input-group">
+                    <div><select id="type" class="form-control">
+                        <option value="enabled">{:lang('Enabled')}</option>
+                        <option value="disabled">{:lang('Disabled')}</option>
+                        <option value="delete">{:lang('Delete')}</option>
+                    </select>
+                    </div>
+                    <span class="input-group-btn"> 
+                        <button type="button" onclick="handle()" class="btn btn-primary btn-flat"><i class="fa fa-save"></i> {:lang('Save')} </button> 
+                    </span>
+                </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right"> {$page} </div>
+          </div>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    //批量操作
+    function handle(){
+        var chk_value =[]; 
+        $('input[name="ids[]"]:checked').each(function(){ 
+            chk_value.push($(this).val()); 
+        }); 
+        var type = $('#type option:selected').val() ;
+        if(chk_value.length < 1){
+            swal({
+                title: "{:lang('No record selected')}",
+                text: "",
+                type: "warning"
+            });
+        }else{
+            swal({
+              title: "{:lang('Are you sure')}",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: "{:lang('Yes')}",
+              cancelButtonText: "{:lang('No')}",
+            }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/user/handle')}",
+                    data:{'ids':chk_value, 'type':type},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success").then(function(value){
+                              window.location.reload();
+                            });
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+            })
+        }
+    }
+
+    function remove(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+          if (result.value) {
+            $.ajax({
+                url:"{:Url('admin/user/remove')}",
+                data:{'id':id},
+                type:'post',
+                dataType:'json',
+                success: function(xhr){
+                    if(xhr.code == 200){
+                        swal(xhr.msg, "","success").then(function(value){
+                            $("#tr_" + id).remove();
+                        });
+                    }else{
+                        swal(xhr.msg, "", "error");
+                    }
+                }
+            })
+          }
+        })
+    }
+</script>
+{/block}

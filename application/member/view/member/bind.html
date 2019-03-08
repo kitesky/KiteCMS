@@ -1,0 +1,47 @@
+{extend name="public:base" /}
+{block name="title"}会员首页{/block}
+
+{block name="content"}
+    <section class="content">
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">账户绑定</h3>
+        </div>
+    
+        <div class="box-body">
+        
+            <ul class="nav nav-pills nav-stacked">
+                <li style="padding:20px">
+                    <div class="row">
+                      <div class="col-md-8 col-xs-8"><i class="fa fa-fw fa-mobile"></i> 手机</div>
+                      <div class="col-md-4 col-xs-4 pull-right">
+                        {if empty($info.phone) }
+                        <a href="{:url('member/member/mobileBind')}"><span class="text-green">绑定</a>
+                        {else /}
+                        <a href="{:url('member/member/mobileUnbind')}"><span class="text-red">解绑</a>
+                        {/if}
+                      </div>
+                    </div>
+                </li>
+                <li style="padding:20px">
+                    <div class="row">
+                      <div class="col-md-8 col-xs-8"><i class="fa fa-fw fa-envelope-o"></i> 邮箱</div>
+                      <div class="col-md-4 col-xs-4 pull-right">
+                        {if empty($info.email) }
+                        <a href="{:url('member/member/emailBind')}"><span class="text-green">绑定</a>
+                        {else /}
+                        <a href="{:url('member/member/emailUnbind')}"><span class="text-red">解绑</a>
+                        {/if}
+                      </div>
+                    </div>
+                </li>
+              </ul>
+
+        </div>
+        <!-- /.box-body -->
+
+    </div>
+
+    </section>
+{/block}

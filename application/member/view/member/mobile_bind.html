@@ -1,0 +1,109 @@
+{extend name="public:base" /}
+{block name="title"}会员首页{/block}
+
+{block name="content"}
+    <section class="content">
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">手机绑定</h3>
+        </div>
+    
+        <div class="box-body">
+            <form role="form" id="operate">
+                <div class="form-group">
+                  <label>手机号码</label>
+                  <div class="row">
+                  <div class="col-md-4">
+                    <input type="text" name="phone" class="form-control input-sm" placeholder="请输入手机号码">
+                  </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>短信动态码</label>
+                  <div class="row">
+                  <div class="col-md-3">
+                  <input type="text" name="code" class="form-control input-sm" placeholder="短信动态码">
+                  </div>
+                  <div class="col-md-9">
+                    <button type="button" onclick="sendSMS();" class="btn btn-default btn-flat btn-sm">发送</button>
+                  </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="btn-group">
+                <button class="btn btn-warning btn-flat" onclick="operate();" type="button">手机绑定</button>
+            </div>
+        </div>
+    </div>
+
+    </section>
+{/block}
+
+{block name="js"}
+<script type="text/javascript">
+
+    function sendSMS(){
+        $.ajax({
+            url:"{:url('member/message/sendSMS')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+    function operate(){
+        $.ajax({
+            url:"{:url('member/member/mobileBind')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

@@ -1,0 +1,56 @@
+{extend name="public:base" /}
+{block name="title"}我的发布 - 会员中心{/block}
+
+{block name="content"}
+
+    <section class="content-header">
+        <h1>我的发布</h1>
+    </section>
+    <section class="content">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="{eq name='search.status' value='1'}active{/eq}{notin name='search.status' value='0,1'}active{/notin}"><a href="{:url('member/document/index', ['status' => 1])}">显示中</a></li>
+              <li class="{eq name='search.status' value='0'}active{/eq}"><a href="{:url('member/document/index', ['status' => 0])}">审核中</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+                <div class="table-responsive">
+                <table class="table table-hover">
+                  <tbody>
+                    <tr>
+                      <th>图片</th>
+                      <th>标题</th>
+                      <th>归类</th>
+                      <th>发布日期</th>
+                      <th>操作</th>
+                    </tr>
+                    {notempty name="list"}
+                        {volist name="list" id="vo"}
+                        <tr>
+                          <td><img src="{$vo.image|default='__STATIC__/admin/dist/img/nopic.png'|thumb=50,50}"></td>
+                          <td><a target="_blank" href="{$vo.url}">{$vo.title}</a></td>
+                          <td><a target="_blank" href="{$vo.cate_url}"><span class="label bg-blue">{$vo.cate_name}</span></a></td>
+                          <td>{$vo.create_at}</td>
+                          <td>
+                            <a href="{:url('member/document/edit', ['id' => $vo.id])}">修改</a>
+                            <a href="">删除</a>
+                          </td>
+                        </tr>
+                        {/volist}
+                    {else /}
+                        <tr><td colspan="5">暂无信息</td></tr>
+                    {/notempty}
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+            <!-- /.tab-content -->
+            <div class="box-footer">
+                <div class="text-center">
+                {$page}
+                </div>
+            </div>
+        </div>
+    </section>
+{/block}

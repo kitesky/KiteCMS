@@ -1,0 +1,51 @@
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <!-- <li class="header">控制面板</li> -->
+        <!-- Optionally, you can add icons to the links -->
+        <li class="header">NAVIGATION</li>
+        {notempty name="menu"}
+            {volist name="menu" id="vo"}
+                {notempty name="vo.child"}
+                    <li class="treeview {$vo.active}">
+                      <a href="{$vo.url}">
+                        <i class="{$vo.icon}"></i> <span><!--{$vo.name}-->{:lang($vo['lang_var'])}</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        {volist name="vo.child" id="son"}
+                            {notempty  name="son.child"}
+                            <li class="treeview {$son.active}">
+                              <a href="{$son.url}"><i class="{$son.icon}"></i> {:lang($son['lang_var'])}
+                                <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                              </a>
+                              <ul class="treeview-menu">
+                                {volist name="son.child" id="gson"}
+                                <li class="{$gson.active}"><a href="{$gson.url}"><i class="{$gson.icon}"></i> {:lang($gson['lang_var'])}</a></li>
+                                {/volist}
+                              </ul>
+                            </li>
+                            {else /}
+                            <li class="{$son.active}"><a href="{$son.url}"><i class="{$son.icon}"></i> {:lang($son['lang_var'])}</a></li>
+                            {/notempty}
+                        {/volist}
+                      </ul>
+                    </li>
+                {else /}
+                    <li class="{$vo.active}"><a href="{$vo.url}"><i class="{$vo.icon}"></i> <span>{:lang($vo['lang_var'])}</span></a></li>
+                {/notempty}
+            {/volist}
+        {/notempty}
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>

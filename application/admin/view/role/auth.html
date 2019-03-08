@@ -1,0 +1,160 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/role/index')}">{:lang('Role')}</a></li>
+      <li class=""><a href="{:url('admin/role/create')}">{:lang('Create')}</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active table-responsive no-padding">
+        <table class="table table-condensed table-hover" id="permission">
+            <thead>
+                <tr>
+                    <th>{:lang('Permission')} 
+                        <a href="#" onclick="jQuery('#permission').treetable('expandAll'); return false;" class="btn btn-flat btn-default btn-xs"><i class="fa fa-plus"></i></a>
+                        <a href="#" onclick="jQuery('#permission').treetable('collapseAll'); return false;" class="btn btn-flat btn-default btn-xs"><i class="fa fa-minus"></i></a>
+                    </th>
+                    <th class="text-right">{$info.role_name}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form id="form">
+                <input type="hidden" name="role_id" value="{$info.role_id}">
+                {volist name="list" id="vo"}
+                <tr id = "tr_{$vo.id}" data-tt-id="{$vo.id}" data-tt-parent-id="{$vo.pid}">
+                    <td>{:lang($vo.lang_var)}</td>
+                    <td class="text-right"><input name="ids[]" {in name="vo.id" value="$permission"}checked{/in} value="{$vo.id}" type="checkbox"></td>
+                </tr>
+                {/volist}
+                </form>
+            </tbody>
+        </table>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="auth();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#permission").treetable({ expandable: true });
+    $("#permission").treetable('expandAll');
+    
+    // 关联选择
+
+    // 递归获取所有子级
+    function getChild(currentId){
+        var arr = new Array();
+        $("tr").each(function(){
+            var allTrPid = $(this).attr('data-tt-parent-id');
+
+            if (allTrPid == currentId) {
+                var c = $(this).attr('data-tt-id');
+                arr.push(c);
+                arr = arr.concat(getChild(c));
+            }
+        });
+        return arr;
+    }
+
+    // 递归过去所有父级
+    function getParent(currentId){
+        var arr = new Array();
+        $("tr").each(function(){
+            var allTrID  = $(this).attr('data-tt-id');
+            var allTrPid = $(this).attr('data-tt-parent-id');
+            if (allTrID == currentId) {
+                if (allTrPid != 0) {
+                    arr.push(allTrPid);
+                    arr = arr.concat(getParent(allTrPid));
+                }
+            }
+        });
+        return arr;
+    }
+
+    $('[type="checkbox"]').click(function(){
+        // 当前TR
+        var c = $(this).parent().parent().attr('data-tt-id');
+        // 父TR
+        var p = $(this).parent().parent().attr('data-tt-parent-id');
+        
+        // 当前checkbox选中状态 它上级要被选中，下级全部被选中。
+        var bool = $(this).is(":checked");
+        if (bool == true) {
+            // 下级全部被选中。
+            $("tr").each(function(){
+                var all = getChild(c);
+                var mychild = $(this).attr('data-tt-id');
+                for(var i = 0; i < all.length; i++){
+                    if(mychild === all[i]){
+                        $(this).find("input").prop("checked",true);;
+                    }
+                }
+            });
+            
+            // 上级选中
+            $("tr").each(function(){
+                var all = getParent(c);
+                var myparent = $(this).attr('data-tt-id');
+                for(var i = 0; i < all.length; i++){
+                    if(myparent === all[i]){
+                        $(this).find("input").prop("checked",true);;
+                    }
+                }
+            });
+
+
+
+        } else {
+            // 下级全部被取消选中。
+            $("tr").each(function(){
+                var all = getChild(c);
+                var mychild = $(this).attr('data-tt-id');
+                for(var i = 0; i < all.length; i++){
+                    if(mychild === all[i]){
+                        $(this).find("input").prop("checked",false);;
+                    }
+                }
+            });
+        }
+
+    })
+
+});
+
+    function auth(){
+        $.ajax({
+            url:"{:Url('admin/role/auth')}",
+            data:$("#form").serialize(),
+            type:'post',
+            dataType:'json',
+            success: function(xhr){
+                if(xhr.code == 200){
+                    swal(xhr.msg, "","success");
+                }else{
+                    swal(xhr.msg, "", "error");
+                }
+            }
+        })
+    }
+</script>
+{/block}

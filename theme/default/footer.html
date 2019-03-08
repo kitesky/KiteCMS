@@ -1,0 +1,21 @@
+    <footer class="margin-top-30">
+        <div class="container">
+            <div class="footer-head">
+                <div class="row center-content">
+                {kite:link var="vo" cid="1" limit="10" order="id desc"}
+                    <a class="text-white padding-left-10" href="{$vo.url}">{$vo.name}</a>
+                {/kite:link}
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <p>{kite:siteinfo var ='copyright' /}</p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 text-right">
+                        <a href="http://www.miitbeian.gov.cn" target="_blank">{kite:siteinfo var ='icp' /}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>

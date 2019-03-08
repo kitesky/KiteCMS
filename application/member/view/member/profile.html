@@ -1,0 +1,95 @@
+{extend name="public:base" /}
+{block name="title"}会员首页{/block}
+
+{block name="content"}
+    <section class="content">
+
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-aqua-active">
+          <div class="widget-user-image">
+            <img id="avatar" style="cursor:pointer;" class="img-circle" src="{$member.avatar|default='__STATIC__/admin/dist/img/nopic.png'|thumb=60,60}" alt="User Avatar">
+          </div>
+          <!-- /.widget-user-image -->
+          <h3 class="widget-user-username">{$member.username}</h3>
+          <h4 class="widget-user-desc">{$member.group_name|default='游客组'}</h5>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+              <label>会员账户</label>
+              <div class="row">
+              <div class="col-md-12">
+                {$info.username}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>会员积分</label>
+              <div class="row">
+              <div class="col-md-12">
+                {$info.score}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>电子邮箱</label>
+              <div class="row">
+              <div class="col-md-12 col-xs-12">
+                {$info.email|hide_star}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>手机号码</label>
+              <div class="row">
+              <div class="col-md-12 col-xs-12">
+                {$info.phone|hide_star}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>注册日期</label>
+              <div class="row">
+              <div class="col-md-12">
+                {$info.create_at}
+              </div>
+              </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    </section>
+{/block}
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+layui.use('upload', function(){
+  var $ = layui.jquery
+  ,upload = layui.upload;
+  //拖拽上传
+  upload.render({
+    elem: "#avatar"
+    ,accept: 'file'
+    ,multiple: false
+    ,number: 1
+    ,url: "{:url('member/member/avatar')}"
+    ,done: function(res){
+      if (res.code == 200) {
+        $("#avatar").attr("src", res.data.url);
+      } else {
+        swal({
+          position: 'center',
+          type: 'error',
+          title: res.msg,
+          showConfirmButton: false,
+          toast:false,
+          timer: 2000
+        });
+      }
+    }
+  });
+  
+});
+</script>
+{/block}

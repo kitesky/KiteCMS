@@ -1,0 +1,109 @@
+{include file="index:header" /}
+<div class="layui-container">
+    <div class="install-box">
+        <div class="install-box-header">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>运行环境检测</legend>
+            </fieldset>
+        </div>
+        <div class="install-box-body">
+            <table class="layui-table" lay-size="sm">
+              <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="33%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>环境名称</th>
+                  <th>所需配置</th>
+                  <th>当前配置</th>
+                </tr>
+              </thead>
+              <tbody>
+                {volist name="env" id="vo"}
+                <tr>
+                  <td>{$vo[0]}</td>
+                  <td>{$vo[1]}</td>
+                  <td class="{eq name='vo[4]' value='no'}layui-bg-red{/eq}">{$vo[3]}</td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+              <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="33%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>目录/文件</th>
+                  <th>所需权限</th>
+                  <th>当前权限</th>
+                </tr> 
+              </thead>
+              <tbody>
+                {volist name="dir" id="vo"}
+                <tr>
+                  <td>{$vo[1]}</td>
+                  <td>{$vo[2]}</td>
+                  <td class="{eq name='vo[4]' value='no'}layui-bg-red{/eq}">{$vo[3]}</td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+              <colgroup>
+                <col width="33%">
+                <col width="33%">
+                <col width="33%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>函数/扩展</th>
+                  <th>类型</th>
+                  <th>是否支持</th>
+                </tr> 
+              </thead>
+              <tbody>
+                {volist name="func" id="vo"}
+                <tr>
+                  <td>{$vo[0]}</td>
+                  <td>{$vo[3]}</td>
+                  <td class="{eq name='vo[2]' value='no'}layui-bg-red{/eq}">{$vo[1]}</td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+        </div>
+        <div class="install-box-footer">
+          <div class="layui-row">
+            <div class="layui-col-xs6">
+                <div class="next pull-left">
+                    <a href="{:url('install/index/index')}" class="layui-btn layui-btn-primary">上一步</a>
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <div class="next pull-right">
+                    <button onclick="step3();" class="layui-btn">下一步</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+function step3(){
+    var bool = '{$msg}';
+    if (bool == 'success') {
+        window.location.href = "{:url('install/index/index', ['step' => 3])}"
+    } else {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('环境检测未通过', {area: '300px'});
+        }); 
+    }
+}
+</script> 
+{include file="index:footer" /}

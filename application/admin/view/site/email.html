@@ -1,0 +1,170 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Email')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Mail server')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_host" value="{$email_host}" class="form-control">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('SSL port')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_port" value="{$email_port}" class="form-control">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Account')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_username" value="{$email_username}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Password')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="password" name="email_password" value="{$email_password}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Send mail')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_from_email" value="{$email_from_email}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Sender')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_from_name" value="{$email_from_name}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Register notification')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="send_email_register" value="1"}checked{/eq} name="send_email_register" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="send_email_register" value="0"}checked{/eq} name="send_email_register" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Verification code template')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="email_code_template" rows="3" placeholder="">{$email_code_template}</textarea>
+                              </div>
+                              </div>
+                              <p class="help-block">${username} ，${code}</p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Register notification template')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="email_register_template" rows="3" placeholder="">{$email_register_template}</textarea>
+                              </div>
+                              </div>
+                              <p class="help-block">${username}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/site/email')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

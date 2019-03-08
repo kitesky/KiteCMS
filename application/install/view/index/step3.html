@@ -1,0 +1,168 @@
+{include file="index:header" /}
+<div class="layui-container">
+    <div class="install-box">
+        <div class="install-box-body">
+            <form class="layui-form" id="operate" action="#">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>数据库配置</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">服务器地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="hostname" value="127.0.0.1" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">数据库服务器地址，例如：127.0.0.1</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">数据库名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="database" value="test" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">数据库名</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="username" value="root" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">数据库用户名</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="password" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">数据库用户密码</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">端口</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="hostport" value="3306" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">默认端口：3306</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">表前缀</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="prefix" value="fel_" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">同数据库多站点并存建议使用表前缀区分。格式："fel_"</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <button type="button" onclick="testConnect();" class="layui-btn pull-right">测试连接</button>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>管理员账户设置</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="user" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">管理员账号</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="pass" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">管理员密码</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="repass" lay-verify="required" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">请再次输入管理员密码</div>
+                </div>
+            </form>
+        </div>
+        <div class="install-box-footer">
+          <div class="layui-row">
+            <div class="layui-col-xs6">
+                <div class="next pull-left">
+                    <a href="{:url('install/index/index', ['step' => 2])}" class="layui-btn layui-btn-primary">上一步</a>
+                </div>
+            </div>
+            <div class="layui-col-xs6">
+                <div class="next pull-right">
+                    <button onclick="step4();" class="layui-btn">下一步</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+function testConnect(){
+    $.ajax({
+        url:"{:url('install/index/index', ['step' => 3])}",
+        data:$("#operate").serialize(),
+        type:'post',
+        dataType:'json',
+        success:function(xhr){
+            if(xhr.code == 200){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg(xhr.msg, {area: '300px'});
+                });
+            } else{
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg(xhr.msg, {area: '300px'});
+                });
+            }
+        }
+    });
+}
+
+function step4(){
+    // 加载层
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        var index = layer.load();
+
+        $.ajax({
+            url:"{:url('install/index/index', ['step' => 4])}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    layer.close(index);
+                    layer.open({
+                        type: 1
+                        ,title: false //不显示标题栏
+                        ,closeBtn: false
+                        ,area: '300px;'
+                        ,shade: 0.8
+                        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,btn: ['进入后台', '返回首页']
+                        ,btnAlign: 'c'
+                        ,moveType: 1 //拖拽模式，0或者1
+                        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">您已经成功安装！^_^</div>'
+                        ,success: function(layero){
+                          var btn = layero.find('.layui-layer-btn');
+                          btn.find('.layui-layer-btn0').attr({
+                            href: '{:url("admin/index/index")}'
+                            ,target: '_blank'
+                          });
+                          var btn = layero.find('.layui-layer-btn');
+                          btn.find('.layui-layer-btn1').attr({
+                            href: '{:url("index/index/index")}'
+                            ,target: '_blank'
+                          });
+                        }
+                    });
+                } else{
+                    layer.close(index);
+                    layer.msg(xhr.msg, {area: '300px'});
+                }
+            }
+        });
+
+    });
+}
+</script> 
+{include file="index:footer" /}
