@@ -95,8 +95,8 @@ class DocumentContent extends Model
 
         $categoryMap = [];
         // 分类参数 存在子栏目ID就查子栏目信息 否则查询当前栏目下所有子栏目
-        if (isset($request['category']) && is_numeric($request['category'])) {
-            $categoryMap = [['cid', '=', $request['category']]];
+        if (isset($request['cat_id']) && is_numeric($request['cat_id'])) {
+            $categoryMap = [['cid', '=', $request['cat_id']]];
         } else {
             $categoryMap = [['cid', '=', $cid]];
         }
@@ -104,7 +104,7 @@ class DocumentContent extends Model
         // 自定义字段参数 构造子查询语句
         if (!empty($request)) {
             foreach ($request as $key => $value) {
-                $except = ['cate_alias', 'category', 'page']; // 排除非自定义字段
+                $except = ['cat_id','category', 'page']; // 排除非自定义字段
                 if (!in_array($key, $except) && $value != 'all')
                 {
                     if (strripos($key, '_child')) {
@@ -137,11 +137,8 @@ class DocumentContent extends Model
                         $ids[] = $v['document_id'];
                     }
                 }
-                if (!empty($ids)) {
-                    $map[] = ['id', 'in', $ids];
-                } else {
-                    $map[] = ['id', 'in', [-1]];
-                }
+
+                $map[] = ['id', 'in', $ids];
             }
         }
 

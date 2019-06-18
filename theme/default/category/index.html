@@ -20,6 +20,7 @@
             <div class="col-md-8">
 
                 <div class="margin-top-60 margin-bottom-60">
+                    <!-- 横向导航
                     <ul class="nav nav-pills">
                     {foreach $filter as $key=>$vo }
                       <li role="presentation" class="dropdown">
@@ -34,7 +35,7 @@
                       </li>
                     {/foreach}
                     </ul>
-                    <!-- 横向导航
+                    -->
                     <ul>
                     {foreach $filter as $key=>$vo }
                         <li>
@@ -45,7 +46,7 @@
                         </li>
                     {/foreach}
                     </ul>
-                    -->
+
                 </div>
 
                 {volist name="doclist" id="vo"}
@@ -67,7 +68,6 @@
                                     <span class="views"><i class="fa fa-eye"></i> {$vo.pv}</span>
                                 </div>
                                 <p>{$vo.description}</p>
-                                <a href="{$vo.url}" class="small-title rmore">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -82,18 +82,16 @@
 
             <aside class="col-md-4">
                 <div class="side-widget">
-                    <h4> 关注我们</h4>
-                    <div class="side-social">
-                        <a href="#"><i class="fa fa-weibo"></i> 2,279 <span>fans</span></a>
-                        <a href="#"><i class="fa fa-qq"></i> 1,928 <span>followers</span></a>
-                        <a href="#"><i class="fa fa-wechat"></i> 829 <span>followers</span></a>
+                    <div class="ad-banner">
+                        <span>Advertisement</span>
+                        <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
                     </div>
                 </div>
 
                 <div class="clearfix"></div>
 
                 <div class="side-widget">
-                    <h4><i class="fa fa-fire"></i> 热门</h4>
+                    <h4>最新信息</h4>
                     {kite:doclist var='vo' hot_flag="1" order='pv desc' limit='3'}
                     <article class="style4">
                         <a href="{$vo.url}">
@@ -221,15 +219,6 @@
                         </div>
                     </div>
                     <!-- TABS -->
-                </div>
-
-                <div class="clearfix"></div>
-
-                <div class="side-widget">
-                    <div class="ad-banner">
-                        <span>Advertisement</span>
-                        <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
-                    </div>
                 </div>
 
             </aside>

@@ -8,9 +8,8 @@ use app\common\model\SendMessage;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\Hook;
-use app\common\model\Member as MemberModel;
-use app\common\model\MemberGroup;
-use app\common\validate\MemberValidate;
+use app\common\model\AuthUser;
+use app\common\validate\UserValidate;
 use app\common\model\UploadFile;
 
 class Member extends Base
@@ -30,8 +29,8 @@ class Member extends Base
         $ret = $uploadObj->upload($file);
 
         // 修改图片路径
-        $memberObj = new MemberModel;
-        $member = $memberObj->where('mid', $this->mid)->find();
+        $memberObj = new AuthUser;
+        $member = $memberObj->where('uid', $this->uid)->find();
         $member->avatar = $ret['url'];
         $member->save();
 
@@ -49,15 +48,15 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('updatePassword')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
-            $userInfo = $obj->where('mid', $this->mid)->find();
+            $obj = new AuthUser;
+            $userInfo = $obj->where('uid', $this->uid)->find();
 
             // 验证密码 
             if (!password_verify($request['oldpassword'], $userInfo->password)) {
@@ -66,14 +65,14 @@ class Member extends Base
 
             $userInfo->password = password_hash($request['password'], PASSWORD_DEFAULT);
             $userInfo->save();
-            if (is_numeric($userInfo->mid)) {
+            if (is_numeric($userInfo->uid)) {
                 return $this->response(200, '密码变更成功');
             } else {
                 return $this->response(201, '密码变更失败');
             }
         }
         
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
 
         return $this->fetch('member/password', ['info' =>$info]);
     }
@@ -81,7 +80,7 @@ class Member extends Base
     // 账户绑定页
     public function bind()
     {
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
 
         return $this->fetch('member/bind', ['info' =>$info]);
     }
@@ -93,15 +92,15 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('mobileBind')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
-            $userInfo = $obj->where('mid', $this->mid)->find();
+            $obj = new AuthUser;
+            $userInfo = $obj->where('uid', $this->uid)->find();
 
             // 验证是否已经绑定过
             if (!empty($userInfo->phone)) {
@@ -110,14 +109,14 @@ class Member extends Base
 
             $userInfo->phone = $request['phone'];
             $userInfo->save();
-            if (is_numeric($userInfo->mid)) {
+            if (is_numeric($userInfo->uid)) {
                 return $this->response(200, '手机号码绑定成功');
             } else {
                 return $this->response(201, '手机号码绑定失败');
             }
         }
 
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
         if (!empty($info->phone)) {
             $this->redirect('member/member/mobileUnbind');
         }
@@ -132,15 +131,15 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('mobileUnbind')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
-            $userInfo = $obj->where('mid', $this->mid)->find();
+            $obj = new AuthUser;
+            $userInfo = $obj->where('uid', $this->uid)->find();
 
             // 验证短信
             $message = new SendMessage($this->site_id);
@@ -152,14 +151,14 @@ class Member extends Base
             // 解绑
             $userInfo->phone = '';
             $userInfo->save();
-            if (is_numeric($userInfo->mid)) {
+            if (is_numeric($userInfo->uid)) {
                 return $this->response(200, '号码已解绑');
             } else {
                 return $this->response(201, '号码解绑失败');
             }
         }
 
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
         if (empty($info->phone)) {
             $this->redirect('member/member/mobileBind');
         }
@@ -174,15 +173,15 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('emailBind')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
-            $userInfo = $obj->where('mid', $this->mid)->find();
+            $obj = new AuthUser;
+            $userInfo = $obj->where('uid', $this->uid)->find();
 
             // 验证动态码
             $message = new SendMessage($this->site_id);
@@ -194,14 +193,14 @@ class Member extends Base
             // 解绑
             $userInfo->email = $request['email'];
             $userInfo->save();
-            if (is_numeric($userInfo->mid)) {
+            if (is_numeric($userInfo->uid)) {
                 return $this->response(200, '邮箱绑定成功');
             } else {
                 return $this->response(201, '邮箱绑定失败');
             }
         }
         
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
         if (!empty($info->email)) {
             $this->redirect('member/member/emailUnbind');
         }
@@ -216,15 +215,15 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('emailUnbind')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
-            $userInfo = $obj->where('mid', $this->mid)->find();
+            $obj = new AuthUser;
+            $userInfo = $obj->where('uid', $this->uid)->find();
 
             // 验证动态码
             $message = new SendMessage($this->site_id);
@@ -236,14 +235,14 @@ class Member extends Base
             // 解绑
             $userInfo->email = '';
             $userInfo->save();
-            if (is_numeric($userInfo->mid)) {
+            if (is_numeric($userInfo->uid)) {
                 return $this->response(200, '邮箱已解绑');
             } else {
                 return $this->response(201, '邮箱解绑失败');
             }
         }
 
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
         if (empty($info->email)) {
             $this->redirect('member/member/emailBind');
         }
@@ -254,7 +253,7 @@ class Member extends Base
     // 个人资料
     public function profile()
     {
-        $info = MemberModel::get($this->mid);
+        $info = AuthUser::get($this->uid);
 
         return $this->fetch('member/profile', ['info' =>$info]);
     }
@@ -266,7 +265,7 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('login')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
@@ -287,7 +286,7 @@ class Member extends Base
             }
 
             // 并查询用户信息
-            $obj = new MemberModel;
+            $obj = new AuthUser;
             $userInfo = $obj->where('username', $request['username'])->find();
 
             // 用户不存在
@@ -306,22 +305,21 @@ class Member extends Base
             }
 
             // 生成session
-            Session::set('mid',$userInfo->mid,'index');
-            Session::set('group_id',$userInfo->group_id,'index');
+            Session::set('uid',$userInfo->uid,'index');
             Session::set('username',$userInfo->username,'index');
 
             // 监听会员登录
             $logData = [
-                'mid'     => $userInfo->mid,
+                'uid'     => $userInfo->uid,
                 'site_id' => $this->site_id,
                 'ip'      => get_client_ip(),
             ];
-            Hook::listen('member_login', $logData);
+            Hook::listen('user_login', $logData);
 
             return $this->response(200, '登录成功');
         }
 
-        if (Session::get('mid', 'index')) {
+        if (Session::get('uid', 'index')) {
             $this->redirect('member/index/index');
         }
 
@@ -338,7 +336,7 @@ class Member extends Base
             $request = Request::param();
 
             // 验证数据
-            $validate = new MemberValidate();
+            $validate = new UserValidate();
             $validateResult = $validate->scene('register')->check($request);
             if (!$validateResult) {
                 return $this->response(201, $validate->getError());
@@ -359,8 +357,8 @@ class Member extends Base
             }
 
             // 校验记录
-            $memberObj = new MemberModel;
-            $exist = $memberObj->where('username', $request['username'])->value('mid');
+            $memberObj = new AuthUser;
+            $exist = $memberObj->where('username', $request['username'])->value('uid');
             if (is_numeric($exist)) {
                 return $this->response(201, '账户名称已经存在');
             }
@@ -377,16 +375,16 @@ class Member extends Base
             $memberData = array_merge($request, $memberData);
             $memberObj->allowField(true)->save($memberData);
 
-            if (is_numeric($memberObj->mid)) {
+            if (is_numeric($memberObj->uid)) {
                 // 监听会员注册
                 $params = [
-                    'mid'           => $memberObj->mid,
-                    'username'      => $memberObj->mid,
+                    'uid'           => $memberObj->uid,
+                    'username'      => $memberObj->username,
                     'register_time' => time(),
                     'site_id'       => $this->site_id,
                     'register_ip'   => get_client_ip(),
                 ];
-                Hook::listen('member_register', $params);
+                Hook::listen('user_register', $params);
 
                 return $this->response(200, '注册成功');
             } else {
@@ -402,7 +400,7 @@ class Member extends Base
     // 注销登录
     public function logout()
     {
-        Session::delete('mid','index');
+        Session::delete('uid','index');
         Session::delete('username','index');
         Session::delete('group_id','index');
         return $this->redirect('member/member/login');

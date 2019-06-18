@@ -72,7 +72,7 @@ class Document extends Base
         $list = $documentObj
             ->where($map)
             ->where('site_id', 'eq', $this->site_id)
-            ->where('mid', 'eq', $this->mid)
+            ->where('uid', 'eq', $this->uid)
             ->order('id desc')
             ->paginate(10, false, [
                 'type'     => 'bootstrap',
@@ -90,7 +90,7 @@ class Document extends Base
                 $v->url = url('index/document/index', ['id' => $v->id]);;
                 $cate = $cateObj->getCategoryById($this->site_id, $v->cid);
                 $v->cate_name = $cate->title;
-                $v->cate_url  = url('index/category/index', ['cate_alias' =>$cate->alias]);
+                $v->cate_url  = url('index/category/index', ['cate_id' =>$cate->id]);
             }
         }
 
@@ -147,7 +147,7 @@ class Document extends Base
             // 写入content内容
             $contentData = [
                 'site_id' => $this->site_id,
-                'mid'     => $this->mid,
+                'uid'     => $this->uid,
                 'album'   => isset($matches[2]) ? implode(',', $matches[2]) : null,
             ];
 
@@ -162,12 +162,12 @@ class Document extends Base
             // 文档创建监听钩子 Hook
             $docData = [
                 'id'      => $contentObj->id,
-                'mid'     => $this->mid,
+                'uid'     => $this->uid,
                 'site_id' => $this->site_id,
                 'content' => $contentData,
                 'extra'   => isset($request['extra']) ? $request['extra'] : [],
             ];
-            Hook::listen('member_create_document', $docData);
+            Hook::listen('user_create_document', $docData);
 
             if (is_numeric($contentObj->id)) {
                 return $this->response(200, Lang::get('success'));
@@ -249,12 +249,12 @@ class Document extends Base
             // 文档更新监听钩子 Hook
             $docData = [
                 'id'      => $contentObj->id,
-                'mid'     => $this->mid,
+                'uid'     => $this->uid,
                 'site_id' => $this->site_id,
                 'content' => $contentData,
                 'extra'   => isset($request['extra']) ? $request['extra'] : [],
             ];
-            Hook::listen('member_edit_document', $docData);
+            Hook::listen('user_edit_document', $docData);
 
             if (is_numeric($contentObj->id)) {
                 return $this->response(200, Lang::get('success'));

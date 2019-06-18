@@ -4,89 +4,23 @@
 {block name="content"}
     <section class="content">
 
-    <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-aqua-active">
-          <div class="widget-user-image">
-            <img class="img-circle" src="{$member.logo|default='__STATIC__/admin/dist/img/nopic.png'}" alt="User Avatar">
-          </div>
-          <!-- /.widget-user-image -->
-          <h3 class="widget-user-username">{$member.username}</h3>
-          <h5 class="widget-user-desc">{$member.group_name|default='游客组'}</h5>
+        <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-aqua-active">
+              <div class="widget-user-image">
+                <img class="img-circle" src="{$member.logo|default='__STATIC__/admin/dist/img/nopic.png'}" alt="User Avatar">
+              </div>
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">{$member.username}</h3>
+              <h5 class="widget-user-desc">{$member.group_name|default='游客组'}</h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-pills">
+                <li><a href="#"><i class="fa fa-fw fa-mobile "></i>{$member.phone|hide_star} </a></li>
+                <li><a href="#"><i class="fa fa-fw fa-envelope-o"></i> {$member.email|hide_star}</a></li>
+              </ul>
+            </div>
         </div>
-        <div class="box-footer no-padding">
-          <ul class="nav nav-pills">
-            <li><a href="#"><i class="fa fa-fw fa-mobile "></i>{$member.phone|hide_star} </a></li>
-            <li><a href="#"><i class="fa fa-fw fa-envelope-o"></i> {$member.email|hide_star}</a></li>
-          </ul>
-        </div>
-    </div>
-
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Tab 1</a></li>
-          <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab_1">
-                <ul class="products-list product-list-in-box">
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="__STATIC__/admin/dist/img/nopic.png" alt="Product Image">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Samsung TV
-                          <span class="label label-warning pull-right">$1800</span></a>
-                        <span class="product-description">
-                              Samsung 32" 1080p 60Hz LED Smart HDTV.
-                            </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="__STATIC__/admin/dist/img/nopic.png" alt="Product Image">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Bicycle
-                          <span class="label label-info pull-right">$700</span></a>
-                        <span class="product-description">
-                              26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                            </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="__STATIC__/admin/dist/img/nopic.png" alt="Product Image">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                        <span class="product-description">
-                              Xbox One Console Bundle with Halo Master Chief Collection.
-                            </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                    <li class="item">
-                      <div class="product-img">
-                        <img src="__STATIC__/admin/dist/img/nopic.png" alt="Product Image">
-                      </div>
-                      <div class="product-info">
-                        <a href="javascript:void(0)" class="product-title">PlayStation 4
-                          <span class="label label-success pull-right">$399</span></a>
-                        <span class="product-description">
-                              PlayStation 4 500GB Console (PS4)
-                            </span>
-                      </div>
-                    </li>
-                    <!-- /.item -->
-                </ul>
-          </div>
-          <!-- /.tab-pane -->
-        </div>
-        <!-- /.tab-content -->
-    </div>
 
     </section>
 {/block}

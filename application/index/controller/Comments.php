@@ -25,7 +25,7 @@ class Comments extends Base
         $request = Request::param();
 
         // 判断登录状态
-        if (empty($this->mid)) {
+        if (empty($this->uid)) {
             return $this->response(201, '请先登录');
         }
 
@@ -48,7 +48,7 @@ class Comments extends Base
 
         $insertData = [
             'site_id' => $this->site_id,
-            'mid'     => $this->mid,
+            'uid'     => $this->uid,
         ];
         $insertData = array_merge($insertData, $request);
 
@@ -60,12 +60,12 @@ class Comments extends Base
             // 文档评论监听
             $commentsData = [
                 'id'          => $obj->id,
-                'mid'         => $this->mid,
+                'uid'         => $this->uid,
                 'site_id'     => $this->site_id,
                 'document_id' => $request['document_id'],
                 'content'     => $request['content'],
             ];
-            Hook::listen('member_comments', $commentsData);
+            Hook::listen('user_comments', $commentsData);
 
             return $this->response(200, Lang::get('success'));
         }

@@ -148,10 +148,11 @@ class Navigation extends Admin
                 $category = $cateObj::get($v);
                 $data[] = [
                     'cid'     => $request['cid'],
+                    'cat_id'  => $v,
                     'site_id' => $this->site_id,
                     'name'    => $category->title,
                     'type'    => 1,
-                    'url'     => $category->alias,
+                    'url'     => $category->cid,
                 ];
             }
 

@@ -40,13 +40,6 @@ class Category extends Admin
             }
 
             $cateObj = new DocumentCategory;
-            $exist = $cateObj
-                ->where('site_id', $this->site_id)
-                ->where('alias', $request['alias'])
-                ->value('id');
-            if (is_numeric($exist)) {
-                return $this->response(201, Lang::get('This record already exists'));
-            }
 
             $insertData = [
                 'site_id' => $this->site_id,
@@ -97,14 +90,6 @@ class Category extends Admin
             }
 
             $cateObj = new DocumentCategory;
-            $exist = $cateObj
-                ->where('site_id', $this->site_id)
-                ->where('alias', $request['alias'])
-                ->value('id');
-            if (is_numeric($exist) && $exist != $request['id']) {
-                return $this->response(201, Lang::get('This record already exists'));
-            }
-
             $cateObj->isUpdate(true)->allowField(true)->save($request);
 
             if (is_numeric($cateObj->id)) {

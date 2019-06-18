@@ -16,11 +16,11 @@ class Category extends Base
 {
     public function index()
     {
-        $cate_alias = Request::param('cate_alias');
+        $cat_id = Request::param('cat_id');
 
         // 当前栏目信息
         $cateObj = new DocumentCategory;
-        $category = $cateObj->getCategoryByAlias($this->site_id, $cate_alias);
+        $category = $cateObj->getCategoryById($this->site_id, $cat_id);
         if (!isset($category)) {
             throw new HttpException(404, 'The page can not be found');
         }
@@ -36,9 +36,10 @@ class Category extends Base
         $likeObj = new DocumentContentLike;
         $commObj = new DocumentComments;
         $list = $docObj->getDocmentPaginateByFilter($this->site_id, $category->id, $request);
-        // var_dump($docObj->getLastSql());
-        if (!empty($list)) {
+
+        if (!$list->isEmpty()) {
             foreach ($list as $v) {
+
                 $v->url = BuildUrl::instance($this->site_id)->documentUrl(['id' => $v->id]);
                 $v->extra = $extraObj->getContentExtraFormatKeyValue($v->id);
                 // 加载自定义扩展信息
@@ -63,6 +64,6 @@ class Category extends Base
             'docpage' => $list->render(),
         ];
 
-        return $this->fetch($category->list_tpl, $data);
+        return $this->fetch('category/index', $data);
     }
 }

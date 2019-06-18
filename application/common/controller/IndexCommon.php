@@ -5,7 +5,7 @@ use think\facade\View;
 use think\facade\Request;
 use think\facade\Session;
 use app\common\model\Site;
-use app\common\model\Member;
+use app\common\model\AuthUser;
 use app\common\controller\Common;
 
 class IndexCommon extends Common
@@ -22,11 +22,11 @@ class IndexCommon extends Common
     // 模板名称
     protected $theme;
     
-    // 会员mid
-    protected $mid;
+    // 会员uid
+    protected $uid;
 
     // 会员信息对象
-    protected $member;
+    protected $user;
 
     public function __construct()
     {
@@ -56,14 +56,14 @@ class IndexCommon extends Common
         Session::set('site_id', $siteInfo->id, 'index');
         Session::set('site_alias', $siteInfo->alias, 'index');
 
-        // 获取mid
-        $this->mid = Session::get('mid', 'index');
-        $obj = new Member;
-        $member = $obj->getMemberInfoByMid($this->mid);
-        $this->member   = isset($member) ? $member : null;
+        // 获取uid
+        $this->uid = Session::get('uid', 'index');
+        $obj  = new AuthUser;
+        $user = $obj->get($this->uid);
+        $this->user = isset($user) ? $user : null;
 
         // 站点赋值
-        View::share('member', $this->member);
+        View::share('member', $this->user);
     }
 
 }

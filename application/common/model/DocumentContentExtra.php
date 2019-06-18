@@ -79,7 +79,7 @@ class DocumentContentExtra extends Model
                 $type = ['text', 'textarea'];
                 if (!empty($v['regular']) && !empty($extraData[$v['variable']] && in_array($v['type'], $type))) {
                     // 正则验证不通过
-                    if (!preg_match($v['regular'], $extraData[$v['variable']])) {
+                    if (!preg_match($v['regular'], $extraData[$v['variable']], $matches)) {
                         $this->error = $v['msg'];
                         return false;
                     }
@@ -328,6 +328,17 @@ class DocumentContentExtra extends Model
         } else {
             return true;
         }
+    }
+
+    /**
+     * 删除扩展信息
+     * @access public
+     * @param  int $document_id 文档信息ID
+     * @return boolean
+     */
+    public function deleteContentExtra($document_id)
+    {
+        return DocumentContentExtra::where('document_id', 'eq', $document_id)->delete();
     }
 
     /**

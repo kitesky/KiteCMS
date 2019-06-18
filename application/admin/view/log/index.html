@@ -11,44 +11,12 @@
 {block name="content"}
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">{:lang('Member login log')}</a></li>
-      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="true">{:lang('Admin login log')}</a></li>
+      <li class="active"><a href="#">日志</a></li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="tab_1">
-        <table class="table table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th>#ID</th>
-                    <th>{:lang("Account")}</th>
-                    <th>{:lang("Site name")}</th>
-                    <th>IP</th>
-                    <th>{:lang("Login time")}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {volist name="memberLoginLog" id="vo"}
-                <tr>
-                    <td>{$vo.id}</td>
-                    <td>{$vo.username}</td>
-                    <td>{$vo.sitename}</td>
-                    <td>{$vo.ip}</td>
-                    <td>{$vo.create_at|date="Y-m-d H:i:s"}</td>
-                </tr>
-                {/volist}
-                {empty name="memberLoginLog"}
-                <tr>
-                    <td colspan="5" class="text-center">{:lang("No record")}</td>
-                </tr>
-                {/empty}
-            </tbody>
-        </table>
-        <div class="box-footer">
-          {$memberLoginLog->render()}
-        </div>
-      </div>
+
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="tab_2">
+      <div class="tab-pane active table-responsive no-padding">
         <table class="table table-condensed table-hover">
             <thead>
                 <tr>
@@ -59,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                {volist name="adminLoginLog" id="vo"}
+                {volist name="log" id="vo"}
                 <tr>
                     <td>{$vo.id}</td>
                     <td>{$vo.username}</td>
@@ -67,7 +35,7 @@
                     <td>{$vo.create_at|date="Y-m-d H:i:s"}</td>
                 </tr>
                 {/volist}
-                {empty name="adminLoginLog"}
+                {empty name="log"}
                 <tr>
                     <td colspan="5" class="text-center">{:lang("No record")}</td>
                 </tr>
@@ -75,7 +43,7 @@
             </tbody>
         </table>
         <div class="box-footer">
-          {$adminLoginLog->render()}
+          {$log->render()}
         </div>
       </div>
       <!-- /.tab-pane -->

@@ -19,9 +19,9 @@ class Base extends IndexCommon
     {
         $url = strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
 
-        $permission = Db::name('member_permission')->where('menu', 1)->select();
+        $permission = Db::name('user_nav')->select();
 
-        $permission_id = Db::name('member_permission')
+        $permission_id = Db::name('user_nav')
             ->where('url', $url)
             ->value('id');
 

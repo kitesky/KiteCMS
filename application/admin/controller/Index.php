@@ -42,7 +42,7 @@ class Index extends Admin
         $data = [
             'document_count' => Db::name('document_content')->where('site_id', $this->site_id)->count(),
             'comments_count' => Db::name('document_comments')->where('site_id', $this->site_id)->count(),
-            'member_count' => Db::name('member')->where('site_id', $this->site_id)->count(),
+            'member_count' => Db::name('auth_user')->count(),
         ];
         
         return $data;

@@ -27,5 +27,6 @@ class UserValidate extends Validate
         'edit'           => ['ids', 'email'],
         'updatePassword' => ['password', 'repassword'],
         'login'          => ['username', 'password'],
+        'register'       => ['username', 'password'],
     ];
 }

@@ -5,7 +5,7 @@ use think\facade\Request;
 use app\common\model\SiteConfig;
 use app\member\controller\Base;
 use app\common\model\SendMessage;
-use app\common\model\Member;
+use app\common\model\AuthUser;
 
 class Message extends Base
 {
@@ -30,8 +30,8 @@ class Message extends Base
     {
         $email = Request::param('email');
 
-        $member = new Member;
-        $user = $member->where('mid', $this->mid)->field('username,email')->find();
+        $member = new AuthUser;
+        $user = $member->where('uid', $this->uid)->field('username,email')->find();
         if (empty($email)) {
             $email = $user->email;
         }

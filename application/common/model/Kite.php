@@ -28,7 +28,7 @@ class Kite
 
         // 查询栏目信息
         $cateObj = new DocumentCategory;
-        $category = $cateObj->getCategoryByAlias($site_id, $request['cate_alias']);
+        $category = $cateObj->getCategoryById($site_id, $request['cat_id']);
 
         // 下级分类筛选  --1
         $categoryChild = $cateObj->getCategoryChildByPid($category->id);
@@ -70,82 +70,6 @@ class Kite
         // 合并到所有筛选字段 
         if (!empty($filterField)) {
             $filter = array_merge($filter, $filterField);
-        }
-
-        // 地区筛选项目  --3
-        $dist = $extraObj->getDistrictFilterField($category->model_id);
-        if (!empty($dist)) {
-            $distObj = new District;
-            foreach ($dist as $v) {
-                // 地区筛选 
-                $district_one = $distObj->getParentList($site_id);
-                $oneArr = [];
-                if (!empty($district_one)) {
-                    foreach ($district_one as $val) {
-                        $select = [
-                            'key'    => $val->id,
-                            'value'  => $val['name'],
-                            'active' => '',
-                        ];
-                        array_push($oneArr, $select);
-                    }
-
-                    // 添加全部选项
-                    if (!empty($oneArr)) {
-                        $all = [
-                            'key'    => 'all',
-                            'value'  => '全部',
-                            'active' => '',
-                        ];
-                        array_unshift($oneArr, $all);
-                    }
-
-                    $oneField = [
-                        'name'     => $v['name'],
-                        'variable' => $v['variable'],
-                        'select'   => $oneArr,
-                    ];
-                    if (!empty($oneArr)) {
-                        array_push($filter, $oneField);
-                    }
-                }
-                
-                // 地区二级
-                if (!empty($request[$v['variable']]) && $request[$v['variable']] != 'all') {
-                    $district_two = $distObj->getChildList($site_id, $request[$v['variable']]);
-                    $twoArr = [];
-                    if (!empty($district_two)) {
-                        foreach ($district_two as $val) {
-                            $select = [
-                                'key'    => $val->id,
-                                'value'  => $val['name'],
-                                'active' => '',
-                            ];
-                            array_push($twoArr, $select);
-                        }
-
-                        // 添加全部选项
-                        if (!empty($twoArr)) {
-                            $all = [
-                                'key'    => 'all',
-                                'value'  => '全部',
-                                'active' => '',
-                            ];
-                            array_unshift($twoArr, $all);
-                        }
-
-                        $twoField = [
-                            'name'     => $v['name'] . '下级',
-                            'variable' => $v['variable'] . '_child',
-                            'select'   => $twoArr,
-                        ];
-                        if (!empty($twoArr)) {
-                            array_push($filter, $twoField);
-                        }
-                    }
-                }
-
-            }
         }
 
         // 生成带链接的数组
@@ -295,7 +219,7 @@ class Kite
         if (!empty($list)) {
             foreach ($list as $v) {
                 $category = $cateObj->where('id', $v['cid'])->find();
-                $category->url = BuildUrl::instance($site_id)->categoryUrl(['alias' => $category->alias]);
+                $category->url = BuildUrl::instance($site_id)->categoryUrl(['cat_id' => $category->id]);
                 $v->category = $category;
                 $v->url = BuildUrl::instance($site_id)->documentUrl(['id' => $v->id]);
                 $v->album = !empty($v->album) ? explode(',', $v->album) : [];
@@ -353,11 +277,8 @@ class Kite
             ->select();
 
         // 获取栏目ID 及所有父级ID
-        $cid = Request::param('cid');
-        if (!isset($cid)) {
-            $alias = Request::param('cate_alias');
-            $cid = $cateObj->where('alias', $alias)->value('id');
-        }
+        $cid = Request::param('cat_id');
+
         // 如果获取不到栏目ID 根据文章ID获取cid
         if (!isset($cid)) {
             $docId = Request::param('id');
@@ -376,7 +297,7 @@ class Kite
         $new_list = [];
         if (!empty($list)) {
             foreach ($list as $v) {
-                $v['url'] = BuildUrl::instance($site_id)->categoryUrl(['alias' => $v->alias]);
+                $v['url'] = BuildUrl::instance($site_id)->categoryUrl(['cat_id' => $v->id]);
                 if (in_array($v->id, $ids)) {
                     $v->active = 'active';
                 } else {
@@ -415,7 +336,6 @@ class Kite
 
         // 获取栏目ID 及所有父级ID
         $cid = Request::param('cid');
-        $alias = Request::param('cate_alias');
         $docId = Request::param('id');
         $parents = [];
         if (isset($docId)) {
@@ -424,15 +344,12 @@ class Kite
             $parents = get_parents($list, $doc->cid);
         } else if (isset($cid)) {
             $parents = get_parents($list, $cid);
-        } else if(isset($alias)) {
-            $cid = $cateObj->where('alias', $alias)->value('id');
-            $parents = get_parents($list, $cid);
         }
 
         // 如果栏目不为空 push到面包导航中
         if (isset($parents)) {
             foreach ($parents as $v) {
-                $cate['url'] = BuildUrl::instance($site_id)->categoryUrl(['alias' => $v->alias]);
+                $cate['url'] = BuildUrl::instance($site_id)->categoryUrl(['cat_id' => $v->id]);
                 $cate['title'] = $v->title;
                 array_push($tree, $cate);
             }
@@ -516,17 +433,14 @@ class Kite
      */
     public function getNavigationForTree($site_id = 1, $cid = 0, $order = 'weighing asc')
     {
-        $alias = Request::param('cate_alias');
+        $cat_id = Request::param('cat_id');
 
         $navObj = new Navigation;
         $list = $navObj->getNavigation($site_id, $cid, $order);
 
         // 获取所有父级ID
         $ids = [];
-        if (!empty ($alias)) {
-            $id = $navObj->getIdByUrl($site_id, $alias);
-            $ids = get_parents_id ($list, $id);
-        }
+        $ids = get_parents_id ($list, $cat_id);
 
         if (!empty($list)) {
             foreach ($list as $v) {
@@ -535,7 +449,7 @@ class Kite
                     if (in_array($v->id, $ids)) {
                         $v->active = 'active';
                     }
-                    $v->url = url('index/category/index', ['cate_alias' => $v->url]);
+                    $v->url = url('index/category/index', ['cat_id' => $v->cat_id]);
                 }
             }
         }

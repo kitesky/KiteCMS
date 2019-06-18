@@ -26,11 +26,11 @@ class DocumentComments extends Model
     {
         // 查询数据列表
         $list = self::where('c.site_id',$site_id)
-            ->field('c.*,m.avatar,m.username')
+            ->field('c.*,u.avatar,u.username')
             ->alias('c')
             ->where('c.status',1)
             ->where('document_id', $document_id)
-            ->join('member m', 'c.mid = m.mid')
+            ->join('auth_user u', 'c.uid = u.uid')
             ->order('c.id desc')
             ->paginate(20, false, [
                 'type'     => 'bootstrap',

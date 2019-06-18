@@ -51,7 +51,7 @@ class Document extends Base
         $cateObj = new DocumentCategory;
         $category = $cateObj->getCategoryById($this->site_id, $document->cid);
         if (isset($category)) {
-            $category->url = BuildUrl::instance($this->site_id)->categoryUrl(['alias' => $category->alias]);
+            $category->url = BuildUrl::instance($this->site_id)->categoryUrl(['cat_id' => $category->id]);
         }
 
         // 上一条信息

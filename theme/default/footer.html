@@ -2,8 +2,9 @@
         <div class="container">
             <div class="footer-head">
                 <div class="row center-content">
+                    <span class="text-white padding-left-10">友情链接</span>
                 {kite:link var="vo" cid="1" limit="10" order="id desc"}
-                    <a class="text-white padding-left-10" href="{$vo.url}">{$vo.name}</a>
+                    <a target="_blank" class="text-white padding-left-10" href="{$vo.url}">{$vo.name}</a>
                 {/kite:link}
                 </div>
             </div>
@@ -11,6 +12,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <p>{kite:siteinfo var ='copyright' /}</p>
+                        <script type="text/javascript" src="https://s22.cnzz.com/z_stat.php?id=1271300655&web_id=1271300655"></script>
                     </div>
                     <div class="col-md-6 col-sm-6 text-right">
                         <a href="http://www.miitbeian.gov.cn" target="_blank">{kite:siteinfo var ='icp' /}</a>

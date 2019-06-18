@@ -11,12 +11,9 @@ class Log extends Admin
     public function index()
     {
         $log = new LogModel;
-        $data = [
-            'memberLoginLog' => $log->getMemberLoginLog(),
-            'adminLoginLog'  => $log->getAdminLoginLog(),
-        ];
-
-        return $this->fetch('index', $data);
+        $logData = $log->getUserLoginLog();
+        $this->assign('log', $logData);
+        return $this->fetch('index');
     }
 
 

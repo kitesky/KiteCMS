@@ -119,6 +119,7 @@ class Index extends Controller
         return $this->fetch('step3');
     }
 
+    
     protected function step4()
     {
         if (Request::isAjax()) {

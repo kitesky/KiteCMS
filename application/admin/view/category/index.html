@@ -21,7 +21,6 @@
             <thead>
                 <tr>
                     <th>{:lang('Title')}</th>
-                    <th>{:lang('Alias')}</th>
                     <th>{:lang('Model')}</th>
                     <th>{:lang('Status')}</th>
                     <th>{:lang('Action')}</th>
@@ -31,7 +30,6 @@
                 {volist name="list" id="vo"}
                 <tr id = "tr_{$vo.id}" data-tt-id="{$vo.id}" data-tt-parent-id="{$vo.pid}">
                     <td>{$vo.title} <span class="text-muted">(ID:{$vo.id})</span></td>
-                    <td>{$vo.alias}</td>
                     <td>{$vo.model_name}</td>
                     <td>
                         {switch vo.status}

@@ -16,16 +16,15 @@ class DocumentField extends Admin
     // 类型
     protected $type = [
         'text'                => '字符串(text)',
-        'textarea'            => '文本框(textarea)',
+        'textarea'            => '文本框(textArea)',
         'radio'               => '单选(radio)',
-        'checkbox'            => '多选(checkbox)',
+        'checkbox'            => '多选(checkBox)',
         'select'              => '下拉选择框(select)',
-        'datetime'            => '日期(datetime)',
-        'imageupload'         => '图片上传(imageupload)',
-        'multipleimageupload' => '多图片上传(multipleimageupload)',
-        'videoupload'         => '视频上传(videoupload)',
-        'attachupload'        => '附件上传(attachupload)',
-        'district'            => '地区联动(district)',
+        'datetime'            => '日期(dateTime)',
+        'imageupload'         => '图片上传(imageUpload)',
+        'multipleimageupload' => '多图片上传(multipleImageUpload)',
+        'videoupload'         => '视频上传(videoUpload)',
+        'attachupload'        => '附件上传(attachUpload)',
     ];
 
     public function index()

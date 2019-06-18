@@ -13,7 +13,7 @@
     <div class="box-body">
         <form action="#" method="get" class="form-inline">
           <div class="form-group">
-            <label>{:lang('Menu')}：</label>
+            <label>{:lang('Navigation')}：</label>
             <select name="cid" class="form-control">
               {volist name="category" id="vo"}
               <option value="{$vo.id}" {eq name='search.cid' value='$vo.id'}selected{/eq}>{$vo.name}</option>
@@ -93,7 +93,7 @@
   <div class="col-md-8">
     <div class="box box-solid">
         <div class="box-header with-border">
-            <h3 class="box-title">{$cate_name|default="Please create a new menu"}</h3>
+            <h3 class="box-title">{$cate_name|default="请先创建一个菜单"}</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
