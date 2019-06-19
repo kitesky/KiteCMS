@@ -163,11 +163,13 @@ class Index extends Controller
             if ($fwrite == false) {
                 return json(['code' => 201, 'msg' => '数据库配置文件写入失败']);
             }
+            sleep(1);
 
             // 验证数据库是否存在 并导入数据库文件
             $str1 = 'SELECT * FROM information_schema.schemata WHERE schema_name = "%s"';
             $sql1 = sprintf($str1, $config['database']);
             $checkDatabase = $conn->query($sql1);
+
             if ($checkDatabase) {
                 $sqlList = $this->getSql($request['prefix']);
                 if (isset($sqlList)) {
@@ -186,9 +188,11 @@ class Index extends Controller
                     'username' => $request['user'],
                     'password' => password_hash($request['pass'], PASSWORD_DEFAULT),
                     'create_at' => time(),
-                    
             ];
-            $userStatus = Db::table($request['prefix'] . 'auth_user')->where(['uid' => 1])->update($userData);
+            $table = $request['prefix'] . 'auth_user';
+            $_updataAdminSql = "UPDATE %s SET username = '%s',password = '%s',create_at = %s  WHERE uid = 1";
+            $updataAdminSql = sprintf($_updataAdminSql, $table, $userData['username'], $userData['password'], $userData['create_at']);
+            $conn->query($updataAdminSql);
 
             // 生成lock文件
             $create_at = date('Y-m-d H:i:s');
@@ -198,7 +202,7 @@ class Index extends Controller
                 fwrite($open, $create_at);
                 fclose($open);
             }
-            
+
             return json(['code' => 200, 'msg' => '安装成功']);
         }
     }
@@ -311,7 +315,7 @@ EOF;
                         continue;
                     }
                     if ($prefix != '') {
-                        $value = str_replace('`fel_', '`' . $prefix, $value);
+                        $value = str_replace('`kite_', '`' . $prefix, $value);
                     }
                     if ($value == 'BEGIN;' || $value =='COMMIT;') {
                         continue;

@@ -253,34 +253,13 @@ class Auth extends Model
     {
         if (!empty($auth)) {
             Session::set('user_auth', $auth, 'admin');
-            Session::set('user_auth_sign', self::sign($auth), 'admin');
+            Session::set('user_auth_sign', sign($auth), 'admin');
         } else {
             return false;
         }
 
         return true;
     }
-    
-    /**
-     * 数据签名认证
-     *
-     * @param array $auth 被认证的数据
-     * @return string 签名
-     */
-    static protected function sign($auth)
-    {
-        // 数据类型检测
-        if (!is_array($auth)) {
-            $auth = (array)$auth;
-        }
 
-        ksort($auth); //排序
 
-        // url编码并生成query字符串
-        $code = http_build_query($auth);
-
-        // 生成签名
-        $sign = sha1($code);
-        return $sign;
-    }
 }

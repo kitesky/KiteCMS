@@ -100,6 +100,6 @@ return [
         'comment_score'  => 5,
     ],
 
-    // public根目录
-    'public_path' => Env::get('root_path') . 'public'
+    // upload根目录
+    'public_path' => Env::get('root_path'),
 ];

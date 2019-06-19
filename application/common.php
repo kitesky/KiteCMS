@@ -13,6 +13,16 @@
 use think\facade\Session;
 use app\common\model\upload\Thumb;
 
+    function is_login()
+    {
+        $user_auth = Session::get('user_auth', 'index');
+        if (!$user_auth) {
+            return false;
+        } else {
+            return $user_auth['uid'];
+        }
+    }
+
     /**
      * 时间戳格式化
      * @param string $time 时间戳
@@ -420,3 +430,27 @@ use app\common\model\upload\Thumb;
         $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
         return $ip[$type];
     }
+
+    /**
+     * 数据签名认证
+     *
+     * @param array $auth 被认证的数据
+     * @return string 签名
+     */
+    function sign($auth)
+    {
+        // 数据类型检测
+        if (!is_array($auth)) {
+            $auth = (array)$auth;
+        }
+
+        ksort($auth); //排序
+
+        // url编码并生成query字符串
+        $code = http_build_query($auth);
+
+        // 生成签名
+        $sign = sha1($code);
+        return $sign;
+    }
+    

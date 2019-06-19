@@ -69,8 +69,8 @@ class Category extends Admin
         $data = [
             'category'  => $category,
             'model'     => $model,
-            'list_tpl'   => $this->getTpl($template, 'category'),
-            'detail_tpl' => $this->getTpl($template, 'document'),
+            'list_tpl'   => $this->getTpl($template, 'list'),
+            'detail_tpl' => $this->getTpl($template, 'detail'),
         ];
 
         return $this->fetch('create', $data);
@@ -120,8 +120,8 @@ class Category extends Admin
             'category' => $category,
             'model'    => $model,
             'info'     => $info,
-            'list_tpl'   => $this->getTpl($template, 'category'),
-            'detail_tpl' => $this->getTpl($template, 'document'),
+            'list_tpl'   => $this->getTpl($template, 'list'),
+            'detail_tpl' => $this->getTpl($template, 'detail'),
         ];
 
         return $this->fetch('edit', $data);

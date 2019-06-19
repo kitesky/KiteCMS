@@ -12,7 +12,12 @@
               </div>
               <!-- /.widget-user-image -->
               <h3 class="widget-user-username">{$member.username}</h3>
-              <h5 class="widget-user-desc">{$member.group_name|default='游客组'}</h5>
+              <h5 class="widget-user-desc">
+              
+              {volist name="role" id="vo"}
+                [{$vo.role_name}]
+              {/volist}
+              </h5>
             </div>
             <div class="box-footer no-padding">
               <ul class="nav nav-pills">

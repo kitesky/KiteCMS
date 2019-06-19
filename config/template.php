@@ -34,6 +34,7 @@ return [
     'taglib_end'   => '}',
     'default_filter' => '',
     'tpl_replace_string' => [
-        '__STATIC__' => '/static',
+        '__STATIC__' => '/public/static',
+        '__THEME__'  => '/theme',
     ],
 ];

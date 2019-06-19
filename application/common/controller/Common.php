@@ -15,4 +15,9 @@ class Common extends Controller
 
         return json($response, 200);
     }
+
+    public function currentPathUrl()
+    {
+        return strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
+    }
 }

@@ -16,7 +16,7 @@ class AuthUserRole extends Model
             ->order('weighing asc')
             ->select();
     }
-    
+
     public function getRoleIds($uid)
     {
         $list = Db::name('auth_user_role')->where('uid', $uid)->select();

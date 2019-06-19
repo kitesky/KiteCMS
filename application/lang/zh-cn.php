@@ -54,7 +54,7 @@ return [
     'Content'                => '内容',
     'Page view'              => '浏览量',
     'Status'                 => '状态',
-    'Creation date'          => '新建日期',
+    'Creation date'          => '创建日期',
     'Action'                 => '操作',
     'Alias'                  => '别名',
     'Model'                  => '模型',

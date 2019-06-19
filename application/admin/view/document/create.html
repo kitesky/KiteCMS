@@ -143,7 +143,7 @@
     <!-- /.tab-content -->
     <div class="box-footer">
         <div class="btn-group">
-            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"><i class="fa fa-save"></i> {:lang('Save')}</button>
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
         </div>
     </div>
   </div>
@@ -181,8 +181,8 @@ layui.use('upload', function(){
   
 });
 </script>
-<script src="/static/ueditor/ueditor.config.js"></script>
-<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="__STATIC__/ueditor/ueditor.config.js"></script>
+<script src="__STATIC__/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
 var ue = UE.getEditor('editor', {
     toolbars: [

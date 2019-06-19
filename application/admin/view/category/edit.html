@@ -171,7 +171,7 @@
     <!-- /.tab-content -->
     <div class="box-footer">
         <div class="btn-group">
-            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"><i class="fa fa-save"></i> {:lang('Save')}</button>
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"> {:lang('Save')}</button>
         </div>
     </div>
   </div>
@@ -179,8 +179,8 @@
 
 <!-- 自定义js -->
 {block name="js"}
-<script src="/static/ueditor/ueditor.config.js"></script>
-<script src="/static/ueditor/ueditor.all.min.js"></script>
+<script src="__STATIC__/ueditor/ueditor.config.js"></script>
+<script src="__STATIC__/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
 var ue = UE.getEditor('editor', {
     toolbars: [

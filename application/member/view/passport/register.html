@@ -73,10 +73,10 @@
       <p>- OR -</p>
       <div class="row">
         <div class="col-xs-6">
-          <a href="{:url('member/member/forget')}" >忘记密码？</a>
+          <a href="{:url('member/passport/forget')}" >忘记密码？</a>
         </div>
         <div class="col-xs-6">
-          <a href="{:url('member/member/login')}" >登录</a>
+          <a href="{:url('member/passport/login')}" >登录</a>
         </div>
       </div>
     </div>
@@ -108,7 +108,7 @@
     function operate() {
         $.ajax({
             type:'post',
-            url: "{:url('member/member/register')}",
+            url: "{:url('member/passport/register')}",
             data: $("#operate").serialize(),
             success: function(r){
                 if (r.code == 200) {
@@ -120,7 +120,7 @@
                       toast:true,
                       timer: 1000
                     }).then(function(){
-                        window.location.href = "{:url('member/member/login')}";
+                        window.location.href = "{:url('member/passport/login')}";
                     });
                 } else {
                     swal({

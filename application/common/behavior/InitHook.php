@@ -33,8 +33,5 @@ class InitHook extends Controller
 
         // 文档更新
         Hook::add('edit_document',['app\\common\\behavior\\Document']);
-
-        // 会员登陆操作
-        Hook::add('action_begin',['app\\common\\behavior\\Member']);
     }
 }

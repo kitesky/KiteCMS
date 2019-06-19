@@ -64,6 +64,6 @@ class Category extends Base
             'docpage' => $list->render(),
         ];
 
-        return $this->fetch('category/index', $data);
+        return $this->fetch($category->list_tpl, $data);
     }
 }

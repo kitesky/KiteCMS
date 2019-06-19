@@ -11,6 +11,10 @@ class Base extends IndexCommon
 {
     public function __construct()
     {
+        if (!is_login()) {
+            $this->redirect('member/passport/login');
+        }
+
         View::share('menu', $this->getMemberMenu());
 
         parent::__construct();

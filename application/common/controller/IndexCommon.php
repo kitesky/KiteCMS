@@ -28,6 +28,9 @@ class IndexCommon extends Common
     // 会员信息对象
     protected $user;
 
+    // 会员组信息
+    protected $role;
+
     public function __construct()
     {
         parent::__construct();
@@ -56,14 +59,20 @@ class IndexCommon extends Common
         Session::set('site_id', $siteInfo->id, 'index');
         Session::set('site_alias', $siteInfo->alias, 'index');
 
-        // 获取uid
-        $this->uid = Session::get('uid', 'index');
+        $user_auth = Session::get('user_auth', 'index');
+        $this->uid = isset($user_auth) ? $user_auth['uid'] : null;
+        $this->role = isset($user_auth) ? $user_auth['role'] : null;
+
+        // 获取用户信息
         $obj  = new AuthUser;
         $user = $obj->get($this->uid);
         $this->user = isset($user) ? $user : null;
 
+
+
         // 站点赋值
         View::share('member', $this->user);
+        View::share('role', $this->role);
     }
 
 }
