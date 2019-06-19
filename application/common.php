@@ -10,9 +10,21 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+use think\facade\Request;
 use think\facade\Session;
 use app\common\model\upload\Thumb;
 
+    function get_path_url()
+    {
+        return strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
+    }
+
+
+    /**
+     * 判断前台是否登录
+
+     * @return boolean
+     */
     function is_login()
     {
         $user_auth = Session::get('user_auth', 'index');

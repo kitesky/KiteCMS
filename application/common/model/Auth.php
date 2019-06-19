@@ -9,11 +9,6 @@ use think\facade\Url;
 
 class Auth extends Model
 {
-    public static function getUrl()
-    {
-        return strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
-    }
-
     /**
      * 检测登陆
      * @param $resource 资源名称/URL
@@ -74,7 +69,7 @@ class Auth extends Model
     {
         $permission = Db::name('auth_permission')
             ->field('id,pid,name,description,url,lang_var')
-            ->where('url', self::getUrl())
+            ->where('url', get_path_url())
             ->find();
 
         $permission_list = Db::name('auth_permission')
@@ -108,7 +103,7 @@ class Auth extends Model
     static public function menu()
     {
         $permission_id = Db::name('auth_permission')
-            ->where('url', self::getUrl())
+            ->where('url', get_path_url())
             ->value('id');
 
         // 获取session信息
@@ -189,7 +184,10 @@ class Auth extends Model
             'login_time' => time(),
         ];
 
-        return self::auth($data);
+        Session::set('user_auth', $data, 'admin');
+        Session::set('user_auth_sign', sign($data), 'admin');
+
+        return true;
     }
 
     /**
@@ -242,24 +240,5 @@ class Auth extends Model
 
         return $permissionList;
     }
-
-    /**
-     * 创建用户登陆授权
-     *
-     * @params $auth array 用户信息
-     * @return boolean
-     */
-    static protected function auth($auth)
-    {
-        if (!empty($auth)) {
-            Session::set('user_auth', $auth, 'admin');
-            Session::set('user_auth_sign', sign($auth), 'admin');
-        } else {
-            return false;
-        }
-
-        return true;
-    }
-
 
 }

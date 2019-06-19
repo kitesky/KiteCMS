@@ -168,9 +168,7 @@ class Block extends Admin
                 break;
             case 'active':
                 foreach ($request['ids'] as $v) {
-                    $result = $obj
-                        ->where('id', $v)
-                        ->setField('status', 1);
+                    $result = $obj->where('id', $v)->setField('status', 1);
                 }
 
                 if ($result !== false) {
@@ -179,9 +177,7 @@ class Block extends Admin
                 break;
             case 'freeze':
                 foreach ($request['ids'] as $v) {
-                    $result = $obj
-                        ->where('id', $v)
-                        ->setField('status', 0);
+                    $result = $obj->where('id', $v)->setField('status', 0);
                 }
 
                 if ($result !== false) {

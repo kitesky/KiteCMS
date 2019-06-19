@@ -8,6 +8,20 @@
  */
 return [
 
+    // 字段类型
+    'filedType' => [
+        'text'                => '字符串(text)',
+        'textarea'            => '文本框(textArea)',
+        'radio'               => '单选(radio)',
+        'checkbox'            => '多选(checkBox)',
+        'select'              => '下拉选择框(select)',
+        'datetime'            => '日期(dateTime)',
+        'imageupload'         => '图片上传(imageUpload)',
+        'multipleimageupload' => '多图片上传(multipleImageUpload)',
+        'videoupload'         => '视频上传(videoUpload)',
+        'attachupload'        => '附件上传(attachUpload)',
+    ],
+
     // 邮箱
     'email' => [
         'email_host'       => 'smtp.163.com',      // 邮件服务器

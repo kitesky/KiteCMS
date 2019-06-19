@@ -31,18 +31,7 @@ class DocumentField extends Model
 
     public function getTypeTextAttr($value, $data)
     {
-        $type = [
-            'text'                => '字符串(text)',
-            'textarea'            => '文本框(textArea)',
-            'radio'               => '单选(radio)',
-            'checkbox'            => '多选(checkBox)',
-            'select'              => '下拉选择框(select)',
-            'datetime'            => '日期(dateTime)',
-            'imageupload'         => '图片上传(imageUpload)',
-            'multipleimageupload' => '多图片上传(multipleImageUpload)',
-            'videoupload'         => '视频上传(videoUpload)',
-            'attachupload'        => '附件上传(attachUpload)',
-        ];
+        $type = config('site.filedType');
         return $type[$data['type']];
     }
 

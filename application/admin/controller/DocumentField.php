@@ -13,20 +13,6 @@ class DocumentField extends Admin
     // 分类配置标识
     protected $category = 'field_category';
 
-    // 类型
-    protected $type = [
-        'text'                => '字符串(text)',
-        'textarea'            => '文本框(textArea)',
-        'radio'               => '单选(radio)',
-        'checkbox'            => '多选(checkBox)',
-        'select'              => '下拉选择框(select)',
-        'datetime'            => '日期(dateTime)',
-        'imageupload'         => '图片上传(imageUpload)',
-        'multipleimageupload' => '多图片上传(multipleImageUpload)',
-        'videoupload'         => '视频上传(videoUpload)',
-        'attachupload'        => '附件上传(attachUpload)',
-    ];
-
     public function index()
     {
         $request = Request::param();
@@ -127,7 +113,7 @@ class DocumentField extends Admin
         $fieldObj = new DocumentFieldModel;
         $data = [
             'category' => $category,
-            'type'     => $this->type,
+            'type'     => config('site.filedType'),
             'rule'     => $fieldObj->rule,
         ];
 
@@ -174,7 +160,7 @@ class DocumentField extends Admin
         $info =  $fieldObj::get($id);
         $data = [
             'category' => $category,
-            'type'     => $this->type,
+            'type'     => config('site.filedType'),
             'info'     => $info,
             'rule'     => $fieldObj->rule,
         ];

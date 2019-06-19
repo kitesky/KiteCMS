@@ -95,7 +95,7 @@ return [
     'Require'                => '必填项',
     'Yes'                    => '是',
     'No'                     => '否',
-    'System field'           => '系统字段',
+    'Field'                  => '全部字段',
     'Model field'            => '模型字段',
     'Icon'                   => '图标',
     'Remark'                 => '备注',

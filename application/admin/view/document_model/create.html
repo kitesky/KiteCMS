@@ -6,7 +6,7 @@
 
 <!-- 自定义css -->
 {block name="css"}
-<link rel="stylesheet" href="/static/sortable/sortable.css">
+<link rel="stylesheet" href="__STATIC__/sortable/sortable.css">
 {/block}
 
 <!-- 内容区域 -->
@@ -38,7 +38,7 @@
               <p class="help-block"></p>
             </div>
             <div class="form-group">
-              <label>{:lang('System field')}</label>
+              <label>{:lang('Field')}</label>
                 <div class="row">
                     <div class="col-md-6">
                         {notempty name="allField"}
@@ -119,7 +119,7 @@
 
 <!-- 自定义js -->
 {block name="js"}
-<script src="/static/sortable/sortable.js"></script>
+<script src="__STATIC__/sortable/sortable.js"></script>
 <script type="text/javascript">
     // TAB默认选中第一个
     $("#tab li").each(function(){

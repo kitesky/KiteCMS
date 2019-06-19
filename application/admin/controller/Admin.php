@@ -27,17 +27,16 @@ class Admin extends Common
             $this->redirect('admin/passport/login');
         } else {
             // 检测权限
-            if (!Auth::check(Auth::getUrl())) {
-                // $this->redirect('admin/passport/login');
+            if (!Auth::check(get_path_url())) {
                 $this->error(Lang::get('No permissions'));
             }
         }
 
         // 获取session
-        $session = Session::get('user_auth', 'admin');
-        $this->uid           = $session['uid'];
-        $this->username      = $session['username'];
-        $this->site_id       = !empty(Session::get('site_id', 'admin')) ? Session::get('site_id', 'admin') : 0;
+        $session        = Session::get('user_auth', 'admin');
+        $this->uid      = $session['uid'];
+        $this->username = $session['username'];
+        $this->site_id  = !empty(Session::get('site_id', 'admin')) ? Session::get('site_id', 'admin') : 0;
 
         // 查询站点信息
         $siteObj = new Site;
