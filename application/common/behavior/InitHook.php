@@ -10,20 +10,10 @@ class InitHook extends Controller
     //初始化钩子信息
     public function run($params)
     {
-        \think\Loader::addNamespace('addons', Env::get('root_path') . '/addons/');
-        $hooks = \think\Db::name('hooks')->column('name,addons');
-        foreach ($hooks as $key => $value) {
-            if($value){
-                $names = explode(',',$value);
-                $data = \think\Db::name('addons')
-                    ->where('status', 1)
-                    ->where('name', 'in', $names)
-                    ->column('id,name');
-                if($data){
-                    $addons = array_intersect($names, $data);
-                    Hook::add($key,array_map('get_addon_class',$addons));
-                }
-            }
+        // 验证是否安装系统
+        $lock = Env::get('app_path') . 'install' . DIRECTORY_SEPARATOR . 'install.lock';
+        if (!file_exists($lock)) {
+            return false;
         }
 
         // 用户登录日志
@@ -44,11 +34,31 @@ class InitHook extends Controller
         // 会员发布评论
         Hook::add('user_comments',['app\\common\\behavior\\Score']);
 
-
         // 文档创建
         Hook::add('create_document',['app\\common\\behavior\\Document']);
 
         // 文档更新
         Hook::add('edit_document',['app\\common\\behavior\\Document']);
+
+        $this->setHook();
+    }
+    
+    public function setHook()
+    {
+        \think\Loader::addNamespace('addons', Env::get('root_path') . '/addons/');
+        $hooks = \think\Db::name('hooks')->column('name,addons');
+        foreach ($hooks as $key => $value) {
+            if($value){
+                $names = explode(',',$value);
+                $data = \think\Db::name('addons')
+                    ->where('status', 1)
+                    ->where('name', 'in', $names)
+                    ->column('id,name');
+                if($data){
+                    $addons = array_intersect($names, $data);
+                    Hook::add($key,array_map('get_addon_class',$addons));
+                }
+            }
+        }
     }
 }

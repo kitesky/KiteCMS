@@ -234,7 +234,6 @@ class Site extends Admin
 
         if(isset($site)) {
             Session::set('site_id', $site['id'], 'admin');
-            Session::set('site_alias', $site['alias'], 'admin');
             Session::set('site_name', $site['name'], 'admin');
             Session::set('site_url', $site['domain'], 'admin');
             Session::set('site_theme', isset($site['theme']) ? $site['theme'] : 'default', 'admin');
@@ -261,12 +260,6 @@ class Site extends Admin
             }
 
             $siteObj = new SiteModel;
-
-            $exist = $siteObj->where('alias', $request['alias'])->value('id');
-            if (is_numeric($exist)) {
-                return $this->response(201, Lang::get('This record already exists'));
-            }
-
             $siteObj->allowField(true)->save($request);
 
             if (is_numeric($siteObj->id)) {
