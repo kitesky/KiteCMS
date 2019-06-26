@@ -47,8 +47,7 @@ class Passport extends IndexCommon
 
             // 并查询用户信息
             $obj = new AuthUser;
-            $userInfo = $obj->where('username', $request['username'])->find();
-            $userRole = $obj->getUserRole($userInfo['uid']);
+            $userInfo = $obj->find($request['username']);
 
             // 用户不存在
             if (!$userInfo) {
@@ -69,7 +68,7 @@ class Passport extends IndexCommon
             $user_auth =[
                 'uid'      => $userInfo->uid,
                 'username' => $userInfo->username,
-                'role'     => $userRole,
+                'role'     => $userInfo->role,
             ];
 
             Session::set('user_auth', $user_auth, 'index');

@@ -31,7 +31,7 @@
                     {volist name="category" id="vo"}
                     <option {eq name="vo.id" value="$search.cid"}selected{/eq} value="{$vo.id}">
                         {eq name="vo.pid" value="0"}
-                            <{$vo.title}>
+                            {$vo.title}
                         {else/}
                             {$vo.html} {$vo.title}
                         {/eq}

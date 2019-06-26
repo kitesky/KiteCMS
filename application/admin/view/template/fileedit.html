@@ -6,8 +6,8 @@
 
 <!-- 自定义css -->
 {block name="css"}
-<link href="/static/codemirror/codemirror.css" rel="stylesheet" />
-<link href="/static/codemirror/theme/monokai.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/codemirror/codemirror.css" rel="stylesheet" />
+<link href="__STATIC__/codemirror/theme/monokai.css" rel="stylesheet" type="text/css">
 {/block}
 
 <!-- 内容区域 -->
@@ -46,14 +46,14 @@
 
 <!-- 自定义js -->
 {block name="js"}
-<script src="/static/codemirror/codemirror.js"></script>
+<script src="__STATIC__/codemirror/codemirror.js"></script>
 <!-- 因为HTML混合语言依赖Javascript、XML、CSS语言支持，所以都要引入 -->
-<script type="text/javascript" src="/static/codemirror/mode/javascript.js"></script>
-<script type="text/javascript" src="/static/codemirror/mode/xml.js"></script>
-<script type="text/javascript" src="/static/codemirror/mode/css.js"></script>
-<script type="text/javascript" src="/static/codemirror/mode/htmlmixed.js"></script>
-<script type="text/javascript" src="/static/codemirror/mode/php.js"></script>
-<script type="text/javascript" src="/static/codemirror/addon/active-line.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/mode/javascript.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/mode/xml.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/mode/css.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/mode/htmlmixed.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/mode/php.js"></script>
+<script type="text/javascript" src="__STATIC__/codemirror/addon/active-line.js"></script>
 <script type="text/javascript">
 
     var editor = CodeMirror.fromTextArea(document.getElementById('html'), {

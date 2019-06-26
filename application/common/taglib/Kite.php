@@ -137,7 +137,7 @@ class Kite extends TagLib{
     {
         $var    = $tag['var'];
         $cid    = isset($tag['cid']) ? $tag['cid'] : 0;
-        $order  = isset($tag['order']) ? $tag['order'] : 'weighing asc';
+        $order  = isset($tag['order']) ? $tag['order'] : 'sort asc';
         $parse  = '<?php ';
         $parse .= '$__LIST__ = callback("app\\common\\model\\Kite@getNavigationForTree"';
         $parse .= ',"' . $cid . '"';
@@ -159,7 +159,7 @@ class Kite extends TagLib{
     {
         $var = $tag['var'];
         $pid = isset($tag['pid']) ? $tag['pid'] : 0;
-        $order  = isset($tag['order']) ? $tag['order'] : 'weighing asc';
+        $order  = isset($tag['order']) ? $tag['order'] : 'sort asc';
 
         $parse = '<?php ';
         $parse .= '$__LIST__ = callback("app\\common\\model\\Kite@getAllCategoryTree"';

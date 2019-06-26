@@ -34,7 +34,7 @@
                 {volist name="list" id="vo"}
                 <div class="checkbox">
                   <label>
-                    <input name="ids[]" {in name="vo.role_id" value="$role"}checked{/in} value="{$vo.role_id}" type="checkbox"> {$vo.role_name}
+                    <input name="ids[]" {in name="vo.role_id" value="$role_ids"}checked{/in} value="{$vo.role_id}" type="checkbox"> {$vo.role_name}
                   </label>
                 </div>
                 {/volist}
@@ -46,7 +46,7 @@
               <label>{:lang('Password')} </label>
               <div class="row">
               <div class="col-md-4">
-              <input type="text" name="password" class="form-control input-sm" placeholder="">
+              <input type="password" name="password" class="form-control input-sm" placeholder="">
               </div>
               </div>
               <p class="help-block"></p>

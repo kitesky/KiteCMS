@@ -5,7 +5,7 @@ use think\Controller;
 use think\Db;
 use app\common\model\SiteConfig;
 use app\common\model\AuthUser;
-use app\common\model\AuthUserScore;
+use app\common\model\Score as ScoreModel;
 
 class Score extends Controller
 {
@@ -44,7 +44,7 @@ class Score extends Controller
         $memberObj->setScore($params['uid'], $sum);
 
         // 增加积分记录
-        $scoreObj = new AuthUserScore;
+        $scoreObj = new ScoreModel;
         $logData = [
             'site_id' => $params['site_id'],
             'uid'     => $params['uid'],

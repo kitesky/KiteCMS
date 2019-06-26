@@ -33,7 +33,7 @@
                 {volist name="list" id="vo"}
                 <tr id = "tr_{$vo.id}" data-tt-id="{$vo.id}" data-tt-parent-id="{$vo.pid}">
                     <td>{:lang($vo.lang_var)}</td>
-                    <td class="text-right"><input name="ids[]" {in name="vo.id" value="$permission"}checked{/in} value="{$vo.id}" type="checkbox"></td>
+                    <td class="text-right"><input name="ids[]" {in name="vo.id" value="$rule"}checked{/in} value="{$vo.id}" type="checkbox"></td>
                 </tr>
                 {/volist}
                 </form>

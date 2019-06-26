@@ -13,16 +13,62 @@
 use think\facade\Request;
 use think\facade\Session;
 use app\common\model\upload\Thumb;
+use think\facade\App;
+use think\Loader;
 
+    /**
+     * 字符串转换为数组，主要用于把分隔符调整到第二个参数
+     * @param  string $str  要分割的字符串
+     * @param  string $glue 分割符
+     * @return array
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
+     */
+    function str2arr($str = '', $glue = ','){
+        return explode($glue, $str);
+    }
+
+    /**
+     * 数组转换为字符串，主要用于把分隔符调整到第二个参数
+     * @param  array  $arr  要连接的数组
+     * @param  string $glue 分割符
+     * @return string
+     * @author 麦当苗儿 <zuojiazi@vip.qq.com>
+     */
+    function arr2str($arr = [], $glue = ','){
+        return implode($glue, $arr);
+    }
+
+    /**
+     * 获取插件的模型名
+     * @param strng $name 插件名
+     * @param strng $model 模型名
+     */
+    function get_addon_model($name, $model){
+        $class = "addons\\{$name}\model\\{$model}";
+        return $class;
+    }
+
+    /**
+     * 获取插件类的类名
+     * @param strng $name 插件名
+     */
+    function get_addon_class($name){
+        $name = ucfirst($name);
+        $class = "\\addons\\" . strtolower($name) . "\\{$name}";
+        return $class;
+    }
+
+    /**
+     * 获取当前URL地址
+     * @return string
+     */
     function get_path_url()
     {
         return strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
     }
 
-
     /**
      * 判断前台是否登录
-
      * @return boolean
      */
     function is_login()
@@ -445,7 +491,6 @@ use app\common\model\upload\Thumb;
 
     /**
      * 数据签名认证
-     *
      * @param array $auth 被认证的数据
      * @return string 签名
      */

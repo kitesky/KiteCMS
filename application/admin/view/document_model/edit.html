@@ -33,7 +33,7 @@
               <label>{:lang('Sort')}</label>
               <div class="row">
               <div class="col-md-2">
-              <input type="text" name="weighing" value="{$info.weighing}" class="form-control input-sm" placeholder="">
+              <input type="text" name="sort" value="{$info.sort}" class="form-control input-sm" placeholder="">
               </div>
               </div>
               <p class="help-block"></p>
@@ -167,7 +167,7 @@
             data:{
                 'id':$("[name='id']").val(),
                 'name':$("[name='name']").val(),
-                'weighing':$("[name='weighing']").val(),
+                'sort':$("[name='sort']").val(),
                 'fieldIds':list2.toArray(),
             },
             type:'post',

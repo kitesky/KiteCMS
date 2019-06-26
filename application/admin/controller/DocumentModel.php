@@ -30,10 +30,10 @@ class DocumentModel extends Admin
 
         // 分页列表
         $list = $modelObj
-            ->field('id,name,weighing,create_at')
+            ->field('id,name,sort,create_at')
             ->where('site_id', 'eq', $this->site_id)
             ->where('name','like','%'.$q.'%')
-            ->order('weighing asc')
+            ->order('sort asc')
             ->paginate(20, false, [
                 'type'     => 'bootstrap',
                 'var_page' => 'page',
@@ -84,7 +84,7 @@ class DocumentModel extends Admin
                     $data = [
                         'model_id' => $modelObj->id,
                         'field_id' => $v,
-                        'weighing' => $k
+                        'sort' => $k
                     ];
 
                     $ins = $modelObj->insertModelField($data);
@@ -143,7 +143,7 @@ class DocumentModel extends Admin
                     $data = [
                         'model_id' => $request['id'],
                         'field_id' => $v,
-                        'weighing' => $k
+                        'sort' => $k
                     ];
 
                     $ins = $modelObj->insertModelField($data);

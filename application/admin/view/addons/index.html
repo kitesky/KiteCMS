@@ -1,0 +1,222 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Addons')}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active table-responsive no-padding">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>{:lang('Title')}</th>
+                        <th>{:lang('Name')}</th>
+                        <th>{:lang('Descripiton')}</th>
+                        <th>{:lang('Status')}</th>
+                        <th>{:lang('Author')}</th>
+                        <th>{:lang('Version')}</th>
+                        <th>{:lang('Action')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr id = "tr_{$vo.name}">
+                        <td>{$vo.title}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.description}</td>
+                        <td>
+                            {switch vo.status}
+                                {case 0}{:lang('Install')}{/case}
+                                {case 1}{:lang('Enable')}{/case}
+                                {case 2}{:lang('Disable')}{/case}
+                                {case 3}{:lang('Damage')}{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                        <td>{$vo.author}</td>
+                        <td>{$vo.version}</td>
+                        <td>
+                            {switch vo.status}
+                                {case 0}<a onclick="install('{$vo.name}');" href="#"> {:lang('Install')}</a>{/case}
+                                {case 1}
+                                  {eq name="vo.has_config" value="1"}
+                                  <a href="{:url('admin/addons/config', ['id' => $vo.id])}"> {:lang('Config')}</a>
+                                  {/eq}
+                                  {eq name="vo.has_adminlist" value="1"}
+                                  <a target="_blank" href="{:addons_url($vo.name . '://Admin/index')}"> {:lang('Manage')}</a>
+                                  {/eq}
+                                  <a onclick="disable({$vo.id});" href="#"> {:lang('Disable')}</a>
+                                  <a onclick="uninstall({$vo.id});" href="#"> {:lang('Uninstall')}</a>
+                                {/case}
+                                {case 2}
+                                  {eq name="vo.has_config" value="1"}
+                                  <a href="{:url('admin/addons/config', ['id' => $vo.id])}"> {:lang('Config')}</a>
+                                  {/eq}
+                                  {eq name="vo.has_adminlist" value="1"}
+                                  <a target="_blank" href="{:addons_url($vo.name . '://Admin/index')}"> {:lang('Manage')}</a>
+                                  {/eq}
+                                  <a onclick="enable({$vo.id});" href="#"> {:lang('Enable')}</a>
+                                  <a onclick="uninstall({$vo.id});" href="#"> {:lang('Uninstall')}</a>
+                                {/case}
+                                {case 3}损坏{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                    </tr>
+                    {/volist}
+                    
+                    {empty name="list"}
+                    <tr>
+                        <td colspan="8" class="text-center">{:lang("No record")}</td>
+                    </tr>
+                    {/empty}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div>
+
+
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function uninstall(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/addons/uninstall')}",
+                    data:{'id':id},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success");
+                            var int=self.setInterval(function(){
+                              location.reload();
+                            },1000)
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+        })
+    }
+
+    function install(addon_name){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/addons/install')}",
+                    data:{'name':addon_name},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success");
+                            var int=self.setInterval(function(){
+                              location.reload();
+                            },1000)
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+        })
+    }
+
+
+    function enable(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/addons/enable')}",
+                    data:{'id':id},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success");
+                            var int=self.setInterval(function(){
+                              location.reload();
+                            },1000)
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+        })
+    }
+    
+    function disable(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/addons/disable')}",
+                    data:{'id':id},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success");
+                            var int=self.setInterval(function(){
+                              location.reload();
+                            },1000)
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+        })
+    }
+</script>
+{/block}

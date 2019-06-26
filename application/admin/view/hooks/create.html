@@ -1,0 +1,93 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/hooks/index')}">{:lang('Hooks')}</a></li>
+      <li class="active"><a href="">{:lang('Create')}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{:lang('Name')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              <input type="text" name="name" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Description')}</label>
+              <div class="row">
+              <div class="col-md-6">
+                <textarea class="form-control input-sm" name="description" rows="10" placeholder=""></textarea></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Type')}</label>
+              <div class="row">
+              <div class="col-md-2">
+              <select name="type" class="form-control">
+                <option value="1">控制器</option>
+                <option value="2">视图</option>
+              </select>
+              </div>
+              </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/hooks/create')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

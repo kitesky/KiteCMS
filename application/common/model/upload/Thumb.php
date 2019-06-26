@@ -58,7 +58,7 @@ class Thumb
                 return $saveName;
             }
         } else {
-            $image->thumb($this->width,$this->height,3)->save($savePath);
+            $image->thumb($this->width,$this->height,2)->save($savePath);
             // 记录缩略图
             $fileObj = new SiteFile;
             $fileObj->setImageThumb($fileInfo->id, $saveName);

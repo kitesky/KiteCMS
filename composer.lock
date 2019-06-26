@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e93d351c490d8437d6915a574b625ef",
+    "content-hash": "83a44a615e20ad08540492e1fdbea460",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -376,12 +376,59 @@
                 }
             ],
             "time": "2018-05-11T06:45:42+00:00"
+        },
+        {
+            "name": "zzstudio/think-addons",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zz-studio/think-addons.git",
+                "reference": "cd64646c2957a322bba6babd4e8667e335342d93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zz-studio/think-addons/zipball/cd64646c2957a322bba6babd4e8667e335342d93",
+                "reference": "cd64646c2957a322bba6babd4e8667e335342d93",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "topthink/framework": "5.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "think\\": "src/"
+                },
+                "files": [
+                    "src/helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "byron",
+                    "email": "xiaobo.sun@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP5.1 Addons Package",
+            "time": "2019-06-21T06:31:25+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zzstudio/think-addons": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

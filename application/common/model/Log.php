@@ -16,7 +16,7 @@ class Log extends Model
 
     public function getUserLoginLog()
     {
-        return self::field('l.*,u.username')
+        return Log::field('l.*,u.username')
             ->alias('l')
             ->where('l.uid', '>=', 1)
             ->join('auth_user u', 'l.uid = u.uid')

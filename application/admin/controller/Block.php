@@ -18,35 +18,21 @@ class Block extends Admin
     {
         $request = Request::param();
 
-        $obj = new BlockModel;
-
-        // 查询条件
-        $map    = [];
-        $params = [];
-        $search = [];
-
-        // 类别
-        if (isset($request['cid']) && is_numeric($request['cid'])) {
-            $cid           = ['cid','=',$request['cid']];
-            $params['cid'] = $request['cid'];
-            $search['cid'] = $request['cid'];
-            array_push($map, $cid);
-        }else {
-            $cid = [];
-            $search['cid'] = '';
-        }
+        $query = [
+            'site_id' => $this->site_id,
+            'cid'     => isset($request['cid']) ? $request['cid'] : '',
+        ];
+        $args = [
+            'query'  => $query,
+            'field'  => '',
+            'order'  => 'id desc',
+            'params' => $query,
+            'limit'  => 15,
+        ];
 
         // 分页列表
-        $list = $obj
-            ->where($map)
-            ->where('site_id', 'eq', $this->site_id)
-            ->order('id desc')
-            ->paginate(20, false, [
-                'type'     => 'bootstrap',
-                'var_page' => 'page',
-                'query'    => $params,
-            ]);
-
+        $obj = new BlockModel;
+        $list = $obj->select($args);
         if (!empty($list)) {
             foreach ($list as $v) {
                 $v->catename = SiteConfig::getCategoryConfigName($this->site_id, $this->category, $v->cid);
@@ -57,11 +43,10 @@ class Block extends Admin
         $category = SiteConfig::getCategoryConfig($this->site_id, $this->category);
 
         $data = [
-            'search'   => $search,
+            'search'   => $query,
             'category' => $category,
             'list'     => $list,
             'page'     => $list->render(),
-        
         ];
 
         return $this->fetch('index', $data);
@@ -104,11 +89,7 @@ class Block extends Admin
         // 获取分类列表
         $category = SiteConfig::getCategoryConfig($this->site_id, $this->category);
 
-        $data = [
-            'category' => $category,
-        ];
-
-        return $this->fetch('create', $data);
+        return $this->fetch('create', ['category' => $category]);
     }
 
     public function edit()
@@ -227,7 +208,7 @@ class Block extends Admin
                         $updateData = [
                             'id'       => $data['id'][$k],
                             'name'     => $data['name'][$k],
-                            'weighing' => $data['weighing'][$k],
+                            'sort' => $data['sort'][$k],
                         ];
                         $result = SiteConfig::updateCategoryConfig($this->site_id, $this->category, $updateData);
                     }
@@ -237,7 +218,7 @@ class Block extends Admin
                     foreach ($data['temp_name'] as $k => $v) {
                         $insertData = [
                             'name'     => $v,
-                            'weighing' => $data['temp_weighing'][$k],
+                            'sort' => $data['temp_sort'][$k],
                         ];
                         $result = SiteConfig::insertCategoryConfig($this->site_id, $this->category, $insertData);
                     }

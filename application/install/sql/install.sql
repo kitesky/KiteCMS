@@ -10,113 +10,34 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-06-19 14:02:43
+Date: 2019-06-27 00:17:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for kite_auth_permission
+-- Table structure for kite_addons
 -- ----------------------------
-DROP TABLE IF EXISTS `kite_auth_permission`;
-CREATE TABLE `kite_auth_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL DEFAULT 0,
-  `name` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '规则名称',
-  `url` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `menu` tinyint(1) DEFAULT 0 COMMENT '是否为菜单0 否 1是',
-  `icon` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT 'fa fa-circle-o' COMMENT '图标',
-  `weighing` int(11) DEFAULT 0 COMMENT '权重排序',
-  `description` varchar(255) CHARACTER SET utf8 DEFAULT '' COMMENT '备注说明',
-  `lang_var` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '语言表示',
-  PRIMARY KEY (`id`),
-  KEY `permission_url` (`url`) USING BTREE,
-  KEY `lang_var` (`lang_var`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+DROP TABLE IF EXISTS `kite_addons`;
+CREATE TABLE `kite_addons` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(40) NOT NULL COMMENT '插件名或标识',
+  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '中文名',
+  `description` text DEFAULT NULL COMMENT '插件描述',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态 0 未安装 1 启用 2禁用 3损坏',
+  `config` text DEFAULT NULL COMMENT '配置',
+  `author` varchar(40) DEFAULT '' COMMENT '作者',
+  `version` varchar(20) DEFAULT '' COMMENT '版本号',
+  `has_adminlist` tinyint(1) unsigned NOT NULL DEFAULT 0 COMMENT '是否有后台列表',
+  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='插件表';
 
 -- ----------------------------
--- Records of kite_auth_permission
+-- Records of kite_addons
 -- ----------------------------
-INSERT INTO `kite_auth_permission` VALUES ('1', '0', '系统管理', '#', '1', 'fa fa-laptop', '6', '', 'System');
-INSERT INTO `kite_auth_permission` VALUES ('2', '7', '管理员授权', 'admin/user/auth', '0', '', '3', '', 'Site authorization');
-INSERT INTO `kite_auth_permission` VALUES ('3', '0', '信息管理', '#', '1', 'fa fa-file-word-o', '2', '', 'Information');
-INSERT INTO `kite_auth_permission` VALUES ('4', '0', '会员管理', '#', '1', 'fa fa-user', '4', '', 'Member');
-INSERT INTO `kite_auth_permission` VALUES ('5', '0', '功能扩展', '#', '1', 'fa fa-chrome', '3', '', 'Extended');
-INSERT INTO `kite_auth_permission` VALUES ('6', '3', '模型管理', 'admin/documentModel/index', '1', 'fa fa-cube', '4', '', 'Document model');
-INSERT INTO `kite_auth_permission` VALUES ('7', '4', '用户管理', 'admin/user/index', '1', 'fa fa-user-secret', '1', '', 'User');
-INSERT INTO `kite_auth_permission` VALUES ('8', '4', '角色管理', 'admin/role/index', '1', 'fa fa-users', '2', '', 'Role');
-INSERT INTO `kite_auth_permission` VALUES ('9', '1', '站点管理', 'admin/site/index', '1', 'fa fa-globe', '4', '', 'Sites');
-INSERT INTO `kite_auth_permission` VALUES ('10', '0', '站点首页', 'admin/index/index', '1', 'fa fa-dashboard ', '1', '', 'Control panel');
-INSERT INTO `kite_auth_permission` VALUES ('11', '9', '创建站点', 'admin/site/create', '0', 'fa fa-circle-o', '0', '', 'Create site');
-INSERT INTO `kite_auth_permission` VALUES ('12', '1', '权限配置', 'admin/permission/index', '1', 'fa fa-shield', '3', '', 'Permission');
-INSERT INTO `kite_auth_permission` VALUES ('13', '12', '增加权限', 'admin/permission/create', '0', 'fa fa-circle-o', '0', '', 'Create permission');
-INSERT INTO `kite_auth_permission` VALUES ('14', '12', '权限编辑', 'admin/permission/edit', '0', '', '0', '', 'Permission update');
-INSERT INTO `kite_auth_permission` VALUES ('15', '8', '增加角色', 'admin/role/create', '0', '', '0', '', 'Create role');
-INSERT INTO `kite_auth_permission` VALUES ('16', '8', '角色编辑', 'admin/role/edit', '0', '', '0', '', 'Role update');
-INSERT INTO `kite_auth_permission` VALUES ('17', '8', '角色授权', 'admin/role/auth', '0', '', '0', '', 'Role authorization');
-INSERT INTO `kite_auth_permission` VALUES ('18', '7', '创建管理员', 'admin/user/create', '0', '', '0', '', 'Create');
-INSERT INTO `kite_auth_permission` VALUES ('19', '7', '更新管理员', 'admin/user/edit', '0', '', '0', '', 'Update');
-INSERT INTO `kite_auth_permission` VALUES ('20', '7', '删除管理员', 'admin/user/remove', '0', '', '0', '', 'Delete');
-INSERT INTO `kite_auth_permission` VALUES ('21', '7', '管理员批量操作', 'admin/user/handle', '0', '', '0', '', 'Batch operation');
-INSERT INTO `kite_auth_permission` VALUES ('22', '9', '编辑站点', 'admin/site/edit', '0', '', '0', '', 'Update site');
-INSERT INTO `kite_auth_permission` VALUES ('23', '9', '删除站点', 'admin/site/remove', '0', '', '0', '', 'Delete site');
-INSERT INTO `kite_auth_permission` VALUES ('24', '3', '文档信息', 'admin/document/index', '1', 'fa fa-file-text-o', '1', '', 'Document');
-INSERT INTO `kite_auth_permission` VALUES ('25', '3', '栏目分类', 'admin/category/index', '1', 'fa fa-list-ol', '2', '', 'Category');
-INSERT INTO `kite_auth_permission` VALUES ('26', '6', '创建模型', 'admin/documentModel/create', '0', '', '0', '', 'Create document model');
-INSERT INTO `kite_auth_permission` VALUES ('27', '6', '编辑模型', 'admin/documentModel/edit', '0', '', '0', '', 'Edit document model');
-INSERT INTO `kite_auth_permission` VALUES ('28', '6', '删除模型', 'admin/documentModel/remove', '0', '', '0', '', 'Remove document model');
-INSERT INTO `kite_auth_permission` VALUES ('29', '3', '字段管理', 'admin/documentField/index', '1', 'fa fa-cubes', '3', '', 'Document Field');
-INSERT INTO `kite_auth_permission` VALUES ('30', '29', '创建字段', 'admin/documentField/create', '0', '', '0', '', 'Create document field');
-INSERT INTO `kite_auth_permission` VALUES ('31', '29', '编辑字段', 'admin/documentField/edit', '0', '', '0', '', 'Edit document field');
-INSERT INTO `kite_auth_permission` VALUES ('32', '29', '删除字段', 'admin/documentField/remove', '0', '', '0', '', 'Remove document field');
-INSERT INTO `kite_auth_permission` VALUES ('33', '29', '字段类别', 'admin/documentField/category', '0', '', '0', '', 'Document field category');
-INSERT INTO `kite_auth_permission` VALUES ('34', '29', '删除字段分类', 'admin/documentField/removeCategory', '0', '', '0', '', 'Remove document field category');
-INSERT INTO `kite_auth_permission` VALUES ('35', '29', '批量操作字段分类', 'admin/documentField/handleCategory', '0', '', '0', '', 'Handle document field category');
-INSERT INTO `kite_auth_permission` VALUES ('36', '24', '创建文档', 'admin/document/create', '0', '', '0', '', 'Create document');
-INSERT INTO `kite_auth_permission` VALUES ('37', '24', '更新文档', 'admin/document/edit', '0', '', '0', '', 'Edit document');
-INSERT INTO `kite_auth_permission` VALUES ('38', '24', '删除文档', 'admin/document/remove', '0', '', '0', '', 'Remove document');
-INSERT INTO `kite_auth_permission` VALUES ('39', '25', '创建文档', 'admin/category/create', '0', '', '0', '', 'Create category');
-INSERT INTO `kite_auth_permission` VALUES ('40', '25', '更新文档', 'admin/category/edit', '0', '', '0', '', 'Edit category');
-INSERT INTO `kite_auth_permission` VALUES ('41', '25', '删除文档', 'admin/category/remove', '0', '', '0', '', 'Remove category');
-INSERT INTO `kite_auth_permission` VALUES ('51', '4', '积分配置', 'admin/score/index', '1', 'fa fa-star', '3', '', 'Score config');
-INSERT INTO `kite_auth_permission` VALUES ('52', '86', '编辑评论', 'admin/comments/edit', '0', '', '0', '', 'Edit comments');
-INSERT INTO `kite_auth_permission` VALUES ('53', '72', '文件上传', 'admin/site/uploadFile', '1', 'fa fa-file-o', '4', '', 'File upload');
-INSERT INTO `kite_auth_permission` VALUES ('54', '72', '图片水印', 'admin/site/imageWater', '1', 'fa fa-file-photo-o', '5', '', 'Watermarking');
-INSERT INTO `kite_auth_permission` VALUES ('55', '72', '验证码', 'admin/site/captcha', '1', 'fa fa-lock', '6', '', 'Captcha');
-INSERT INTO `kite_auth_permission` VALUES ('56', '5', '友情链接', 'admin/link/index', '1', 'fa fa-link', '3', '', 'Link');
-INSERT INTO `kite_auth_permission` VALUES ('57', '56', '创建友情链接', 'admin/link/create', '0', '', '0', '', 'Create link');
-INSERT INTO `kite_auth_permission` VALUES ('58', '56', '编辑友情链接', 'admin/link/edit', '0', '', '0', '', 'Edit link');
-INSERT INTO `kite_auth_permission` VALUES ('59', '56', '删除友情链接', 'admin/link/remove', '0', '', '0', '', 'Remove link');
-INSERT INTO `kite_auth_permission` VALUES ('60', '56', '友情链接类别', 'admin/link/category', '0', '', '0', '', 'Link category');
-INSERT INTO `kite_auth_permission` VALUES ('61', '56', '删除友情链接分类', 'admin/link/removeCategory', '0', '', '0', '', 'Remove link category');
-INSERT INTO `kite_auth_permission` VALUES ('62', '56', '批量操作友情链接分类', 'admin/link/handleCategory', '0', '', '0', '', 'Handle link category');
-INSERT INTO `kite_auth_permission` VALUES ('63', '1', '模板管理', 'admin/template/filelist', '1', 'fa fa-file-code-o', '8', '', 'Template file');
-INSERT INTO `kite_auth_permission` VALUES ('64', '63', '模板修改', 'admin/template/fileedit', '0', '', '0', '', 'Template file edit');
-INSERT INTO `kite_auth_permission` VALUES ('65', '5', '幻灯片', 'admin/slider/index', '1', 'fa fa-file-image-o', '2', '', 'Slider');
-INSERT INTO `kite_auth_permission` VALUES ('66', '65', '创建幻灯片', 'admin/slider/create', '0', '', '0', '', 'Create slider');
-INSERT INTO `kite_auth_permission` VALUES ('67', '65', '编辑幻灯片', 'admin/slider/edit', '0', '', '0', '', 'Edit slider');
-INSERT INTO `kite_auth_permission` VALUES ('68', '65', '删除幻灯片', 'admin/slider/remove', '0', '', '0', '', 'Remove slider');
-INSERT INTO `kite_auth_permission` VALUES ('69', '65', '幻灯片类别', 'admin/slider/category', '0', '', '0', '', 'Slider category');
-INSERT INTO `kite_auth_permission` VALUES ('70', '65', '删除幻灯片分类', 'admin/slider/removeCategory', '0', '', '0', '', 'Remove slider category');
-INSERT INTO `kite_auth_permission` VALUES ('71', '65', '批量操作幻灯片分类', 'admin/slider/handleCategory', '0', '', '0', '', 'Handle slider category');
-INSERT INTO `kite_auth_permission` VALUES ('72', '1', '参数配置', '#', '1', 'fa fa-wrench', '5', '', 'Site config');
-INSERT INTO `kite_auth_permission` VALUES ('73', '72', '短信接口', 'admin/site/sms', '1', 'fa fa-commenting', '3', '', 'SMS');
-INSERT INTO `kite_auth_permission` VALUES ('74', '72', '邮件设置', 'admin/site/email', '1', 'fa fa-envelope-o', '2', '', 'Email');
-INSERT INTO `kite_auth_permission` VALUES ('75', '5', '内容区块', 'admin/block/index', '1', 'fa fa-code', '4', '', 'Block');
-INSERT INTO `kite_auth_permission` VALUES ('76', '75', '创建区块', 'admin/block/create', '0', '', '0', '', 'Create block');
-INSERT INTO `kite_auth_permission` VALUES ('77', '75', '编辑区块', 'admin/block/edit', '0', '', '0', '', 'Edit block');
-INSERT INTO `kite_auth_permission` VALUES ('78', '75', '删除区块', 'admin/block/remove', '0', '', '0', '', 'Remove block');
-INSERT INTO `kite_auth_permission` VALUES ('79', '75', '区块类别', 'admin/block/category', '0', '', '0', '', 'Block category');
-INSERT INTO `kite_auth_permission` VALUES ('80', '75', '删除区块分类', 'admin/block/removeCategory', '0', '', '0', '', 'Remove block category');
-INSERT INTO `kite_auth_permission` VALUES ('81', '75', '批量操作区块分类', 'admin/block/handleCategory', '0', '', '0', '', 'Handle block category');
-INSERT INTO `kite_auth_permission` VALUES ('86', '5', '评论管理', 'admin/comments/index', '1', 'fa fa-comments', '1', '', 'Comments');
-INSERT INTO `kite_auth_permission` VALUES ('87', '86', '删除评论', 'admin/comments/remove', '0', '', '0', '', 'Remove comments');
-INSERT INTO `kite_auth_permission` VALUES ('88', '86', '批量操作评论', 'admin/comments/handle', '0', '', '0', '', 'Handle comments');
-INSERT INTO `kite_auth_permission` VALUES ('89', '1', '系统日志', 'admin/log/index', '1', 'fa fa-history', '6', '', 'Log');
-INSERT INTO `kite_auth_permission` VALUES ('90', '1', '编辑菜单', 'admin/navigation/index', '1', 'fa fa-navicon', '7', '', 'Navigation');
-INSERT INTO `kite_auth_permission` VALUES ('91', '90', '菜单管理', 'admin/navigation/category', '0', '', '0', '', 'Navigation category');
-INSERT INTO `kite_auth_permission` VALUES ('92', '90', '删除菜单', 'admin/navigation/removeCategory', '0', '', '0', '', 'Remove navigation category');
-INSERT INTO `kite_auth_permission` VALUES ('93', '90', '批量操作菜单', 'admin/navigation/handleCategory', '0', '', '0', '', 'Handle navigation category');
+INSERT INTO `kite_addons` VALUES ('3', 'demo', '演示插件', '用于演示插件', '1', '{\"title\":\"\\u7cfb\\u7edf\\u4fe1\\u606f\",\"width\":\"6\",\"display\":\"1\"}', 'kitecms', '1.0', '1', null, null);
 
 -- ----------------------------
 -- Table structure for kite_auth_role
@@ -125,143 +46,133 @@ DROP TABLE IF EXISTS `kite_auth_role`;
 CREATE TABLE `kite_auth_role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `rule_ids` varchar(1024) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '角色拥有的权限集合',
+  `site_ids` varchar(1024) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '站点ID集合',
   `lang_var` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '语言表示',
-  `weighing` int(11) DEFAULT 0 COMMENT '权重排序',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_auth_role
 -- ----------------------------
-INSERT INTO `kite_auth_role` VALUES ('1', '管理员', 'Administrator', '1');
-INSERT INTO `kite_auth_role` VALUES ('2', '编辑员', 'Editor', '2');
-INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', 'Member', '2');
+INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,4,7,18,19,20,21,8,15,16,17,2,51,1,12,13,14,9,11,22,23,72,74,73,53,54,55,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
+INSERT INTO `kite_auth_role` VALUES ('2', '编辑员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28', '', 'Editor', '2');
+INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', '10', '', 'Member', '2');
 
 -- ----------------------------
--- Table structure for kite_auth_role_permission
+-- Table structure for kite_auth_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `kite_auth_role_permission`;
-CREATE TABLE `kite_auth_role_permission` (
-  `role_id` int(11) NOT NULL COMMENT '角色ID',
-  `permission_id` int(11) NOT NULL COMMENT '权限ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+DROP TABLE IF EXISTS `kite_auth_rule`;
+CREATE TABLE `kite_auth_rule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `module` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '规则所属模型',
+  `name` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '规则名称',
+  `url` varchar(64) CHARACTER SET utf8 NOT NULL,
+  `menu` tinyint(1) DEFAULT 0 COMMENT '是否为菜单0 否 1是',
+  `icon` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT 'fa fa-circle-o' COMMENT '图标',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  `description` varchar(255) CHARACTER SET utf8 DEFAULT '' COMMENT '备注说明',
+  `lang_var` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '语言表示',
+  PRIMARY KEY (`id`),
+  KEY `permission_url` (`url`) USING BTREE,
+  KEY `lang_var` (`lang_var`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
--- Records of kite_auth_role_permission
+-- Records of kite_auth_rule
 -- ----------------------------
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '10');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '3');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '24');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '36');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '37');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '38');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '25');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '39');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '40');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '41');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '29');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '30');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '31');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '32');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '33');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '34');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '35');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '6');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '26');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '27');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '28');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '5');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '86');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '52');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '87');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '88');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '65');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '66');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '67');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '68');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '69');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '70');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '71');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '56');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '57');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '58');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '59');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '60');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '61');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '62');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '75');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '76');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '77');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '78');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '79');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '80');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '81');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '82');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '83');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '84');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '85');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '4');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '42');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '43');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '44');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '45');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '46');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '47');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '48');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '49');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '50');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '51');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '1');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '7');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '18');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '19');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '20');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '21');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '2');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '8');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '15');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '16');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '17');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '12');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '13');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '14');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '9');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '11');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '22');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '23');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '72');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '74');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '73');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '53');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '54');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '55');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '89');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '90');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '91');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '92');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '93');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '63');
-INSERT INTO `kite_auth_role_permission` VALUES ('1', '64');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '10');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '5');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '86');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '52');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '87');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '88');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '65');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '66');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '67');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '68');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '69');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '70');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '71');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '56');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '57');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '58');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '59');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '60');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '61');
-INSERT INTO `kite_auth_role_permission` VALUES ('2', '62');
+INSERT INTO `kite_auth_rule` VALUES ('1', '0', 'admin', '系统管理', '#', '1', 'fa fa-laptop', '6', '', 'System');
+INSERT INTO `kite_auth_rule` VALUES ('2', '8', 'admin', '站点授权', 'admin/role/siteAuth', '0', '', '3', '', 'Site authorize');
+INSERT INTO `kite_auth_rule` VALUES ('3', '0', 'admin', '信息管理', '#', '1', 'fa fa-file-word-o', '2', '', 'Information');
+INSERT INTO `kite_auth_rule` VALUES ('4', '0', 'admin', '会员管理', '#', '1', 'fa fa-user', '4', '', 'Member');
+INSERT INTO `kite_auth_rule` VALUES ('5', '0', 'admin', '功能扩展', '#', '1', 'fa fa-chrome', '3', '', 'Extended');
+INSERT INTO `kite_auth_rule` VALUES ('6', '3', 'admin', '模型管理', 'admin/documentModel/index', '1', 'fa fa-cube', '4', '', 'Document model');
+INSERT INTO `kite_auth_rule` VALUES ('7', '4', 'admin', '用户管理', 'admin/user/index', '1', 'fa fa-user-secret', '1', '', 'User');
+INSERT INTO `kite_auth_rule` VALUES ('8', '4', 'admin', '角色管理', 'admin/role/index', '1', 'fa fa-users', '2', '', 'Role');
+INSERT INTO `kite_auth_rule` VALUES ('9', '1', 'admin', '站点管理', 'admin/site/index', '1', 'fa fa-globe', '4', '', 'Sites');
+INSERT INTO `kite_auth_rule` VALUES ('10', '0', 'admin', '站点首页', 'admin/index/index', '1', 'fa fa-dashboard ', '1', '', 'Control panel');
+INSERT INTO `kite_auth_rule` VALUES ('11', '9', 'admin', '创建站点', 'admin/site/create', '0', 'fa fa-circle-o', '0', '', 'Create site');
+INSERT INTO `kite_auth_rule` VALUES ('12', '1', 'admin', '权限配置', 'admin/rule/index', '1', 'fa fa-shield', '3', '', 'Permission');
+INSERT INTO `kite_auth_rule` VALUES ('13', '12', 'admin', '增加权限', 'admin/rule/create', '0', 'fa fa-circle-o', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('14', '12', 'admin', '权限编辑', 'admin/rule/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('15', '8', 'admin', '增加角色', 'admin/role/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('16', '8', 'admin', '角色编辑', 'admin/role/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('17', '8', 'admin', '角色授权', 'admin/role/auth', '0', '', '0', '', 'Role authorization');
+INSERT INTO `kite_auth_rule` VALUES ('18', '7', 'admin', '创建管理员', 'admin/user/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('19', '7', 'admin', '更新管理员', 'admin/user/edit', '0', '', '0', '', 'Update');
+INSERT INTO `kite_auth_rule` VALUES ('20', '7', 'admin', '删除管理员', 'admin/user/remove', '0', '', '0', '', 'Delete');
+INSERT INTO `kite_auth_rule` VALUES ('21', '7', 'admin', '管理员批量操作', 'admin/user/handle', '0', '', '0', '', 'Batch operation');
+INSERT INTO `kite_auth_rule` VALUES ('22', '9', 'admin', '编辑站点', 'admin/site/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('23', '9', 'admin', '删除站点', 'admin/site/remove', '0', '', '0', '', 'Delete');
+INSERT INTO `kite_auth_rule` VALUES ('24', '3', 'admin', '文档信息', 'admin/document/index', '1', 'fa fa-file-text-o', '1', '', 'Document');
+INSERT INTO `kite_auth_rule` VALUES ('25', '3', 'admin', '栏目分类', 'admin/category/index', '1', 'fa fa-list-ol', '2', '', 'Category');
+INSERT INTO `kite_auth_rule` VALUES ('26', '6', 'admin', '创建模型', 'admin/documentModel/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('27', '6', 'admin', '编辑模型', 'admin/documentModel/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('28', '6', 'admin', '删除模型', 'admin/documentModel/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('29', '3', 'admin', '字段管理', 'admin/documentField/index', '1', 'fa fa-cubes', '3', '', 'Document Field');
+INSERT INTO `kite_auth_rule` VALUES ('30', '29', 'admin', '创建字段', 'admin/documentField/create', '0', '', '0', '', 'Create document field');
+INSERT INTO `kite_auth_rule` VALUES ('31', '29', 'admin', '编辑字段', 'admin/documentField/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('32', '29', 'admin', '删除字段', 'admin/documentField/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('33', '29', 'admin', '字段类别', 'admin/documentField/category', '0', '', '0', '', 'Document field category');
+INSERT INTO `kite_auth_rule` VALUES ('34', '29', 'admin', '删除字段分类', 'admin/documentField/removeCategory', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('35', '29', 'admin', '批量操作字段分类', 'admin/documentField/handleCategory', '0', '', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('36', '24', 'admin', '创建文档', 'admin/document/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('37', '24', 'admin', '更新文档', 'admin/document/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('38', '24', 'admin', '删除文档', 'admin/document/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('39', '25', 'admin', '创建文档', 'admin/category/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('40', '25', 'admin', '更新文档', 'admin/category/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('41', '25', 'admin', '删除文档', 'admin/category/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('42', '5', 'admin', '插件管理', 'admin/addons/index', '1', 'fa fa-plus-square', '0', '', 'Addons');
+INSERT INTO `kite_auth_rule` VALUES ('43', '42', 'admin', '插件安装', 'admin/addons/install', '0', '', '0', '', 'Addons install');
+INSERT INTO `kite_auth_rule` VALUES ('44', '42', 'admin', '插件卸载', 'admin/addons/uninstall', '0', '', '0', '', 'Addons uninstall');
+INSERT INTO `kite_auth_rule` VALUES ('45', '42', 'admin', '插件启用', 'admin/addons/enable', '0', '', '0', '', 'Addons enable');
+INSERT INTO `kite_auth_rule` VALUES ('46', '42', 'admin', '插件禁用', 'admin/addons/disable', '0', '', '0', '', 'Addons disable');
+INSERT INTO `kite_auth_rule` VALUES ('47', '42', 'admin', '插件配置', 'admin/addons/config', '0', '', '0', '', 'Addons config');
+INSERT INTO `kite_auth_rule` VALUES ('48', '5', 'admin', '钩子管理', 'admin/hooks/index', '1', 'fa fa-gg-circle', '0', '', 'Hooks');
+INSERT INTO `kite_auth_rule` VALUES ('49', '48', 'admin', '钩子添加', 'admin/hooks/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('50', '48', 'admin', '钩子编辑', 'admin/hooks/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('51', '4', 'admin', '积分配置', 'admin/score/index', '1', 'fa fa-star', '3', '', 'Score config');
+INSERT INTO `kite_auth_rule` VALUES ('52', '86', 'admin', '编辑评论', 'admin/comments/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('53', '72', 'admin', '文件上传', 'admin/site/uploadFile', '1', 'fa fa-file-o', '4', '', 'File upload');
+INSERT INTO `kite_auth_rule` VALUES ('54', '72', 'admin', '图片水印', 'admin/site/imageWater', '1', 'fa fa-file-photo-o', '5', '', 'Watermarking');
+INSERT INTO `kite_auth_rule` VALUES ('55', '72', 'admin', '验证码', 'admin/site/captcha', '1', 'fa fa-lock', '6', '', 'Captcha');
+INSERT INTO `kite_auth_rule` VALUES ('56', '5', 'admin', '友情链接', 'admin/link/index', '1', 'fa fa-link', '3', '', 'Link');
+INSERT INTO `kite_auth_rule` VALUES ('57', '56', 'admin', '创建友情链接', 'admin/link/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('58', '56', 'admin', '编辑友情链接', 'admin/link/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('59', '56', 'admin', '删除友情链接', 'admin/link/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('60', '56', 'admin', '友情链接类别', 'admin/link/category', '0', '', '0', '', 'Link category');
+INSERT INTO `kite_auth_rule` VALUES ('61', '56', 'admin', '删除友情链接分类', 'admin/link/removeCategory', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('62', '56', 'admin', '批量操作友情链接分类', 'admin/link/handleCategory', '0', '', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('63', '1', 'admin', '模板管理', 'admin/template/filelist', '1', 'fa fa-file-code-o', '8', '', 'Template file');
+INSERT INTO `kite_auth_rule` VALUES ('64', '63', 'admin', '模板修改', 'admin/template/fileedit', '0', '', '0', '', 'Template file edit');
+INSERT INTO `kite_auth_rule` VALUES ('65', '5', 'admin', '幻灯片', 'admin/slider/index', '1', 'fa fa-file-image-o', '2', '', 'Slider');
+INSERT INTO `kite_auth_rule` VALUES ('66', '65', 'admin', '创建幻灯片', 'admin/slider/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('67', '65', 'admin', '编辑幻灯片', 'admin/slider/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('68', '65', 'admin', '删除幻灯片', 'admin/slider/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('69', '65', 'admin', '幻灯片类别', 'admin/slider/category', '0', '', '0', '', 'Slider category');
+INSERT INTO `kite_auth_rule` VALUES ('70', '65', 'admin', '删除幻灯片分类', 'admin/slider/removeCategory', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('71', '65', 'admin', '批量操作幻灯片分类', 'admin/slider/handleCategory', '0', '', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('72', '1', 'admin', '参数配置', '#', '1', 'fa fa-wrench', '5', '', 'Site config');
+INSERT INTO `kite_auth_rule` VALUES ('73', '72', 'admin', '短信接口', 'admin/site/sms', '1', 'fa fa-commenting', '3', '', 'SMS');
+INSERT INTO `kite_auth_rule` VALUES ('74', '72', 'admin', '邮件设置', 'admin/site/email', '1', 'fa fa-envelope-o', '2', '', 'Email');
+INSERT INTO `kite_auth_rule` VALUES ('75', '5', 'admin', '内容区块', 'admin/block/index', '1', 'fa fa-code', '4', '', 'Block');
+INSERT INTO `kite_auth_rule` VALUES ('76', '75', 'admin', '创建区块', 'admin/block/create', '0', '', '0', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('77', '75', 'admin', '编辑区块', 'admin/block/edit', '0', '', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('78', '75', 'admin', '删除区块', 'admin/block/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('79', '75', 'admin', '区块类别', 'admin/block/category', '0', '', '0', '', 'Block category');
+INSERT INTO `kite_auth_rule` VALUES ('80', '75', 'admin', '删除区块分类', 'admin/block/removeCategory', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('81', '75', 'admin', '批量操作区块分类', 'admin/block/handleCategory', '0', '', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('82', '48', 'admin', '钩子删除', 'admin/hooks/delete', '0', 'fa fa-circle-o', '0', '', 'Delete');
+INSERT INTO `kite_auth_rule` VALUES ('86', '5', 'admin', '评论管理', 'admin/comments/index', '1', 'fa fa-comments', '1', '', 'Comments');
+INSERT INTO `kite_auth_rule` VALUES ('87', '86', 'admin', '删除评论', 'admin/comments/remove', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('88', '86', 'admin', '批量操作评论', 'admin/comments/handle', '0', '', '0', '', 'Handle comments');
+INSERT INTO `kite_auth_rule` VALUES ('89', '1', 'admin', '系统日志', 'admin/log/index', '1', 'fa fa-history', '6', '', 'Log');
+INSERT INTO `kite_auth_rule` VALUES ('90', '1', 'admin', '编辑菜单', 'admin/navigation/index', '1', 'fa fa-navicon', '7', '', 'Navigation');
+INSERT INTO `kite_auth_rule` VALUES ('91', '90', 'admin', '菜单管理', 'admin/navigation/category', '0', '', '0', '', 'Navigation category');
+INSERT INTO `kite_auth_rule` VALUES ('92', '90', 'admin', '删除菜单', 'admin/navigation/removeCategory', '0', '', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('93', '90', 'admin', '批量操作菜单', 'admin/navigation/handleCategory', '0', '', '0', '', 'Handle');
 
 -- ----------------------------
 -- Table structure for kite_auth_user
@@ -269,13 +180,12 @@ INSERT INTO `kite_auth_role_permission` VALUES ('2', '62');
 DROP TABLE IF EXISTS `kite_auth_user`;
 CREATE TABLE `kite_auth_user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'UID',
+  `role_ids` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '用户所属角色组',
   `username` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户名',
   `password` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '管理员密码',
   `phone` char(11) COLLATE utf8_bin DEFAULT '' COMMENT '手机号',
   `email` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '电子邮箱',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '状态 0 正常 1禁用',
-  `count` int(11) NOT NULL DEFAULT 0 COMMENT '登陆次数',
-  `last_login_time` int(11) DEFAULT NULL COMMENT '最后一次登陆时间',
   `score` int(11) DEFAULT NULL COMMENT '积分',
   `avatar` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '头像',
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
@@ -286,80 +196,14 @@ CREATE TABLE `kite_auth_user` (
   KEY `created` (`create_at`) USING BTREE,
   KEY `phone` (`phone`) USING BTREE,
   KEY `email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_auth_user
 -- ----------------------------
-INSERT INTO `kite_auth_user` VALUES ('1', 'admin', '$2y$10$EUJoTCX/QX0w2UFi6LqADukOuxeR00/tqcIfDT2RSSPVrtOVfTYaW', '18780221108', 'kite@kitesky.com', '0', '15', null, null, '', '1560924144', '1535434946');
-INSERT INTO `kite_auth_user` VALUES ('2', 'kite', '$2y$10$1f/FRyoZxN.gP3ND6aJcrOueubjMfKQYzGR09rNjWGfsGsCPiBBbe', '', 'kite@qq.com', '0', '0', null, '4', '/upload/20190618/83b56ac13413773672ac9cfbeaccba85.png', '1555628531', '1560843846');
-INSERT INTO `kite_auth_user` VALUES ('4', 'test', '$2y$10$Hdj5OUEryL2rvhx4fuzFCeH6M9sEgU4fJPfA6dmhsOLassMLekJC2', '', 'test@19981.com', '0', '0', null, '1', '', '1560852844', '1560852844');
-
--- ----------------------------
--- Table structure for kite_auth_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `kite_auth_user_role`;
-CREATE TABLE `kite_auth_user_role` (
-  `uid` int(11) NOT NULL COMMENT 'UID',
-  `role_id` int(11) NOT NULL COMMENT '角色ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of kite_auth_user_role
--- ----------------------------
-INSERT INTO `kite_auth_user_role` VALUES ('1', '1');
-INSERT INTO `kite_auth_user_role` VALUES ('1', '2');
-INSERT INTO `kite_auth_user_role` VALUES ('41', '2');
-INSERT INTO `kite_auth_user_role` VALUES ('2', '1');
-INSERT INTO `kite_auth_user_role` VALUES ('2', '2');
-INSERT INTO `kite_auth_user_role` VALUES ('3', '1');
-INSERT INTO `kite_auth_user_role` VALUES ('3', '2');
-INSERT INTO `kite_auth_user_role` VALUES ('4', '3');
-
--- ----------------------------
--- Table structure for kite_auth_user_score
--- ----------------------------
-DROP TABLE IF EXISTS `kite_auth_user_score`;
-CREATE TABLE `kite_auth_user_score` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '积分记录编号',
-  `site_id` int(11) NOT NULL COMMENT '站点ID',
-  `uid` int(11) NOT NULL COMMENT '会员ID',
-  `sum` int(11) NOT NULL COMMENT '剩余总数',
-  `score` int(11) NOT NULL COMMENT '积分数量',
-  `source` varchar(255) CHARACTER SET latin1 DEFAULT NULL COMMENT '获取原因',
-  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
-  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of kite_auth_user_score
--- ----------------------------
-INSERT INTO `kite_auth_user_score` VALUES ('21', '1', '2', '2', '1', 'login_score', '1560852792', '1560852792');
-INSERT INTO `kite_auth_user_score` VALUES ('22', '1', '2', '3', '1', 'login_score', '1560852820', '1560852820');
-INSERT INTO `kite_auth_user_score` VALUES ('23', '1', '4', '1', '1', 'login_score', '1560852883', '1560852883');
-INSERT INTO `kite_auth_user_score` VALUES ('24', '1', '2', '4', '1', 'login_score', '1560853578', '1560853578');
-
--- ----------------------------
--- Table structure for kite_auth_user_site
--- ----------------------------
-DROP TABLE IF EXISTS `kite_auth_user_site`;
-CREATE TABLE `kite_auth_user_site` (
-  `uid` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL COMMENT '站点ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of kite_auth_user_site
--- ----------------------------
-INSERT INTO `kite_auth_user_site` VALUES ('1', '4');
-INSERT INTO `kite_auth_user_site` VALUES ('1', '3');
-INSERT INTO `kite_auth_user_site` VALUES ('1', '2');
-INSERT INTO `kite_auth_user_site` VALUES ('1', '1');
-INSERT INTO `kite_auth_user_site` VALUES ('2', '3');
-INSERT INTO `kite_auth_user_site` VALUES ('2', '2');
-INSERT INTO `kite_auth_user_site` VALUES ('3', '2');
-INSERT INTO `kite_auth_user_site` VALUES ('3', '1');
+INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$EUJoTCX/QX0w2UFi6LqADukOuxeR00/tqcIfDT2RSSPVrtOVfTYaW', '18780221108', 'kite@kitesky.com', '0', '4', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1560924144', '1561565703');
+INSERT INTO `kite_auth_user` VALUES ('2', '2,3', 'kite', '$2y$10$1f/FRyoZxN.gP3ND6aJcrOueubjMfKQYzGR09rNjWGfsGsCPiBBbe', '', 'kite@qq.com', '0', '7', '/upload/20190618/83b56ac13413773672ac9cfbeaccba85.png', '1555628531', '1561301767');
+INSERT INTO `kite_auth_user` VALUES ('3', '3', 'test', '$2y$10$Hdj5OUEryL2rvhx4fuzFCeH6M9sEgU4fJPfA6dmhsOLassMLekJC2', '', 'test@19981.com', '0', '1', '', '1560852844', '1561299373');
 
 -- ----------------------------
 -- Table structure for kite_block
@@ -393,9 +237,8 @@ CREATE TABLE `kite_document_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '上级父ID',
   `site_id` int(11) NOT NULL COMMENT '模型归属站点',
-  `cid` int(11) DEFAULT NULL COMMENT '分类ID',
   `model_id` int(11) NOT NULL COMMENT '模型ID',
-  `weighing` int(11) DEFAULT NULL COMMENT '权重排序',
+  `sort` int(11) DEFAULT 0 COMMENT '权重排序',
   `title` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档标题',
   `keywords` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档关键词',
   `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '描述',
@@ -406,20 +249,28 @@ CREATE TABLE `kite_document_category` (
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_category
 -- ----------------------------
-INSERT INTO `kite_document_category` VALUES ('4', '0', '1', '0', '1', '0', '明星', '', '', '', 'list/index', 'detail/index', '1', null, '1560831077');
-INSERT INTO `kite_document_category` VALUES ('5', '0', '1', '0', '1', '0', '图片', '', '', '', 'list/index', 'detail/index', '1', '1541328648', '1541328648');
-INSERT INTO `kite_document_category` VALUES ('6', '0', '1', '0', '1', '0', '关于我们', '', '', 0x3C703EE585B3E4BA8EE68891E4BBAC3C2F703E, 'list/index', 'detail/index', '1', '1552019863', '1552019863');
-INSERT INTO `kite_document_category` VALUES ('7', '7', '1', '0', '2', '0', '产品1', '', '', '', 'list/index', 'detail/index', '1', '1552019887', '1552549497');
-INSERT INTO `kite_document_category` VALUES ('8', '0', '1', '0', '3', '0', '招聘', '', '', '', 'list/index', 'detail/index', '1', '1552019904', '1552020166');
-INSERT INTO `kite_document_category` VALUES ('9', '0', '1', '0', '4', '0', '新闻', '', '', '', 'list/index', 'detail/index', '1', '1552271505', '1552271505');
-INSERT INTO `kite_document_category` VALUES ('11', '0', '2', '0', '7', '0', '大类测试', '', '', '', 'list/index', 'detail/index', '1', '1560746334', '1560746334');
-INSERT INTO `kite_document_category` VALUES ('12', '0', '2', null, '5', '0', 'test111555', '', '', '', 'list/index', 'detail/index', '1', '1560848590', '1560848607');
-INSERT INTO `kite_document_category` VALUES ('13', '12', '2', null, '5', '0', 'DFDSF', '', '', '', 'list/index', 'detail/index', '1', '1560848695', '1560848826');
+INSERT INTO `kite_document_category` VALUES ('1', '9', '1', '1', '0', 'PHP编程', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', null, '1561002621');
+INSERT INTO `kite_document_category` VALUES ('2', '9', '1', '1', '0', '前端技术', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1541328648', '1561029529');
+INSERT INTO `kite_document_category` VALUES ('3', '9', '1', '1', '0', 'SEO搜索优化', '', '', 0x3C703EE585B3E4BA8EE68891E4BBAC3C2F703E, 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1552019863', '1561002638');
+INSERT INTO `kite_document_category` VALUES ('4', '9', '1', '1', '0', '视频课程', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1552019887', '1561002728');
+INSERT INTO `kite_document_category` VALUES ('5', '0', '1', '1', '0', '服务项目', '', '', '', 'category/service', '', '1', '1552019904', '1561029415');
+INSERT INTO `kite_document_category` VALUES ('6', '0', '1', '1', '0', '手册', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1552271505', '1561029428');
+INSERT INTO `kite_document_category` VALUES ('7', '0', '1', '1', '0', '下载', 'cms', '下载', '', 'category/down', '', '1', '1561001820', '1561003786');
+INSERT INTO `kite_document_category` VALUES ('8', '0', '1', '1', '0', '模板主题', '', '', '', 'category/project-list-sidebar', 'document/project-detail', '1', '1561001864', '1561009531');
+INSERT INTO `kite_document_category` VALUES ('9', '0', '1', '1', '0', '教程', '', '', '', '', '', '1', '1561001879', '1561001905');
+INSERT INTO `kite_document_category` VALUES ('10', '9', '1', '1', '0', '使用帮助', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1561001886', '1561027591');
+INSERT INTO `kite_document_category` VALUES ('11', '9', '1', '1', '0', '模板制作', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1561002000', '1561027600');
+INSERT INTO `kite_document_category` VALUES ('12', '9', '1', '1', '0', '二次开发', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1561002022', '1561027606');
+INSERT INTO `kite_document_category` VALUES ('13', '9', '1', '1', '0', '数据字典', '', '', '', 'category/article-list-sidebar', 'document/article-detail-sidebar', '1', '1561002056', '1561027614');
+INSERT INTO `kite_document_category` VALUES ('14', '0', '1', '1', '0', '联系我们', '', '', '', 'category/contact', '', '1', '1561003161', '1561003161');
+INSERT INTO `kite_document_category` VALUES ('15', '0', '2', '2', '0', '新闻', '', '', '', 'category/index', 'document/index', '1', '1561563507', '1561563507');
+INSERT INTO `kite_document_category` VALUES ('16', '0', '2', '2', '0', '产品', '', '', '', 'category/index', 'document/index', '1', '1561563518', '1561563518');
+INSERT INTO `kite_document_category` VALUES ('17', '0', '2', '3', '0', '招聘', '', '', '', 'category/index', 'document/index', '1', '1561563531', '1561563973');
 
 -- ----------------------------
 -- Table structure for kite_document_comments
@@ -456,11 +307,12 @@ CREATE TABLE `kite_document_comments_like` (
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_comments_like
 -- ----------------------------
+INSERT INTO `kite_document_comments_like` VALUES ('1', '1', '0', '1', '127.0.0.1', '1560939442', '1560939442');
 
 -- ----------------------------
 -- Table structure for kite_document_content
@@ -470,7 +322,6 @@ CREATE TABLE `kite_document_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL DEFAULT 0 COMMENT '文档分类ID',
   `site_id` int(11) NOT NULL COMMENT '内容归属站点',
-  `mid` int(11) DEFAULT NULL COMMENT '会员发布者 mid',
   `uid` int(11) DEFAULT NULL COMMENT '后台管理员发布者 UID',
   `title` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档标题',
   `keywords` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档关键词',
@@ -491,18 +342,19 @@ CREATE TABLE `kite_document_content` (
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
-  KEY `title` (`title`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `title` (`title`) USING BTREE,
+  KEY `site_id` (`site_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_content
 -- ----------------------------
-INSERT INTO `kite_document_content` VALUES ('1', '5', '1', null, '1', '网站备案信息真实性核验单 ', '', '', '', '/upload/20190308/b43fe439a4f441d6abcc7634055e2855.jpg', '', '1', '1', '0', '0', '0', '0', '0', '0', '153', '1541328668', '1560851609');
-INSERT INTO `kite_document_content` VALUES ('2', '5', '1', null, '1', '产品测试标题', '', '', 0x3C703EE4BAA7E59381E6A8A1E59E8BE58FAFE4BBA5E5889BE5BBBAE4BBBBE4BD95E7B1BBE59E8BE79A84E5AD97E6AEB53C2F703E, '/upload/20190308/ac8494fd0ee97bc769ac108f1c44cb25.jpg', '', '1', '1', '0', '1', '0', '0', '0', '0', '143', '1552020450', '1560851606');
-INSERT INTO `kite_document_content` VALUES ('3', '8', '1', null, '1', '招聘设计妹子一枚', '', '', 0x3C703E31313C2F703E, '/upload/20190308/a4116ba637cbbcd3a3a73d8819920b56.jpg', '', '1', '1', '0', '0', '0', '0', '0', '0', '126', '1552021531', '1560851609');
-INSERT INTO `kite_document_content` VALUES ('4', '12', '2', null, '1', 'HP Support Assistant v8.7.50.3 для Windows Бесплатно', '', '', 0x3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223E3C7370616E207374796C653D22626F782D73697A696E673A20696E68657269743B20666F6E742D7765696768743A20626F6C6465723B223E485020537570706F727420417373697374616E74266E6273703B3C2F7370616E3EE2809320D0BED184D0B8D186D0B8D0B0D0BBD18CD0BDD18BD0B920D0BFD0B0D0BAD0B5D18220D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD0BED0B3D0BE20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D18F20D0B4D0BBD18F20D180D0B0D0B1D0BED182D18B20D18120D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC20D0BED18220D0BAD0BED0BCD0BFD0B0D0BDD0B8D0B8204865776C657474205061636B6172642C20D0B220D187D0B8D181D0BBD0BE20D0BAD0BED182D0BED180D0BED0B3D0BE20D0B2D185D0BED0B4D0B8D18220D0BFD180D0B8D0BDD182D0B5D180D18B2C20D181D0BAD0B0D0BDD0B5D180D18B2C20D0BDD0BED183D182D0B1D183D0BAD0B82C20D0BFD0B5D180D181D0BED0BDD0B0D0BBD18CD0BDD18BD0B520D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D18B20D0B820D0BCD0BDD0BED0B3D0BED0B520D0B4D180D183D0B3D0BED0B52E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09FD180D0BED0B3D180D0B0D0BCD0BCD0B020D0B0D181D181D0B8D181D182D0B5D0BDD18220D0BFD0BE20D183D0BCD0BED0BBD187D0B0D0BDD0B8D18E20D0BFD180D0B5D0B4D183D181D182D0B0D0BDD0BED0B2D0BBD0B5D0BDD0B020D0BDD0B020D0B2D181D0B5D18520D0BDD0BED183D182D0B1D183D0BAD0B0D18520D0B820D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D0B0D18520D0BED1822048502C20D0BDD0BE20D182D0B0D0BAD0B6D0B520D0BCD0BED0B6D0BDD0BE20D183D181D182D0B0D0BDD0BED0B2D0B8D182D18C20D0B820D0BDD0B020D0BBD18ED0B1D18BD0B520D0B4D180D183D0B3D0B8D0B520D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D18B2C20D0B5D181D0BBD0B820D18DD182D0BE20D0BDD0B5D0BED0B1D185D0BED0B4D0B8D0BCD0BE2E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09ED181D0BDD0BED0B2D0BDD0B0D18F20D0B7D0B0D0B4D0B0D187D0B020D0B0D181D181D0B8D181D182D0B5D0BDD182D0B020D183D0BFD180D0BED181D182D0B8D182D18C20D0B2D0B7D0B0D0B8D0BCD0BED0B4D0B5D0B9D181D182D0B2D0B8D0B520D0BCD0B5D0B6D0B4D18320D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD0B5D0BC2C20D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC20D0B820D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD18BD0BC20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D0B5D0BC2C20D0B7D0B020D181D187D0B5D18220D182D0BED0B3D0BE2C20D187D182D0BE20D0BFD180D0BED0B3D180D0B0D0BCD0BCD0B020D0B1D0B5D180D0B5D18220D0BDD0B020D181D0B5D0B1D18F20D0B2D181D0B520D0BED181D0BDD0BED0B2D0BDD18BD0B520D0B7D0B0D0B4D0B0D187D0B820D0BFD0BE20D0BED0BFD182D0B8D0BCD0B8D0B7D0B0D186D0B8D0B82C20D0BED0B1D0BDD0BED0B2D0BBD0B5D0BDD0B8D18E20D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD0BED0B3D0BE20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D18F2C20D0B820D0BDD0B0D181D182D180D0BED0B9D0BAD0B820D0BAD0BED0BDD184D0B8D0B3D183D180D0B0D186D0B8D0B82C20D187D182D0BE20D0B220D181D0B2D0BED18E20D0BED187D0B5D180D0B5D0B4D18C20D0BFD180D0B8D0B2D0BED0B4D0B8D18220D0BA20D182D0BED0BCD18320D187D182D0BE20D0BFD180D18FD0BCD0BED0B520D183D187D0B0D181D182D0B8D0B520D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18F20D181D0B2D0BED0B4D0B8D182D181D18F20D0BA20D0BCD0B8D0BDD0B8D0BCD183D0BCD1832E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09AD180D0BED0BCD0B520D182D0BED0B3D0BE2C20D181D182D0BED0B8D18220D0BED182D0BCD0B5D182D0B8D182D18C20D187D182D0BE20D0B220D181D0BED181D182D0B0D0B220485020537570706F727420417373697374616E7420D0B2D185D0BED0B4D0B8D18220D0BED0B1D188D0B8D180D0BDD0B0D18F20D0B4D0BED0BAD183D0BCD0B5D0BDD182D0B0D186D0B8D18F20D0B820D181D0BFD180D0B0D0B2D0BAD0B020D0BFD0BE20D0B2D181D0B5D0BC20D0B2D0B8D0B4D0B0D0BC20D0B2D18BD0BFD183D181D0BAD0B0D0B5D0BCD0BED0B920D0BFD180D0BED0B4D183D0BAD186D0B8D0B820D0BED1822048502C20D0B820D0B220D181D0BBD183D187D0B0D0B520D0BFD180D0BED0B1D0BBD0B5D0BC2C20D0BDD0B0D0BFD180D0B8D0BCD0B5D1802C20D18120D0BFD180D0B8D0BDD182D0B5D180D0BED0BC2C20D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18C20D0BBD0B5D0B3D0BAD0BE20D0BDD0B0D0B9D0B4D0B5D18220D0B2D181D18E20D0BDD0B5D0BED0B1D185D0BED0B4D0B8D0BCD183D18E20D0B8D0BDD184D0BED180D0BCD0B0D186D0B8D18E2C20D0BDD0B520D0BFD180D0B8D0B1D0B5D0B3D0B0D18F20D0BA20D0BFD0BED0B8D181D0BAD18320D0B220D0B8D0BDD182D0B5D180D0BDD0B5D182D0B52E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED095D189D0B520D0BED0B4D0BDD0BED0B920D0BFD0BED0BBD0B5D0B7D0BDD0BED0B920D0BDD0B020D0BCD0BED0B920D0B2D0B7D0B3D0BBD18FD0B420D0BED0BFD186D0B8D0B5D0B920D18FD0B2D0BBD18FD0B5D182D181D18F20D0B0D0B2D182D0BED0BCD0B0D182D0B8D187D0B5D181D0BAD0BED0B520D0BED0B1D0BDD0BED0B2D0BBD0B5D0BDD0B8D0B520D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B22C20D0BED0BFD18FD182D18C20D0B6D0B520D0BFD180D0B8D0B2D0BED0B4D0B8D18220D0BA20D182D0BED0BCD18320D187D182D0BE20D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18E20D0BDD0B520D0BFD180D0B8D0B4D191D182D181D18F20D0B8D181D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D18C2043442F44564420D0BFD180D0B8D0B2D0BED0B420D0B4D0BBD18F20D0B7D0B0D0BFD183D181D0BAD0B020D0B4D0B8D181D0BAD0B020D0B820D0B8D0BDD181D182D0B0D0BBD0BBD18FD186D0B8D0B820D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B220D0B220D180D183D187D0BDD0BED0BC20D180D0B5D0B6D0B8D0BCD0B52C20D0B8D0BBD0B820D0BA20D0BFD0BED0B8D181D0BAD18320D187D0B5D180D0B5D0B720D0B8D0BDD182D0B5D180D0BDD0B5D1822C20D0B2D181D0B520D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B520D0B1D183D0B4D0B5D18220D0BED0BFD180D0B5D0B4D0B5D0BBD0B5D0BDD0BE20D0B0D0B2D182D0BED0BCD0B0D182D0B8D187D0B5D181D0BAD0B820D0B820D0BFD180D0BED0B8D0BDD181D182D0B0D0BBD0BBD0B8D180D0BED0B2D0B0D0BDD18B20D0BFD0BED181D0BBD0B5D0B4D0BDD0B8D0B520D0B2D0B5D180D181D0B8D0B820D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B22E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09DD0BE20D0B820D18DD182D0BE20D0B5D189D0B520D0BDD0B520D0B2D181D0B52C20D090D181D181D0B8D181D182D0B5D0BDD18220D0BFD180D0B5D0B4D0BBD0B0D0B3D0B0D0B5D18220D0BDD0B0D0BC20D0B2D181D182D180D0BED0B5D0BDD0BDD18BD0B520D0B0D0B2D182D0BED0BCD0B0D182D0B8D0B7D0B8D180D0BED0B2D0B0D0BDD0BDD18BD0B520D181D180D0B5D0B4D181D182D0B2D0B020D0B4D0BBD18F20D180D0B5D188D0B5D0BDD0B8D18F20D0BFD180D0BED0B1D0BBD0B5D0BC20D0B2D0BED0B7D0BDD0B8D0BAD0BDD183D0B2D188D0B8D18520D0BDD0B5D0BFD0BED0BBD0B0D0B4D0BED0BA20D18120D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC2048502C20D0BFD0BED0B7D0B2D0BED0BBD18FD0B5D18220D180D0B5D188D0B8D182D18C20D181D0B0D0BCD18BD0B520D180D0B0D181D0BFD180D0BED181D182D180D0B0D0BDD191D0BDD0BDD18BD0B520D0BDD0B5D0BFD0BED0BBD0B0D0B4D0BAD0B82C20D0B020D0B5D181D0BBD0B820D0BDD0B520D0BFD0BED0BBD183D187D0B0D0B5D182D181D18F20D183D181D182D180D0B0D0BDD0B8D182D18C20D0BFD180D0BED0B1D0BBD0B5D0BCD1832C20D0BED182D0BFD180D0B0D0B2D0BBD18FD0B5D18220D0BDD0B0D18120D0BDD0B020D0BED184D0B8D186D0B8D0B0D0BBD18CD0BDD18BD0B520D181D0B0D0B9D1822C20D0B3D0B4D0B520D0BDD0B0D0BC20D0BFD0BED0BCD0BED0B3D183D18220D183D0B6D0B520D181D0BFD0B5D186D0B8D0B0D0BBD0B8D181D18220D0BAD0BED0BCD0BFD0B0D0BDD0B8D0B82E3C2F703E3C703E3C62722F3E3C2F703E, '/upload/20190616/744f5ca2fa8aad72596801fc5d4ccc32.png', '', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1560620717', '1560853788');
-INSERT INTO `kite_document_content` VALUES ('5', '11', '2', null, '1', 'test123123123', '', '', 0x3C703EE998BFE890A8E5BEB7E6B395E5B888E68993E58F913C2F703E, null, '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1560746522', '1560746522');
-INSERT INTO `kite_document_content` VALUES ('6', '4', '1', null, '2', '11', '', '', 0x3C703E3131313131313C2F703E, null, '', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1560843160', '1560850946');
+INSERT INTO `kite_document_content` VALUES ('4', '12', '2', '1', 'HP Support Assistant v8.7.50.3 для Windows Бесплатно', '', '', 0x3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223E3C7370616E207374796C653D22626F782D73697A696E673A20696E68657269743B20666F6E742D7765696768743A20626F6C6465723B223E485020537570706F727420417373697374616E74266E6273703B3C2F7370616E3EE2809320D0BED184D0B8D186D0B8D0B0D0BBD18CD0BDD18BD0B920D0BFD0B0D0BAD0B5D18220D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD0BED0B3D0BE20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D18F20D0B4D0BBD18F20D180D0B0D0B1D0BED182D18B20D18120D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC20D0BED18220D0BAD0BED0BCD0BFD0B0D0BDD0B8D0B8204865776C657474205061636B6172642C20D0B220D187D0B8D181D0BBD0BE20D0BAD0BED182D0BED180D0BED0B3D0BE20D0B2D185D0BED0B4D0B8D18220D0BFD180D0B8D0BDD182D0B5D180D18B2C20D181D0BAD0B0D0BDD0B5D180D18B2C20D0BDD0BED183D182D0B1D183D0BAD0B82C20D0BFD0B5D180D181D0BED0BDD0B0D0BBD18CD0BDD18BD0B520D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D18B20D0B820D0BCD0BDD0BED0B3D0BED0B520D0B4D180D183D0B3D0BED0B52E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09FD180D0BED0B3D180D0B0D0BCD0BCD0B020D0B0D181D181D0B8D181D182D0B5D0BDD18220D0BFD0BE20D183D0BCD0BED0BBD187D0B0D0BDD0B8D18E20D0BFD180D0B5D0B4D183D181D182D0B0D0BDD0BED0B2D0BBD0B5D0BDD0B020D0BDD0B020D0B2D181D0B5D18520D0BDD0BED183D182D0B1D183D0BAD0B0D18520D0B820D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D0B0D18520D0BED1822048502C20D0BDD0BE20D182D0B0D0BAD0B6D0B520D0BCD0BED0B6D0BDD0BE20D183D181D182D0B0D0BDD0BED0B2D0B8D182D18C20D0B820D0BDD0B020D0BBD18ED0B1D18BD0B520D0B4D180D183D0B3D0B8D0B520D0BAD0BED0BCD0BFD18CD18ED182D0B5D180D18B2C20D0B5D181D0BBD0B820D18DD182D0BE20D0BDD0B5D0BED0B1D185D0BED0B4D0B8D0BCD0BE2E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09ED181D0BDD0BED0B2D0BDD0B0D18F20D0B7D0B0D0B4D0B0D187D0B020D0B0D181D181D0B8D181D182D0B5D0BDD182D0B020D183D0BFD180D0BED181D182D0B8D182D18C20D0B2D0B7D0B0D0B8D0BCD0BED0B4D0B5D0B9D181D182D0B2D0B8D0B520D0BCD0B5D0B6D0B4D18320D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD0B5D0BC2C20D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC20D0B820D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD18BD0BC20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D0B5D0BC2C20D0B7D0B020D181D187D0B5D18220D182D0BED0B3D0BE2C20D187D182D0BE20D0BFD180D0BED0B3D180D0B0D0BCD0BCD0B020D0B1D0B5D180D0B5D18220D0BDD0B020D181D0B5D0B1D18F20D0B2D181D0B520D0BED181D0BDD0BED0B2D0BDD18BD0B520D0B7D0B0D0B4D0B0D187D0B820D0BFD0BE20D0BED0BFD182D0B8D0BCD0B8D0B7D0B0D186D0B8D0B82C20D0BED0B1D0BDD0BED0B2D0BBD0B5D0BDD0B8D18E20D0BFD180D0BED0B3D180D0B0D0BCD0BCD0BDD0BED0B3D0BE20D0BED0B1D0B5D181D0BFD0B5D187D0B5D0BDD0B8D18F2C20D0B820D0BDD0B0D181D182D180D0BED0B9D0BAD0B820D0BAD0BED0BDD184D0B8D0B3D183D180D0B0D186D0B8D0B82C20D187D182D0BE20D0B220D181D0B2D0BED18E20D0BED187D0B5D180D0B5D0B4D18C20D0BFD180D0B8D0B2D0BED0B4D0B8D18220D0BA20D182D0BED0BCD18320D187D182D0BE20D0BFD180D18FD0BCD0BED0B520D183D187D0B0D181D182D0B8D0B520D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18F20D181D0B2D0BED0B4D0B8D182D181D18F20D0BA20D0BCD0B8D0BDD0B8D0BCD183D0BCD1832E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09AD180D0BED0BCD0B520D182D0BED0B3D0BE2C20D181D182D0BED0B8D18220D0BED182D0BCD0B5D182D0B8D182D18C20D187D182D0BE20D0B220D181D0BED181D182D0B0D0B220485020537570706F727420417373697374616E7420D0B2D185D0BED0B4D0B8D18220D0BED0B1D188D0B8D180D0BDD0B0D18F20D0B4D0BED0BAD183D0BCD0B5D0BDD182D0B0D186D0B8D18F20D0B820D181D0BFD180D0B0D0B2D0BAD0B020D0BFD0BE20D0B2D181D0B5D0BC20D0B2D0B8D0B4D0B0D0BC20D0B2D18BD0BFD183D181D0BAD0B0D0B5D0BCD0BED0B920D0BFD180D0BED0B4D183D0BAD186D0B8D0B820D0BED1822048502C20D0B820D0B220D181D0BBD183D187D0B0D0B520D0BFD180D0BED0B1D0BBD0B5D0BC2C20D0BDD0B0D0BFD180D0B8D0BCD0B5D1802C20D18120D0BFD180D0B8D0BDD182D0B5D180D0BED0BC2C20D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18C20D0BBD0B5D0B3D0BAD0BE20D0BDD0B0D0B9D0B4D0B5D18220D0B2D181D18E20D0BDD0B5D0BED0B1D185D0BED0B4D0B8D0BCD183D18E20D0B8D0BDD184D0BED180D0BCD0B0D186D0B8D18E2C20D0BDD0B520D0BFD180D0B8D0B1D0B5D0B3D0B0D18F20D0BA20D0BFD0BED0B8D181D0BAD18320D0B220D0B8D0BDD182D0B5D180D0BDD0B5D182D0B52E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED095D189D0B520D0BED0B4D0BDD0BED0B920D0BFD0BED0BBD0B5D0B7D0BDD0BED0B920D0BDD0B020D0BCD0BED0B920D0B2D0B7D0B3D0BBD18FD0B420D0BED0BFD186D0B8D0B5D0B920D18FD0B2D0BBD18FD0B5D182D181D18F20D0B0D0B2D182D0BED0BCD0B0D182D0B8D187D0B5D181D0BAD0BED0B520D0BED0B1D0BDD0BED0B2D0BBD0B5D0BDD0B8D0B520D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B22C20D0BED0BFD18FD182D18C20D0B6D0B520D0BFD180D0B8D0B2D0BED0B4D0B8D18220D0BA20D182D0BED0BCD18320D187D182D0BE20D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D0B5D0BBD18E20D0BDD0B520D0BFD180D0B8D0B4D191D182D181D18F20D0B8D181D0BFD0BED0BBD18CD0B7D0BED0B2D0B0D182D18C2043442F44564420D0BFD180D0B8D0B2D0BED0B420D0B4D0BBD18F20D0B7D0B0D0BFD183D181D0BAD0B020D0B4D0B8D181D0BAD0B020D0B820D0B8D0BDD181D182D0B0D0BBD0BBD18FD186D0B8D0B820D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B220D0B220D180D183D187D0BDD0BED0BC20D180D0B5D0B6D0B8D0BCD0B52C20D0B8D0BBD0B820D0BA20D0BFD0BED0B8D181D0BAD18320D187D0B5D180D0B5D0B720D0B8D0BDD182D0B5D180D0BDD0B5D1822C20D0B2D181D0B520D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B520D0B1D183D0B4D0B5D18220D0BED0BFD180D0B5D0B4D0B5D0BBD0B5D0BDD0BE20D0B0D0B2D182D0BED0BCD0B0D182D0B8D187D0B5D181D0BAD0B820D0B820D0BFD180D0BED0B8D0BDD181D182D0B0D0BBD0BBD0B8D180D0BED0B2D0B0D0BDD18B20D0BFD0BED181D0BBD0B5D0B4D0BDD0B8D0B520D0B2D0B5D180D181D0B8D0B820D0B4D180D0B0D0B9D0B2D0B5D180D0BED0B22E3C2F703E3C70207374796C653D22626F782D73697A696E673A20696E68657269743B206D617267696E2D746F703A203070783B206D617267696E2D626F74746F6D3A203172656D3B206C696E652D6865696768743A20323570783B20636F6C6F723A20726762283130332C203132382C20313539293B20666F6E742D66616D696C793A20526F626F746F2C2073616E732D73657269663B20666F6E742D73697A653A20313570783B2077686974652D73706163653A206E6F726D616C3B206261636B67726F756E642D636F6C6F723A20726762283235352C203235352C20323535293B223ED09DD0BE20D0B820D18DD182D0BE20D0B5D189D0B520D0BDD0B520D0B2D181D0B52C20D090D181D181D0B8D181D182D0B5D0BDD18220D0BFD180D0B5D0B4D0BBD0B0D0B3D0B0D0B5D18220D0BDD0B0D0BC20D0B2D181D182D180D0BED0B5D0BDD0BDD18BD0B520D0B0D0B2D182D0BED0BCD0B0D182D0B8D0B7D0B8D180D0BED0B2D0B0D0BDD0BDD18BD0B520D181D180D0B5D0B4D181D182D0B2D0B020D0B4D0BBD18F20D180D0B5D188D0B5D0BDD0B8D18F20D0BFD180D0BED0B1D0BBD0B5D0BC20D0B2D0BED0B7D0BDD0B8D0BAD0BDD183D0B2D188D0B8D18520D0BDD0B5D0BFD0BED0BBD0B0D0B4D0BED0BA20D18120D0BED0B1D0BED180D183D0B4D0BED0B2D0B0D0BDD0B8D0B5D0BC2048502C20D0BFD0BED0B7D0B2D0BED0BBD18FD0B5D18220D180D0B5D188D0B8D182D18C20D181D0B0D0BCD18BD0B520D180D0B0D181D0BFD180D0BED181D182D180D0B0D0BDD191D0BDD0BDD18BD0B520D0BDD0B5D0BFD0BED0BBD0B0D0B4D0BAD0B82C20D0B020D0B5D181D0BBD0B820D0BDD0B520D0BFD0BED0BBD183D187D0B0D0B5D182D181D18F20D183D181D182D180D0B0D0BDD0B8D182D18C20D0BFD180D0BED0B1D0BBD0B5D0BCD1832C20D0BED182D0BFD180D0B0D0B2D0BBD18FD0B5D18220D0BDD0B0D18120D0BDD0B020D0BED184D0B8D186D0B8D0B0D0BBD18CD0BDD18BD0B520D181D0B0D0B9D1822C20D0B3D0B4D0B520D0BDD0B0D0BC20D0BFD0BED0BCD0BED0B3D183D18220D183D0B6D0B520D181D0BFD0B5D186D0B8D0B0D0BBD0B8D181D18220D0BAD0BED0BCD0BFD0B0D0BDD0B8D0B82E3C2F703E3C703E3C62722F3E3C2F703E, '/upload/20190616/744f5ca2fa8aad72596801fc5d4ccc32.png', '', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1560620717', '1560853788');
+INSERT INTO `kite_document_content` VALUES ('5', '11', '2', '1', 'test123123123', '', '', 0x3C703EE998BFE890A8E5BEB7E6B395E5B888E68993E58F913C2F703E, null, '', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1560746522', '1560746522');
+INSERT INTO `kite_document_content` VALUES ('7', '8', '1', '1', '图文资讯模板', '', '图文资讯模板', 0x3C703EE6A8A1E69DBF3C2F703E, '/upload/20190620/c0b302b007e8aef9e27036f4cbe7aeb3.jpg', '', '1', '1', '0', '1', '0', '0', '0', '0', '93', '1561008838', '1561565803');
+INSERT INTO `kite_document_content` VALUES ('8', '2', '1', '1', '标签使用', '', '这是要给描述信息', 0x3C703E3131313C2F703E, null, '', '1', '0', '0', '0', '0', '0', '0', '0', '55', '1561011185', '1561565668');
+INSERT INTO `kite_document_content` VALUES ('9', '17', '2', '1', '高级PHP工程师', '', '', 0x3C703EE8818CE4BD8DE68F8FE8BFB0EFBC9A3C2F703E3C703E3C62722F3E3C2F703E3C703EEFBC91EFBC8EE38080E99DA2E59091E5AFB9E8B1A1E79A84E5BC80E58F91EFBC8CE7869FE68289E887B3E5B091E4B880E4B8AAE4B8BBE6B581E5BC80E58F91E6A186E69EB6EFBC8CE69C89EFBD90EFBD88EFBD90E58F8AE585B6E79BB8E585B3E6A186E69EB6EFBC88E5A682EFBCACEFBD81EFBD92EFBD81EFBD96EFBD85EFBD8CEFBC89E5BC80E58F91E7BB8FE9AA8CE88085E4BC98E58588EFBC9B3C2F703E3C703EEFBC92EFBC8EE38080E5AFB9EFBCA7EFBD8FEFBD8CEFBD81EFBD8EEFBD87E69C89E585B4E8B6A3E68896E69C89E7BB8FE9AA8CE88085E4BC98E585883C2F703E3C703EEFBC93EFBC8EE38080E7869FE68289EFBD8DEFBD99EFBD93EFBD91EFBD8CE68896EFBD8DEFBD8FEFBD8EEFBD87EFBD8FE695B0E68DAEE5BA93E4BDBFE794A8E59CBAE699AF3C2F703E3C703EEFBC94EFBC8EE38080E980BBE8BE91E6B885E6A59AEFBC8CE6809DE7BBB4E6B885E699B0EFBC8CE6B29FE9809AE889AFE5A5BDEFBC8CE585B7E5A487E889AFE5A5BDE79A84E58886E69E90E38081E79086E8A7A3E38081E8A7A3E586B3E997AEE9A298E79A84E883BDE58A9BEFBC9B3C2F703E3C703EEFBC95EFBC8EE38080E5AF8CE69C89E59BA2E9989FE7B2BEE7A59EEFBC8CE684BFE6848FE68EA5E58F97E696B0E68A80E69CAFE696B0E6809DE7BBB4EFBC8CE5ADA6E4B9A0E883BDE58A9BE889AFE5A5BDE4BBA5E4B88AE380823C2F703E3C703E3C62722F3EE4BBBBE8818CE8A681E6B182EFBC9A3C2F703E3C703E3C62722F3EEFBC91E38081E887B3E5B091EFBC93E5B9B4E79A84E99DA2E59091E5AFB9E8B1A1E79A84EFBCB0EFBCA8EFBCB0E7BC96E7A88BE7BB8FE9AA8CE380823C62722F3EEFBC92E38081E68BA5E69C89E59CA8E7BABFE7BD91E7AB99E5AE9EE99985E7A094E58F91E7BB8FE9AA8CEFBC9B3C62722F3EEFBC93E38081E7B2BEE9809AEFBCADEFBD99EFBCB3EFBCB1EFBCACE695B0E68DAEE5BA93EFBC8CE8A1A8E8AEBEE8AEA1EFBC8CE680A7E883BDE8B083E4BC98EFBC8CE695B0E68DAEE5BA93EFBCB3EFBD88EFBD81EFBD92EFBD84E8AEBEE8AEA1EFBC88E695B0E68DAEE5BA93E58886E589B2EFBC8CE8A1A8E58886E589B2EFBC8CE69E84E5BBBAE695B0E68DAEE5BA93E99B86E7BEA4EFBC89EFBC9B3C62722F3EEFBC94E38081E7869FE68289E4B880E7A78DE4BBA5E4B88AE79A84EFBCB0EFBCA8EFBCB0E6A186E69EB63C62722F3EEFBC95E38081E8B4A3E4BBBBE5BF83E5BCBAEFBC8CE585B7E69C89E889AFE5A5BDE79A84E6B29FE9809AE38081E58D8FE4BD9CE883BDE58A9BE5928CE59BA2E9989FE59088E4BD9CE6848FE8AF86E380823C2F703E, '/upload/20190626/d4ba27fe921bc66b9d1bdb40e2dac63f.png', '', '1', '1', '0', '0', '0', '0', '0', '0', '0', '1561564146', '1561564146');
+INSERT INTO `kite_document_content` VALUES ('10', '15', '2', '1', '中国自己的域名根服务器来了', '', '', 0x3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4B8ADE59BBDE887AAE5B7B1E79A84E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E69DA5E4BA863C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE5B7A5E4BFA1E983A8E8A1A8E7A4BAEFBC8CE5908CE6848FE4B8ADE59BBDE4BA92E88194E7BD91E7BB9CE4BFA1E681AFE4B8ADE5BF83E8AEBEE7AB8BE59F9FE5908DE6A0B9E69C8DE58AA1E599A8EFBC88EFBCA6E38081EFBCA9E38081EFBCABE38081EFBCACE6A0B9E9959CE5838FE69C8DE58AA1E599A8EFBC89E58F8AE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E8BF90E8A18CE69CBAE69E84EFBC8CE8B49FE8B4A3E8BF90E8A18CE38081E7BBB4E68AA4E5928CE7AEA1E79086E7BC96E58FB7E58886E588ABE4B8BAEFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC91EFBCA6E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC92EFBCA6E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC93EFBCA9E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC94EFBCABE38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC95EFBCACE38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC96EFBCACE79A84E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE5908CE697B6EFBC8CE5B7A5E4BFA1E983A8E8A681E6B182E4B8ADE59BBDE4BA92E88194E7BD91E7BB9CE4BFA1E681AFE4B8ADE5BF83E8A681E4B8A5E6A0BCE981B5E5AE88E3808AE4BA92E88194E7BD91E59F9FE5908DE7AEA1E79086E58A9EE6B395E3808BE3808AE9809AE4BFA1E7BD91E7BB9CE5AE89E585A8E998B2E68AA4E7AEA1E79086E58A9EE6B395E3808BE58F8AE79BB8E585B3E6B395E5BE8BE6B395E8A784E38081E8A18CE694BFE8A784E7ABA0E58F8AE8A18CE4B89AE7AEA1E79086E8A784E5AE9AEFBC8CE68EA5E58F97E68891E983A8E79A84E7AEA1E79086E5928CE79B91E79DA3E6A380E69FA5EFBC8CE5BBBAE7AB8BE7ACA6E59088E68891E983A8E8A681E6B182E79A84E4BFA1E681AFE7AEA1E79086E7B3BBE7BB9FE5B9B6E4B88EE68891E983A8E68C87E5AE9AE79A84E7AEA1E79086E7B3BBE7BB9FE5AFB9E68EA5EFBC8CE4BF9DE8AF81E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E5AE89E585A8E38081E58FAFE99DA0E8BF90E8A18CEFBC8CE4B8BAE794A8E688B7E68F90E4BE9BE5AE89E585A8E38081E696B9E4BEBFE79A84E59F9FE5908DE69C8DE58AA1EFBC8CE4BF9DE99A9CE69C8DE58AA1E8B4A8E9878FEFBC8CE4BF9DE68AA4E794A8E688B7E4B8AAE4BABAE4BFA1E681AFE5AE89E585A8EFBC8CE7BBB4E68AA4E59BBDE5AEB6E588A9E79B8AE5928CE794A8E688B7E69D83E79B8AE380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE68FB4E5BC95E887AAE799BEE5BAA6E799BEE7A791E4BB8BE7BB8DEFBC9AE6A0B9E69C8DE58AA1E599A8E4B8BBE8A681E794A8E69DA5E7AEA1E79086E4BA92E88194E7BD91E79A84E4B8BBE79BAEE5BD95EFBC8CE585A8E4B896E7958CEFBCA9EFBCB0EFBD96EFBC94E6A0B9E69C8DE58AA1E599A8E58FAAE69C89EFBC91EFBC93E58FB0EFBC88E8BF99EFBC91EFBC93E58FB0EFBCA9EFBCB0EFBD96EFBC94E6A0B9E59F9FE5908DE69C8DE58AA1E599A8E5908DE5AD97E58886E588ABE4B8BAE2809CEFBCA1E2809DE887B3E2809CEFBCADE2809DEFBC89EFBC8CEFBC91E4B8AAE4B8BAE4B8BBE6A0B9E69C8DE58AA1E599A8E59CA8E7BE8EE59BBDE38082E585B6E4BD99EFBC91EFBC92E4B8AAE59D87E4B8BAE8BE85E6A0B9E69C8DE58AA1E599A8EFBC8CE585B6E4B8ADEFBC99E4B8AAE59CA8E7BE8EE59BBDEFBC8CE6ACA7E6B4B2EFBC92E4B8AAEFBC8CE4BD8DE4BA8EE88BB1E59BBDE5928CE7919EE585B8EFBC8CE4BA9AE6B4B2EFBC91E4B8AAE4BD8DE4BA8EE697A5E69CACE380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE59CA8E4B88EE78EB0E69C89EFBCA9EFBCB0EFBD96EFBC94E6A0B9E69C8DE58AA1E599A8E4BD93E7B3BBE69EB6E69E84E58585E58886E585BCE5AEB9E59FBAE7A180E4B88AEFBC8CE4B8ADE59BBDE4B8BBE5AFBCE2809CE99BAAE4BABAE8AEA1E58892E2809DE4BA8EEFBC92EFBC90EFBC91EFBC96E5B9B4E59CA8E585A8E79083EFBC91EFBC96E4B8AAE59BBDE5AEB6E5AE8CE68890EFBC92EFBC95E58FB0EFBCA9EFBCB0EFBD96EFBC96E6A0B9E69C8DE58AA1E599A8E69EB6E8AEBEEFBC8CE4BA8BE5AE9EE4B88AE5BDA2E68890E4BA86EFBC91EFBC93E58FB0E58E9FE69C89E6A0B9E58AA0EFBC92EFBC95E58FB0EFBCA9EFBCB0EFBD96EFBC96E6A0B9E79A84E696B0E6A0BCE5B180E38082E4B8ADE59BBDE983A8E7BDB2E4BA86E585B6E4B8ADE79A84EFBC94E58FB0EFBC8CE794B1EFBC91E58FB0E4B8BBE6A0B9E69C8DE58AA1E599A8E5928CEFBC93E58FB0E8BE85E6A0B9E69C8DE58AA1E599A8E7BB84E68890EFBC8CE68993E7A0B4E4BA86E4B8ADE59BBDE8BF87E58EBBE6B2A1E69C89E6A0B9E69C8DE58AA1E599A8E79A84E59BB0E5A283E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4BBA5E4B88BE698AFE5B7A5E4BFA1E983A8E689B9E5A48DE585A8E69687EFBC9A3C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4B8ADE59BBDE4BA92E88194E7BD91E7BB9CE4BFA1E681AFE4B8ADE5BF83EFBC9A3C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4BDA0E4B8ADE5BF83E585B3E4BA8EE8AEBEE7AB8BE59F9FE5908DE6A0B9E69C8DE58AA1E599A8EFBC88EFBCA6E38081EFBCA9E38081EFBCABE38081EFBCACE6A0B9E9959CE5838FE69C8DE58AA1E599A8EFBC89E58F8AE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E8BF90E8A18CE69CBAE69E84E79A84E794B3E8AFB7E694B6E68289E38082E6A0B9E68DAEE3808AE4BA92E88194E7BD91E59F9FE5908DE7AEA1E79086E58A9EE6B395E3808BEFBC88E5B7A5E4B89AE5928CE4BFA1E681AFE58C96E983A8E4BBA4E7ACACEFBC94EFBC93E58FB7EFBC89E69C89E585B3E8A784E5AE9AEFBC8CE7BB8FE5AEA1E69FA5EFBC8CE78EB0E689B9E5A48DE5A682E4B88BEFBC9A3C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4B880E38081E5908CE6848FE4BDA0E4B8ADE5BF83E8AEBEE7AB8BE59F9FE5908DE6A0B9E69C8DE58AA1E599A8EFBC88EFBCA6E38081EFBCA9E38081EFBCABE38081EFBCACE6A0B9E9959CE5838FE69C8DE58AA1E599A8EFBC89E58F8AE68890E4B8BAE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E8BF90E8A18CE69CBAE69E84EFBC8CE8B49FE8B4A3E8BF90E8A18CE38081E7BBB4E68AA4E5928CE7AEA1E79086E7BC96E58FB7E58886E588ABE4B8BAEFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC91EFBCA6E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC92EFBCA6E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC93EFBCA9E38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC94EFBCABE38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC95EFBCACE38081EFBCAAEFBCB8EFBC90EFBC90EFBC90EFBC96EFBCACE79A84E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4BA8CE38081E4BDA0E4B8ADE5BF83E5BA94E4B8A5E6A0BCE981B5E5AE88E3808AE4BA92E88194E7BD91E59F9FE5908DE7AEA1E79086E58A9EE6B395E3808BE3808AE9809AE4BFA1E7BD91E7BB9CE5AE89E585A8E998B2E68AA4E7AEA1E79086E58A9EE6B395E3808BE58F8AE79BB8E585B3E6B395E5BE8BE6B395E8A784E38081E8A18CE694BFE8A784E7ABA0E58F8AE8A18CE4B89AE7AEA1E79086E8A784E5AE9AEFBC8CE68EA5E58F97E68891E983A8E79A84E7AEA1E79086E5928CE79B91E79DA3E6A380E69FA5EFBC8CE5BBBAE7AB8BE7ACA6E59088E68891E983A8E8A681E6B182E79A84E4BFA1E681AFE7AEA1E79086E7B3BBE7BB9FE5B9B6E4B88EE68891E983A8E68C87E5AE9AE79A84E7AEA1E79086E7B3BBE7BB9FE5AFB9E68EA5EFBC8CE4BF9DE8AF81E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E5AE89E585A8E38081E58FAFE99DA0E8BF90E8A18CEFBC8CE4B8BAE794A8E688B7E68F90E4BE9BE5AE89E585A8E38081E696B9E4BEBFE79A84E59F9FE5908DE69C8DE58AA1EFBC8CE4BF9DE99A9CE69C8DE58AA1E8B4A8E9878FEFBC8CE4BF9DE68AA4E794A8E688B7E4B8AAE4BABAE4BFA1E681AFE5AE89E585A8EFBC8CE7BBB4E68AA4E59BBDE5AEB6E588A9E79B8AE5928CE794A8E688B7E69D83E79B8AE380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4B889E38081E4BDA0E4B8ADE5BF83E5BA94E5BD93E588B6E5AE9AE5B9B6E4B88DE696ADE5AE8CE59684E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E58F8AE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E8BF90E8A18CE69CBAE69E84E79A84E7AEA1E79086E588B6E5BAA6EFBC9BE68C87E5AE9AE4B893E997A8E4BABAE59198E8B49FE8B4A3E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E79A84E8BF90E8A18CE38081E7BBB4E68AA4E5928CE7AEA1E79086E5B7A5E4BD9CEFBC8CE5BBBAE7AB8BE59BBAE5AE9AE79A84E88194E7B3BBE69CBAE588B6EFBC9BE98089E68BA9E585B7E5A487E8B584E8B4A8E79A84E7BD91E7BB9CE68EA5E585A5E69C8DE58AA1E68F90E4BE9BE88085E4B8BAE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E68F90E4BE9BE68EA5E585A5E69C8DE58AA1EFBC9BE59F9FE5908DE6A0B9E69C8DE58AA1E599A8E69CBAE688BFE59CB0E59D80E38081E4BA92E88194E7BD91E58D8FE8AEAEEFBC88EFBCA9EFBCB0EFBC89E59CB0E59D80E5928CE887AAE6B2BBE59F9FEFBC88EFBCA1EFBCB3EFBC89E58FB7E7A081E7AD89E4BFA1E681AFE58F91E7949FE58F98E69BB4E697B6EFBC8CE5BA94E5BD93E59CA8E58F98E69BB4E4B98BE697A5E5898DEFBC91EFBC95E697A5E4BBA5E4B9A6E99DA2E5BDA2E5BC8FE68AA5E98081E68891E983A8E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE59B9BE38081E4BDA0E4B8ADE5BF83E5BA94E9858DE7BDAEE5BF85E8A681E79A84E7BD91E7BB9CE8B584E6BA90E4BBA5E58F8AE7BD91E7BB9CE5928CE9809AE4BFA1E5BA94E680A5E8AEBEE5A487EFBC8CE588B6E5AE9AE58887E5AE9EE69C89E69588E79A84E7BD91E7BB9CE9809AE4BFA1E4BF9DE99A9CE5928CE7BD91E7BB9CE4B88EE4BFA1E681AFE5AE89E585A8E5BA94E680A5E9A284E6A188EFBC8CE8AEBEE7AB8BE38081E9858DE5A487E4B893E8818CE7BD91E7BB9CE4B88EE4BFA1E681AFE5AE89E585A8E7AEA1E79086E69CBAE69E84E5928CE4BABAE59198EFBC8CE5BBBAE7AB8BE581A5E585A8E7BD91E7BB9CE4B88EE4BFA1E681AFE5AE89E585A8E588B6E5BAA6E4B88EE4BF9DE99A9CE68EAAE696BDEFBC8CE5BBBAE7AB8BE79BB8E5BA94E79A84E4B89AE58AA1E4B88EE5AE89E585A8E7AEA1E79086E7B3BBE7BB9FEFBC8CE5BBBAE8AEBEE79B91E6B58BE9A284E8ADA6E38081E5BA94E680A5E5A484E7BDAEE38081E695B0E68DAEE5A487E4BBBDE7AD89E5BF85E8A681E79A84E68A80E69CAFE6898BE6AEB5EFBC8CE5AE9AE69C9FE68AA5E98081E4BFA1E681AFEFBC8CE69C8DE4BB8EE68891E983A8E79A84E7BB9FE4B880E68C87E68CA5E4B88EE58D8FE8B083EFBC8CE9858DE59088E5BC80E5B195E79BB8E585B3E6B58BE8AF95E5928CE6BC94E7BB83EFBC8CE981B5E5AE88E79BB8E5BA94E79A84E7AEA1E79086E8A681E6B182E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4BA94E38081E4BDA0E4B8ADE5BF83E5BA94E5BD93E59CA8E6AF8FE5ADA3E5BAA6E7BB93E69D9FE5908EE79A84EFBC95E4B8AAE5B7A5E4BD9CE697A5E58685E5B086E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E4B88AE4B880E5ADA3E5BAA6E79A84E4B89AE58AA1E5BC80E5B195E68385E586B5E38081E5AE89E585A8E8BF90E8A18CE68385E586B5E7AD89E4BFA1E681AFE68AA5E98081E68891E983A8EFBC88E4BCA0E79C9FEFBC9AEFBC90EFBC91EFBC90EFBC8DEFBC96EFBC96EFBC90EFBC93EFBC97EFBC90EFBC99EFBC97EFBC9BE794B5E5AD90E982AEE4BBB6EFBC9AEFBD84EFBD8FEFBD8DEFBD81EFBD89EFBD8EEFBCA0EFBD8DEFBD89EFBD89EFBD94EFBC8EEFBD87EFBD8FEFBD96EFBC8EEFBD83EFBD8EEFBC89E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE585ADE38081E4BDA0E4B8ADE5BF83E59CA8E8BF90E8A18CE38081E7BBB4E68AA4E5928CE7AEA1E79086E59F9FE5908DE6A0B9E69C8DE58AA1E599A8E8BF87E7A88BE4B8ADE98187E588B0E997AEE9A298EFBC8CE99C80E58F8AE697B6E4BBA5E4B9A6E99DA2E5BDA2E5BC8FE68AA5E98081E68891E983A8E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE4B883E38081E6ADA4E689B9E5A48DE887AAE58F91E5B883E4B98BE697A5E8B5B7E7949FE69588EFBC8CE69C89E69588E69C9FE4B8BAEFBC95E5B9B4E380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE6ADA4E5A48DE380823C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EE5B7A5E4B89AE5928CE4BFA1E681AFE58C96E983A83C2F703E3C70207374796C653D22746578742D696E64656E743A2032656D3B20746578742D616C69676E3A206C6566743B223EEFBC92EFBC90EFBC91EFBC99E5B9B4EFBC96E69C88EFBC92EFBC94E697A5E38080E380803C2F703E, '/upload/20190626/f8594d9dc116ee24ec265deb036cd916.png', '', '1', '1', '0', '0', '0', '0', '0', '0', '0', '1561564244', '1561564244');
 
 -- ----------------------------
 -- Table structure for kite_document_content_extra
@@ -522,16 +374,14 @@ CREATE TABLE `kite_document_content_extra` (
   KEY `document_id` (`document_id`) USING BTREE,
   KEY `variable` (`variable`) USING BTREE,
   KEY `key` (`key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_content_extra
 -- ----------------------------
-INSERT INTO `kite_document_content_extra` VALUES ('4', '3', 'text', '职位', 'zhiwei', '111', 0x313131, null, null);
-INSERT INTO `kite_document_content_extra` VALUES ('5', '3', 'select', '地点', 'didian', '2', 0xE9878DE5BA86, null, null);
-INSERT INTO `kite_document_content_extra` VALUES ('6', '3', 'select', '薪资待遇', 'daiyu', '1', 0x35303030, null, null);
-INSERT INTO `kite_document_content_extra` VALUES ('7', '5', 'text', 'title', 'title', '阿斯顿发送到', 0xE998BFE696AFE9A1BFE58F91E98081E588B0, null, null);
-INSERT INTO `kite_document_content_extra` VALUES ('8', '5', 'district', '菜品地区', 'area', '', '', null, null);
+INSERT INTO `kite_document_content_extra` VALUES ('1', '9', 'checkbox', '职位', 'zw', '3', 0xE7BE8EE69CAFE8AEBEE8AEA12C504850E5B7A5E7A88BE5B888, null, null);
+INSERT INTO `kite_document_content_extra` VALUES ('2', '9', 'radio', '薪资待遇', 'dy', '2', 0x383030307E3130303030, null, null);
+INSERT INTO `kite_document_content_extra` VALUES ('3', '9', 'radio', '工作地点', 'dd', '1', 0xE68890E983BD, null, null);
 
 -- ----------------------------
 -- Table structure for kite_document_content_like
@@ -546,30 +396,11 @@ CREATE TABLE `kite_document_content_like` (
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_content_like
 -- ----------------------------
-INSERT INTO `kite_document_content_like` VALUES ('1', '1', '1', '0', '171.88.1.80', '1541328834', '1541328834');
-INSERT INTO `kite_document_content_like` VALUES ('2', '1', '1', '0', '171.221.254.149', '1548224075', '1548224075');
-INSERT INTO `kite_document_content_like` VALUES ('3', '1', '1', '0', '171.221.254.149', '1551251112', '1551251112');
-INSERT INTO `kite_document_content_like` VALUES ('4', '1', '1', '0', '171.221.254.149', '1551330765', '1551330765');
-INSERT INTO `kite_document_content_like` VALUES ('5', '3', '1', '0', '117.136.64.89', '1552021797', '1552021797');
-INSERT INTO `kite_document_content_like` VALUES ('6', '3', '1', '0', '117.136.64.85', '1552664890', '1552664890');
-INSERT INTO `kite_document_content_like` VALUES ('7', '1', '1', '0', '223.104.9.200', '1552736710', '1552736710');
-INSERT INTO `kite_document_content_like` VALUES ('8', '1', '1', '0', '221.237.179.164', '1553398609', '1553398609');
-INSERT INTO `kite_document_content_like` VALUES ('9', '2', '1', '0', '183.199.79.59', '1553516082', '1553516082');
-INSERT INTO `kite_document_content_like` VALUES ('10', '1', '0', '1', '182.200.22.168', '1555983287', '1555983287');
-INSERT INTO `kite_document_content_like` VALUES ('11', '3', '1', '0', '117.136.64.83', '1559010322', '1559010322');
-INSERT INTO `kite_document_content_like` VALUES ('12', '1', '1', '0', '118.112.40.125', '1559778695', '1559778695');
-INSERT INTO `kite_document_content_like` VALUES ('13', '3', '0', '1', '118.112.40.110', '1560180629', '1560180629');
-INSERT INTO `kite_document_content_like` VALUES ('14', '1', '1', '0', '118.112.40.110', '1560510281', '1560510281');
-INSERT INTO `kite_document_content_like` VALUES ('15', '3', '1', '0', '118.112.40.110', '1560768080', '1560768080');
-INSERT INTO `kite_document_content_like` VALUES ('16', '1', '1', '0', '127.0.0.1', '1560774492', '1560774492');
-INSERT INTO `kite_document_content_like` VALUES ('17', '2', '1', '0', '127.0.0.1', '1560824717', '1560824717');
-INSERT INTO `kite_document_content_like` VALUES ('18', '3', '1', '0', '127.0.0.1', '1560827659', '1560827659');
-INSERT INTO `kite_document_content_like` VALUES ('19', '6', '1', '0', '127.0.0.1', '1560850947', '1560850947');
 
 -- ----------------------------
 -- Table structure for kite_document_field
@@ -582,7 +413,7 @@ CREATE TABLE `kite_document_field` (
   `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '字段名称',
   `variable` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '字段列名',
   `type` char(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '字段类型',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '权重排序',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权重排序',
   `is_require` tinyint(1) DEFAULT 0 COMMENT '0 正常 1必填',
   `is_filter` tinyint(1) DEFAULT NULL COMMENT '0正常 1筛选条件',
   `option` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '字段内容选项',
@@ -592,22 +423,14 @@ CREATE TABLE `kite_document_field` (
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_field
 -- ----------------------------
-INSERT INTO `kite_document_field` VALUES ('1', '1', '1', '商品编号', 'bianhao', 'text', '0', '0', '0', '', '', '', '', '1552020080', '1552020080');
-INSERT INTO `kite_document_field` VALUES ('2', '1', '1', '商品毛重', 'maozhong', 'text', '0', '0', '0', '', '', '', '', '1552020106', '1552020106');
-INSERT INTO `kite_document_field` VALUES ('3', '1', '1', '商品产地', 'chandi', 'text', '0', '0', '0', '', '', '', '', '1552020125', '1552020125');
-INSERT INTO `kite_document_field` VALUES ('4', '2', '1', '职位', 'zhiwei', 'text', '0', '1', '0', '', '', '/[\\u4e00-\\u9fa5]/', '职位不能空', '1552020242', '1552052621');
-INSERT INTO `kite_document_field` VALUES ('5', '2', '1', '地点', 'didian', 'select', '0', '1', '1', '1=成都\r\n2=重庆\r\n3=北京\r\n4=上海', '', '', '', '1552020306', '1552021232');
-INSERT INTO `kite_document_field` VALUES ('6', '2', '1', '薪资待遇', 'daiyu', 'select', '0', '1', '1', '1=5000\r\n2=8000\r\n3=10000', '', '', '', '1552020361', '1552021245');
-INSERT INTO `kite_document_field` VALUES ('7', '3', '1', '来源', 'laiyuan', 'text', '0', '0', '0', '', '', '', '', '1552271563', '1552271563');
-INSERT INTO `kite_document_field` VALUES ('8', '1', '2', 'title', 'title', 'text', '0', '0', '0', '', '', '', '', '1552635998', '1552635998');
-INSERT INTO `kite_document_field` VALUES ('9', '1', '2', 'screenshots', 'screenshots', 'multipleimageupload', '0', '0', '0', '', '', '', 'screenshots', '1560620667', '1560620667');
-INSERT INTO `kite_document_field` VALUES ('10', '1', '2', '菜品地区', 'area', 'select', '0', '0', '1', '1=option 1\r\n2=option 2', '', '', '', '1560746256', '1560765877');
-INSERT INTO `kite_document_field` VALUES ('11', '1', '1', '主图', 'zhutu', 'imageupload', '0', '0', '0', '', '', '', '', '1560838632', '1560838632');
+INSERT INTO `kite_document_field` VALUES ('1', '1', '2', '工作地点', 'dd', 'radio', '0', '0', '1', '1=成都\r\n2=绵阳\r\n2=重庆', '', '', '', '1561563781', '1561563781');
+INSERT INTO `kite_document_field` VALUES ('2', '1', '2', '薪资待遇', 'dy', 'radio', '0', '0', '1', '1=5000~8000\r\n2=8000~10000\r\n2=大于10000', '', '', '', '1561563839', '1561563839');
+INSERT INTO `kite_document_field` VALUES ('3', '1', '2', '职位', 'zw', 'checkbox', '0', '0', '1', '1=前台\r\n2=客服\r\n3=美术设计\r\n3=PHP工程师', '', '', '', '1561563949', '1561563949');
 
 -- ----------------------------
 -- Table structure for kite_document_model
@@ -617,22 +440,19 @@ CREATE TABLE `kite_document_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '模型ID',
   `site_id` int(11) NOT NULL COMMENT '模型归属站点',
   `name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '模型名称',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序 越小越靠前',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序 越小越靠前',
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_model
 -- ----------------------------
-INSERT INTO `kite_document_model` VALUES ('1', '1', '空模型', '0', '1541328594', '1541328594');
-INSERT INTO `kite_document_model` VALUES ('2', '1', '产品模型', '2', '1552019973', '1553529402');
-INSERT INTO `kite_document_model` VALUES ('3', '1', '招聘模型', '2', '1552019983', '1560177482');
-INSERT INTO `kite_document_model` VALUES ('4', '1', '新闻', '0', '1552271337', '1552271605');
-INSERT INTO `kite_document_model` VALUES ('5', '2', 'kite', '0', '1552635959', '1552635959');
-INSERT INTO `kite_document_model` VALUES ('6', '2', 'windows', '0', '1560620603', '1560620603');
-INSERT INTO `kite_document_model` VALUES ('7', '2', ' test', '1', '1560746160', '1560746278');
+INSERT INTO `kite_document_model` VALUES ('1', '1', '空模型', '1', '1541328594', '1561077574');
+INSERT INTO `kite_document_model` VALUES ('2', '2', '空模型', '1', '1561563483', '1561563483');
+INSERT INTO `kite_document_model` VALUES ('3', '2', '招聘模型', '2', '1561563667', '1561563961');
+INSERT INTO `kite_document_model` VALUES ('4', '2', '产品模型', '3', '1561563677', '1561563677');
 
 -- ----------------------------
 -- Table structure for kite_document_model_field
@@ -641,19 +461,39 @@ DROP TABLE IF EXISTS `kite_document_model_field`;
 CREATE TABLE `kite_document_model_field` (
   `model_id` int(11) NOT NULL COMMENT '模型ID',
   `field_id` int(11) NOT NULL COMMENT '字段ID',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序'
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_document_model_field
 -- ----------------------------
-INSERT INTO `kite_document_model_field` VALUES ('4', '7', '0');
-INSERT INTO `kite_document_model_field` VALUES ('3', '4', '0');
-INSERT INTO `kite_document_model_field` VALUES ('3', '5', '1');
-INSERT INTO `kite_document_model_field` VALUES ('3', '6', '2');
-INSERT INTO `kite_document_model_field` VALUES ('7', '8', '0');
-INSERT INTO `kite_document_model_field` VALUES ('7', '9', '1');
-INSERT INTO `kite_document_model_field` VALUES ('7', '10', '2');
+INSERT INTO `kite_document_model_field` VALUES ('3', '3', '0');
+INSERT INTO `kite_document_model_field` VALUES ('3', '2', '1');
+INSERT INTO `kite_document_model_field` VALUES ('3', '1', '2');
+
+-- ----------------------------
+-- Table structure for kite_hooks
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_hooks`;
+CREATE TABLE `kite_hooks` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
+  `description` text DEFAULT NULL COMMENT '描述',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT 1 COMMENT '类型',
+  `addons` varchar(255) NOT NULL DEFAULT '' COMMENT '钩子挂载的插件 ''，''分割',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of kite_hooks
+-- ----------------------------
+INSERT INTO `kite_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '', '1', null, null);
+INSERT INTO `kite_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '', '1', null, null);
+INSERT INTO `kite_hooks` VALUES ('3', 'AdminIndex', '首页小格子个性化显示', '2', 'demo', '1', null, '1561561552');
 
 -- ----------------------------
 -- Table structure for kite_language
@@ -663,7 +503,7 @@ CREATE TABLE `kite_language` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '语言名称',
   `icon` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `weighing` int(11) NOT NULL COMMENT '权重排序 越大越靠后',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '权重排序 越大越靠后',
   `designation` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '描述',
   PRIMARY KEY (`id`,`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -685,7 +525,7 @@ CREATE TABLE `kite_link` (
   `name` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '网站名称',
   `url` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '网站地址',
   `logo` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'logo地址',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态： 0隐藏  1 显示',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -708,7 +548,7 @@ CREATE TABLE `kite_log` (
   `ip` char(32) COLLATE utf8_bin DEFAULT NULL,
   `create_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_log
@@ -898,6 +738,32 @@ INSERT INTO `kite_log` VALUES ('182', null, '1', null, null, '127.0.0.1', '15608
 INSERT INTO `kite_log` VALUES ('183', '1', null, null, null, '127.0.0.1', '1560845537');
 INSERT INTO `kite_log` VALUES ('184', '4', null, null, null, '127.0.0.1', '1560852851');
 INSERT INTO `kite_log` VALUES ('185', '2', null, null, null, '127.0.0.1', '1560853674');
+INSERT INTO `kite_log` VALUES ('186', '2', null, null, null, '127.0.0.1', '1560937195');
+INSERT INTO `kite_log` VALUES ('187', '1', null, null, null, '127.0.0.1', '1560937547');
+INSERT INTO `kite_log` VALUES ('188', '2', null, null, null, '127.0.0.1', '1560995708');
+INSERT INTO `kite_log` VALUES ('189', '1', null, null, null, '127.0.0.1', '1560995722');
+INSERT INTO `kite_log` VALUES ('190', '1', null, null, null, '127.0.0.1', '1561048763');
+INSERT INTO `kite_log` VALUES ('191', '1', null, null, null, '127.0.0.1', '1561049910');
+INSERT INTO `kite_log` VALUES ('192', '1', null, null, null, '127.0.0.1', '1561076870');
+INSERT INTO `kite_log` VALUES ('193', '1', null, null, null, '127.0.0.1', '1561082173');
+INSERT INTO `kite_log` VALUES ('194', '1', null, null, null, '127.0.0.1', '1561289492');
+INSERT INTO `kite_log` VALUES ('195', '1', null, null, null, '127.0.0.1', '1561299950');
+INSERT INTO `kite_log` VALUES ('196', '1', null, null, null, '127.0.0.1', '1561300005');
+INSERT INTO `kite_log` VALUES ('197', '1', null, null, null, '127.0.0.1', '1561300023');
+INSERT INTO `kite_log` VALUES ('198', '2', null, null, null, '127.0.0.1', '1561301750');
+INSERT INTO `kite_log` VALUES ('199', '1', null, null, null, '127.0.0.1', '1561301758');
+INSERT INTO `kite_log` VALUES ('200', '2', null, null, null, '127.0.0.1', '1561301773');
+INSERT INTO `kite_log` VALUES ('201', '1', null, null, null, '127.0.0.1', '1561301782');
+INSERT INTO `kite_log` VALUES ('202', '2', null, null, null, '127.0.0.1', '1561302336');
+INSERT INTO `kite_log` VALUES ('203', '1', null, null, null, '127.0.0.1', '1561302345');
+INSERT INTO `kite_log` VALUES ('204', '1', null, null, null, '127.0.0.1', '1561302413');
+INSERT INTO `kite_log` VALUES ('205', '2', null, null, null, '127.0.0.1', '1561302544');
+INSERT INTO `kite_log` VALUES ('206', '1', null, null, null, '127.0.0.1', '1561302561');
+INSERT INTO `kite_log` VALUES ('207', '1', null, null, null, '127.0.0.1', '1561340235');
+INSERT INTO `kite_log` VALUES ('208', '1', null, null, null, '127.0.0.1', '1561422473');
+INSERT INTO `kite_log` VALUES ('209', '1', null, null, null, '127.0.0.1', '1561520635');
+INSERT INTO `kite_log` VALUES ('210', '1', null, null, null, '127.0.0.1', '1561545486');
+INSERT INTO `kite_log` VALUES ('211', '1', null, null, null, '127.0.0.1', '1561564790');
 
 -- ----------------------------
 -- Table structure for kite_message
@@ -940,20 +806,62 @@ CREATE TABLE `kite_navigation` (
   `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '菜单名称',
   `url` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '菜单URL',
   `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 栏目 2自定义URL',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_navigation
 -- ----------------------------
-INSERT INTO `kite_navigation` VALUES ('22', '1', '4', '0', '1', '明星', '0', '1', '0', '1560828394', '1560828394');
-INSERT INTO `kite_navigation` VALUES ('23', '1', '5', '0', '1', '图片', '0', '1', '0', '1560828394', '1560828394');
-INSERT INTO `kite_navigation` VALUES ('24', '1', '6', '0', '1', '关于我们', '0', '1', '0', '1560828394', '1560828394');
-INSERT INTO `kite_navigation` VALUES ('25', '1', '8', '0', '1', '招聘', '0', '1', '0', '1560828394', '1560828394');
-INSERT INTO `kite_navigation` VALUES ('26', '1', '9', '0', '1', '新闻', '0', '1', '0', '1560828394', '1560828394');
+INSERT INTO `kite_navigation` VALUES ('1', '1', '5', '0', '1', '服务项目', '', '1', '3', '1561002909', '1561002984');
+INSERT INTO `kite_navigation` VALUES ('2', '1', '6', '0', '1', '手册', '', '1', '4', '1561002909', '1561002984');
+INSERT INTO `kite_navigation` VALUES ('3', '1', '10', '9', '1', '使用帮助', '', '1', '0', '1561002909', '1561027628');
+INSERT INTO `kite_navigation` VALUES ('4', '1', '11', '9', '1', '模板制作', '', '1', '1', '1561002909', '1561027634');
+INSERT INTO `kite_navigation` VALUES ('5', '1', '12', '9', '1', '二次开发', '', '1', '2', '1561002909', '1561027636');
+INSERT INTO `kite_navigation` VALUES ('6', '1', '13', '9', '1', '数据字典', '', '1', '3', '1561002909', '1561027640');
+INSERT INTO `kite_navigation` VALUES ('7', '1', '7', '0', '1', '下载', '', '1', '2', '1561002909', '1561558838');
+INSERT INTO `kite_navigation` VALUES ('8', '1', '8', '0', '1', '模板主题', '', '1', '1', '1561002909', '1561558838');
+INSERT INTO `kite_navigation` VALUES ('9', '1', '9', '0', '1', '教程', '', '1', '5', '1561002909', '1561002984');
+INSERT INTO `kite_navigation` VALUES ('10', '1', '1', '9', '1', 'PHP编程', '', '1', '5', '1561002909', '1561027640');
+INSERT INTO `kite_navigation` VALUES ('11', '1', '2', '9', '1', '前端技术', '', '1', '4', '1561002909', '1561027640');
+INSERT INTO `kite_navigation` VALUES ('12', '1', '3', '9', '1', 'SEO搜索优化', '', '1', '6', '1561002909', '1561027640');
+INSERT INTO `kite_navigation` VALUES ('13', '1', '4', '9', '1', '视频课程', '', '1', '7', '1561002909', '1561027640');
+INSERT INTO `kite_navigation` VALUES ('14', '1', '0', '0', '1', '首页', 'http://f.19981.com', '2', '0', '1561002981', '1561002981');
+INSERT INTO `kite_navigation` VALUES ('15', '1', '14', '0', '1', '联系我们', '', '1', '6', '1561077953', '1561077958');
+INSERT INTO `kite_navigation` VALUES ('16', '1', '15', '0', '2', '新闻', '', '1', '1', '1561563567', '1561563593');
+INSERT INTO `kite_navigation` VALUES ('17', '1', '16', '0', '2', '产品', '', '1', '2', '1561563567', '1561563593');
+INSERT INTO `kite_navigation` VALUES ('18', '1', '17', '0', '2', '招聘', '', '1', '3', '1561563567', '1561563593');
+INSERT INTO `kite_navigation` VALUES ('20', '1', '0', '0', '2', '首页', 'http://101.demo.19981.com', '2', '0', '1561563632', '1561563632');
+
+-- ----------------------------
+-- Table structure for kite_score
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_score`;
+CREATE TABLE `kite_score` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '积分记录编号',
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `uid` int(11) NOT NULL COMMENT '会员ID',
+  `sum` int(11) NOT NULL COMMENT '剩余总数',
+  `score` int(11) NOT NULL COMMENT '积分数量',
+  `source` varchar(255) CHARACTER SET latin1 DEFAULT NULL COMMENT '获取原因',
+  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of kite_score
+-- ----------------------------
+INSERT INTO `kite_score` VALUES ('21', '1', '2', '2', '1', 'login_score', '1560852792', '1560852792');
+INSERT INTO `kite_score` VALUES ('22', '1', '2', '3', '1', 'login_score', '1560852820', '1560852820');
+INSERT INTO `kite_score` VALUES ('23', '1', '4', '1', '1', 'login_score', '1560852883', '1560852883');
+INSERT INTO `kite_score` VALUES ('24', '1', '2', '4', '1', 'login_score', '1560853578', '1560853578');
+INSERT INTO `kite_score` VALUES ('25', '1', '2', '5', '1', 'login_score', '1560927081', '1560927081');
+INSERT INTO `kite_score` VALUES ('26', '1', '2', '7', '1', 'login_score', '1561460771', '1561460771');
+INSERT INTO `kite_score` VALUES ('27', '1', '1', '3', '1', 'login_score', '1561460794', '1561460794');
+INSERT INTO `kite_score` VALUES ('28', '1', '1', '4', '1', 'login_score', '1561565682', '1561565682');
 
 -- ----------------------------
 -- Table structure for kite_site
@@ -966,7 +874,7 @@ CREATE TABLE `kite_site` (
   `alias` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '站点别名',
   `logo` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT 'LOGO',
   `domain` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '站点绑定域名',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序 越小越靠前',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序 越小越靠前',
   `hot` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否热门站点',
   `title` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '站点标题',
   `keywords` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '站点关键词',
@@ -985,8 +893,8 @@ CREATE TABLE `kite_site` (
 -- ----------------------------
 -- Records of kite_site
 -- ----------------------------
-INSERT INTO `kite_site` VALUES ('1', '0', '搜索引擎优化', 'default', '/upload/20190618/47b08ccd14af32d048e1fb5fcd287143.png', 'http://f.19981.com', '0', '0', '搜索引擎优化', '搜索引擎优化', '搜索引擎优化', 'Asia/Shanghai', 'default', '© 2018 19981.com. All rights reserved', '蜀ICP备12004586号-4', '0', '1528854424', '1560838028');
-INSERT INTO `kite_site` VALUES ('2', '0', '风筝的天空', 'kitesky', '/upload/20190611/555ffc45f99a4ad9ab8d5ecab5ea8a77.png', 'http://www.kitesky.com', '0', '0', '风筝的天空', '风筝的天空', '风筝的天空', null, 'default', '个人网站', '蜀ICP备12004586号-2', '0', '1541387367', '1560247110');
+INSERT INTO `kite_site` VALUES ('1', '0', 'KiteCMS官网', 'default', '/upload/20190618/47b08ccd14af32d048e1fb5fcd287143.png', 'http://f.19981.com', '0', '0', 'KiteCMS开源免费网站管理系统', 'KiteCMS,cms,PHP开源网站系统,php企业网站源码', 'KiteCMS开源网站内容管理系统(CMS)，系统基于框架ThinkPHP5.1.*版本开发，适用个人、企业快速建站及开发需求。 提供各行业网站模板，系统采用响应式布局，自适应PC、手机、微信等终端。', 'Asia/Shanghai', 'company', '© 2018 19981.com. All rights reserved', '蜀ICP备12004586号-4', '0', '1528854424', '1561360341');
+INSERT INTO `kite_site` VALUES ('2', '0', '默认站点', 'kitesky', '/upload/20190611/555ffc45f99a4ad9ab8d5ecab5ea8a77.png', 'http://101.demo.19981.com', '0', '0', '默认站点', '默认站点', '默认站点', null, 'default', '个人网站', '蜀ICP备12004586号-2', '0', '1541387367', '1561563466');
 
 -- ----------------------------
 -- Table structure for kite_site_config
@@ -1021,9 +929,9 @@ INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_ak', 0x3956577A66316A69533367
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_sk', 0x54474E6432317877662D794847576E3346774E3337666B5257704F7A7A4D685843356A4566677238, '1530071701', '1530071701');
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_bucket', 0x6B697465736B79, '1530071701', '1530071701');
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_domain', 0x687474703A2F2F6F6E7872386D7438792E626B742E636C6F7564646E2E636F6D, '1530071701', '1530071701');
-INSERT INTO `kite_site_config` VALUES ('1', 'link_category', 0x5B7B226E616D65223A22E69687E5AD97E993BEE68EA5222C227765696768696E67223A2231222C226964223A317D5D, '1531141510', '1531141510');
+INSERT INTO `kite_site_config` VALUES ('1', 'link_category', 0x5B7B226E616D65223A22E69687E5AD97E993BEE68EA5222C22736F7274223A2231222C226964223A317D5D, '1531141510', '1531141510');
 INSERT INTO `kite_site_config` VALUES ('1', 'slider_category', 0x5B5D, '1531147967', '1531147967');
-INSERT INTO `kite_site_config` VALUES ('1', 'field_category', 0x5B7B226E616D65223A22E4BAA7E59381222C227765696768696E67223A22222C226964223A317D2C7B226E616D65223A22E68B9BE88198222C227765696768696E67223A22222C226964223A327D2C7B226E616D65223A22E696B0E997BB222C227765696768696E67223A22222C226964223A337D5D, '1531147967', '1531147967');
+INSERT INTO `kite_site_config` VALUES ('1', 'field_category', 0x5B5D, '1531147967', '1531147967');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1531213657', '1531213657');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1531213657', '1531213657');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_fontSize', 0x3234, '1531213657', '1531213657');
@@ -1059,14 +967,14 @@ INSERT INTO `kite_site_config` VALUES ('1', 'upload_video_ext', 0x726D2C726D7662
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_video_size', 0x3130323430, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_attach_ext', 0x646F632C786C732C7261722C7A6970, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_attach_size', 0x3130323430, '1532327020', '1532327020');
-INSERT INTO `kite_site_config` VALUES ('1', 'navigation_category', 0x5B7B226E616D65223A22E9A1B6E983A8E5AFBCE888AA222C227765696768696E67223A2231222C226964223A317D5D, '1532675827', '1532675827');
+INSERT INTO `kite_site_config` VALUES ('1', 'navigation_category', 0x5B7B226E616D65223A22E9A1B6E983A8E5AFBCE888AA222C22736F7274223A2231222C226964223A317D5D, '1532675827', '1532675827');
 INSERT INTO `kite_site_config` VALUES ('1', 'email_code_template', 0xE5B08AE695ACE79A84E4BC9AE59198247B757365726E616D657D20EFBC8CE682A8E69CACE6ACA1E79A84E9AA8CE8AF81E7A081E4B8BAEFBC9A247B636F64657D20EFBC8CE9AA8CE8AF81E7A081E59CA835E58886E9929FE58685E69C89E69588E38082, '1532856848', '1532856848');
 INSERT INTO `kite_site_config` VALUES ('1', 'email_register_template', 0xE5B08AE695ACE79A84E4BC9AE59198247B757365726E616D657D20EFBC8CE682A8E5B7B2E7BB8FE68890E58A9FE6B3A8E5868CEFBC8CE8AFB7E8B0A8E8AEB0E682A8E79A84E794A8E688B7E5908DE58F8AE5AF86E7A081E38082, '1532856848', '1532856848');
 INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1532856848', '1532856848');
-INSERT INTO `kite_site_config` VALUES ('2', 'field_category', 0x5B7B226E616D65223A22636D73222C227765696768696E67223A22222C226964223A317D5D, '1541487138', '1541487138');
+INSERT INTO `kite_site_config` VALUES ('2', 'field_category', 0x5B7B226E616D65223A22636D73222C22736F7274223A2231222C226964223A317D2C7B226E616D65223A22E4BAA7E59381222C22736F7274223A2232222C226964223A327D5D, '1541487138', '1541487138');
 INSERT INTO `kite_site_config` VALUES ('2', 'slider_category', null, '1548224151', '1548224151');
 INSERT INTO `kite_site_config` VALUES ('2', 'link_category', null, '1548224152', '1548224152');
-INSERT INTO `kite_site_config` VALUES ('2', 'block_category', 0x5B7B226E616D65223A2254455354222C227765696768696E67223A2231222C226964223A317D5D, '1548224152', '1548224152');
+INSERT INTO `kite_site_config` VALUES ('2', 'block_category', 0x5B7B226E616D65223A2254455354222C22736F7274223A2231222C226964223A317D5D, '1548224152', '1548224152');
 INSERT INTO `kite_site_config` VALUES ('2', 'register_score', 0x313030, '1548224155', '1548224155');
 INSERT INTO `kite_site_config` VALUES ('2', 'login_score', 0x31, '1548224155', '1548224155');
 INSERT INTO `kite_site_config` VALUES ('2', 'publish_score', 0x3130, '1548224155', '1548224155');
@@ -1109,7 +1017,7 @@ INSERT INTO `kite_site_config` VALUES ('2', 'captcha_member_login', 0x30, '15482
 INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_document', 0x30, '1548224169', '1548224169');
 INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_comment', 0x30, '1548224169', '1548224169');
 INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_feedback', 0x30, '1548224169', '1548224169');
-INSERT INTO `kite_site_config` VALUES ('2', 'navigation_category', null, '1548224170', '1548224170');
+INSERT INTO `kite_site_config` VALUES ('2', 'navigation_category', 0x5B7B226E616D65223A22E9A1B6E983A8E5AFBCE888AA222C22736F7274223A22222C226964223A317D5D, '1548224170', '1548224170');
 INSERT INTO `kite_site_config` VALUES ('4', 'field_category', null, '1551153424', '1551153424');
 INSERT INTO `kite_site_config` VALUES ('4', 'link_category', null, '1551153427', '1551153427');
 INSERT INTO `kite_site_config` VALUES ('4', 'slider_category', null, '1551153466', '1551153466');
@@ -1126,6 +1034,7 @@ INSERT INTO `kite_site_config` VALUES ('2', 'water_logo', 0x2F7374617469632F6164
 INSERT INTO `kite_site_config` VALUES ('2', 'water_position', 0x39, '1553582315', '1553582315');
 INSERT INTO `kite_site_config` VALUES ('2', 'water_quality', 0x3830, '1553582315', '1553582315');
 INSERT INTO `kite_site_config` VALUES ('2', 'water_status', 0x30, '1553582315', '1553582315');
+INSERT INTO `kite_site_config` VALUES ('0', 'field_category', null, '1561302548', '1561302548');
 
 -- ----------------------------
 -- Table structure for kite_site_file
@@ -1144,7 +1053,7 @@ CREATE TABLE `kite_site_file` (
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_site_file
@@ -1153,9 +1062,6 @@ INSERT INTO `kite_site_file` VALUES ('1', '1', 'local', 'hyd.png', 'c75a61ac9a55
 INSERT INTO `kite_site_file` VALUES ('2', '1', 'local', '1990992729264925_7CA46AC3814E2BC32AAA040E472BFE2F.jpg', 'b5375810e31069b7f959a00109ca7931.jpg', 'jpg', '/upload/20190226/b5375810e31069b7f959a00109ca7931.jpg', null, '0', '1551152426', '1551152426');
 INSERT INTO `kite_site_file` VALUES ('3', '1', 'local', '1990992729264925_BCF67AF8238E28A665B8471C711CA097.jpg', '04b1d8ca8be54fed70ff036692de5843.jpg', 'jpg', '/upload/20190227/04b1d8ca8be54fed70ff036692de5843.jpg', null, '0', '1551251079', '1551251079');
 INSERT INTO `kite_site_file` VALUES ('4', '1', 'local', '1.png', '8e6b5a7a4331080f3fad9607d49ed7f4.png', 'png', '/upload/20190308/8e6b5a7a4331080f3fad9607d49ed7f4.png', null, '0', '1552019787', '1552019787');
-INSERT INTO `kite_site_file` VALUES ('5', '1', 'local', '1.jpg', 'ac8494fd0ee97bc769ac108f1c44cb25.jpg', 'jpg', '/upload/20190308/ac8494fd0ee97bc769ac108f1c44cb25.jpg', 0x2F75706C6F61642F32303139303330382F61633834393466643065653937626337363961633130386631633434636232355F333530783233302E6A70672C2F75706C6F61642F32303139303330382F61633834393466643065653937626337363961633130386631633434636232355F3132307837352E6A70672C2F75706C6F61642F32303139303330382F61633834393466643065653937626337363961633130386631633434636232355F323230783134302E6A70672C2F75706C6F61642F32303139303330382F61633834393466643065653937626337363961633130386631633434636232355F323530783235302E6A70672C2F75706C6F61642F32303139303330382F61633834393466643065653937626337363961633130386631633434636232355F35307835302E6A7067, '0', '1552021670', '1560767353');
-INSERT INTO `kite_site_file` VALUES ('6', '1', 'local', 'c2.jpg', 'a4116ba637cbbcd3a3a73d8819920b56.jpg', 'jpg', '/upload/20190308/a4116ba637cbbcd3a3a73d8819920b56.jpg', 0x2F75706C6F61642F32303139303330382F61343131366261363337636262636433613361373364383831393932306235365F333530783233302E6A70672C2F75706C6F61642F32303139303330382F61343131366261363337636262636433613361373364383831393932306235365F3132307837352E6A70672C2F75706C6F61642F32303139303330382F61343131366261363337636262636433613361373364383831393932306235365F323230783134302E6A70672C2F75706C6F61642F32303139303330382F61343131366261363337636262636433613361373364383831393932306235365F323530783235302E6A70672C2F75706C6F61642F32303139303330382F61343131366261363337636262636433613361373364383831393932306235365F35307835302E6A7067, '0', '1552021704', '1560767353');
-INSERT INTO `kite_site_file` VALUES ('7', '1', 'local', 'c7.jpg', 'b43fe439a4f441d6abcc7634055e2855.jpg', 'jpg', '/upload/20190308/b43fe439a4f441d6abcc7634055e2855.jpg', 0x2F75706C6F61642F32303139303330382F62343366653433396134663434316436616263633736333430353565323835355F323530783235302E6A70672C2F75706C6F61642F32303139303330382F62343366653433396134663434316436616263633736333430353565323835355F3132307837352E6A70672C2F75706C6F61642F32303139303330382F62343366653433396134663434316436616263633736333430353565323835355F323230783134302E6A70672C2F75706C6F61642F32303139303330382F62343366653433396134663434316436616263633736333430353565323835355F333530783233302E6A70672C2F75706C6F61642F32303139303330382F62343366653433396134663434316436616263633736333430353565323835355F35307835302E6A7067, '0', '1552021757', '1560767353');
 INSERT INTO `kite_site_file` VALUES ('8', '1', 'local', '1544174368(1).png', '82c6bc12eebe1bfa5845ec1032518b05.png', 'png', '/upload/20190314/82c6bc12eebe1bfa5845ec1032518b05.png', null, '0', '1552549390', '1552549390');
 INSERT INTO `kite_site_file` VALUES ('9', '2', 'local', '808.jpg', '102082a52c00d370b792a457f2fef68c.jpg', 'jpg', '/upload/20190409/102082a52c00d370b792a457f2fef68c.jpg', null, '0', '1554787624', '1554787624');
 INSERT INTO `kite_site_file` VALUES ('10', '2', 'local', '20180816110115375.png', 'f4657a745bd8bca6cb61f8259071379a.png', 'png', '/upload/20190409/f4657a745bd8bca6cb61f8259071379a.png', null, '0', '1554787635', '1554787635');
@@ -1168,6 +1074,10 @@ INSERT INTO `kite_site_file` VALUES ('16', '1', 'local', 'logo.png', '18afca7dec
 INSERT INTO `kite_site_file` VALUES ('17', '1', 'local', '40.png', '47b08ccd14af32d048e1fb5fcd287143.png', 'png', '/upload/20190618/47b08ccd14af32d048e1fb5fcd287143.png', null, '0', '1560838026', '1560838026');
 INSERT INTO `kite_site_file` VALUES ('18', '1', 'local', 'favicon.png', 'e62b9f5b991b2b30b4dec26666714590.png', 'png', '/upload/20190618/e62b9f5b991b2b30b4dec26666714590.png', 0x2F75706C6F61642F32303139303631382F65363262396635623939316232623330623464656332363636363731343539305F36307836302E706E67, '0', '1560839387', '1560839388');
 INSERT INTO `kite_site_file` VALUES ('19', '1', 'local', 'favicon.png', '83b56ac13413773672ac9cfbeaccba85.png', 'png', '/upload/20190618/83b56ac13413773672ac9cfbeaccba85.png', 0x2F75706C6F61642F32303139303631382F38336235366163313334313337373336373261633963666265616363626138355F36307836302E706E672C2F75706C6F61642F32303139303631382F38336235366163313334313337373336373261633963666265616363626138355F34307834302E706E67, '0', '1560843695', '1560851429');
+INSERT INTO `kite_site_file` VALUES ('20', '1', 'local', '1.jpg', 'c0b302b007e8aef9e27036f4cbe7aeb3.jpg', 'jpg', '/upload/20190620/c0b302b007e8aef9e27036f4cbe7aeb3.jpg', 0x2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F333730783331372E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F333730783331372E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F333730783331372E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F333730783331372E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F333435783239362E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F35307835302E6A70672C2F75706C6F61642F32303139303632302F63306233303262303037653861656639653237303336663463626537616562335F3132307837352E6A7067, '0', '1561023546', '1561565650');
+INSERT INTO `kite_site_file` VALUES ('21', '2', 'local', '1.png', 'd4ba27fe921bc66b9d1bdb40e2dac63f.png', 'png', '/upload/20190626/d4ba27fe921bc66b9d1bdb40e2dac63f.png', null, '0', '1561564139', '1561564139');
+INSERT INTO `kite_site_file` VALUES ('22', '2', 'local', '1.png', 'f8594d9dc116ee24ec265deb036cd916.png', 'png', '/upload/20190626/f8594d9dc116ee24ec265deb036cd916.png', null, '0', '1561564227', '1561564227');
+INSERT INTO `kite_site_file` VALUES ('23', '1', 'local', 'xampp-logo-ac950edf.png', 'aba796d04ef17b1862880b988a5b47d8.png', 'png', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', 0x2F75706C6F61642F32303139303632372F61626137393664303465663137623138363238383062393838613562343764385F36307836302E706E67, '0', '1561565703', '1561565705');
 
 -- ----------------------------
 -- Table structure for kite_slider
@@ -1181,7 +1091,7 @@ CREATE TABLE `kite_slider` (
   `url` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '网站地址',
   `image` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT 'logo地址',
   `content` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '描述内容',
-  `weighing` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态： 0隐藏  1 显示',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -1201,7 +1111,7 @@ CREATE TABLE `kite_user_nav` (
   `url` varchar(64) CHARACTER SET utf8 NOT NULL,
   `menu` tinyint(1) DEFAULT 0 COMMENT '是否为菜单0 否 1是',
   `icon` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT 'fa fa-circle-o' COMMENT '图标',
-  `weighing` int(11) DEFAULT 0 COMMENT '权重排序',
+  `sort` int(11) DEFAULT 0 COMMENT '权重排序',
   `description` varchar(255) CHARACTER SET utf8 DEFAULT '' COMMENT '备注说明',
   `lang_var` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '语言表示',
   PRIMARY KEY (`id`),

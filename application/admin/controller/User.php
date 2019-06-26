@@ -6,8 +6,6 @@ use think\facade\Request;
 use app\admin\controller\Admin;
 use app\common\model\AuthUser;
 use app\common\model\AuthRole;
-use app\common\model\AuthUserRole;
-use app\common\model\AuthUserSite;
 use app\common\validate\UserValidate;
 
 use app\common\model\Site;
@@ -32,7 +30,7 @@ class User extends Admin
 
         $userObj = new AuthUser;
         $list = $userObj
-            ->field('uid,username,phone,email,status')
+            ->field('*')
             ->whereOr('username|phone|email','like','%'.$q.'%')
             ->order('uid desc')
             ->paginate(20, false, [
@@ -42,10 +40,14 @@ class User extends Admin
             ]);
 
         $new_list = [];
-        $userRoleObj = new AuthUserRole;
+        $roleObj = new AuthRole;
         if (isset($list)) {
             foreach ($list as $v) {
-                $v['role'] = $userRoleObj->getRoleList($v['uid']);
+                if (!empty($v['role_ids'])) {
+                    $v['role'] = $roleObj->getAll(explode(',', $v['role_ids']));
+                } else {
+                    $v['role'] = '';
+                }
                 array_push($new_list, $v);
             }
         }
@@ -76,18 +78,8 @@ class User extends Admin
 
             $userObj = new AuthUser;
             $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
+            $request['role_ids'] = is_array($request['ids']) ? implode(',', $request['ids']) : '';
             $userObj->allowField(true)->save($request);
-
-            if (is_array($request['ids'])) {
-                $userRoleObj = new AuthUserRole;
-                foreach($request['ids'] as $v) {
-                    $roleData = [
-                        'uid'     => $userObj->uid,
-                        'role_id' => $v,
-                    ];
-                    $userRoleObj->allowField(true)->save($roleData);
-                }
-            }
 
             if (is_numeric($userObj->uid)) {
                 return $this->response(200, Lang::get('Success'));
@@ -98,7 +90,7 @@ class User extends Admin
 
         // 角色列表
         $roleObj = new AuthRole;
-        $list = $roleObj->order('weighing asc')->select();
+        $list = $roleObj->order('sort asc')->select();
         $this->assign('list', $list);
         return $this->fetch('create');
     }
@@ -129,19 +121,9 @@ class User extends Admin
                 unset($request['repassword']);
             }
             $userObj = new AuthUser;
+            $request['role_ids'] = is_array($request['ids']) ? implode(',', $request['ids']) : '';
             $userObj->isUpdate(true)->allowField(true)->save($request);
 
-            if (is_array($request['ids'])) {
-                $userRoleObj = new AuthUserRole;
-                $userRoleObj->where('uid', 'eq', $request['uid'])->delete();
-                foreach($request['ids'] as $v) {
-                    $roleData = [
-                        'uid'     => $request['uid'],
-                        'role_id' => $v,
-                    ];
-                    $userRoleObj->insert($roleData);
-                }
-            }
 
             if (is_numeric($userObj->uid)) {
                 return $this->response(200, Lang::get('Success'));
@@ -156,80 +138,14 @@ class User extends Admin
         $info = AuthUser::where('uid', $id)->find();
 
         $roleObj = new AuthRole;
-        $list = $roleObj->order('weighing asc')->select();
+        $list = $roleObj->order('sort asc')->select();
 
-        $userRoleObj = new AuthUserRole;
-        $role = $userRoleObj->getRoleIds($id);
+        $role_ids = explode(',', $info->role_ids);;
 
         $this->assign('info', $info);
         $this->assign('list', $list);
-        $this->assign('role', $role);
+        $this->assign('role_ids', $role_ids);
         return $this->fetch('edit');
-    }
-
-    public function auth()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            $userSiteObj = new AuthUserSite;
-
-            // 如果为空 管理站点全部置空
-            if (empty($request['ids'])) {
-                $del = $userSiteObj->where('uid', $request['uid'])->delete();
-                if (is_numeric($del)) {
-                    return $this->response(200, Lang::get('Success'));
-                }else {
-                    return $this->response(201, Lang::get('Fail'));
-                }
-            } else {
-                // 先删除全部
-                $del = $userSiteObj->where('uid', $request['uid'])->delete();
-
-                foreach ($request['ids'] as $v) {
-                    $insertData = [
-                        'uid' => $request['uid'],
-                        'site_id' => $v,
-                    ];
-                    $ins = $userSiteObj->insertGetId($insertData);
-                }
-
-                if ($del !== false && $ins !== false) {
-                    return $this->response(200, Lang::get('Success'));
-                } else {
-                    return $this->response(201, Lang::get('Fail'));
-                }
-            }
-        }
-
-        // 当前角色信息
-        $id = Request::param('id');
-        $info = AuthUser::get($id);
-
-        // 获取所有站点列表
-        $siteObj = new Site;
-        $list = $siteObj
-            ->field('id,name')
-            ->order('id desc')
-            ->select();
-
-        // 获取当前用户管理的站点
-        $_hasList = AuthUserSite::where('uid', $id)->select();
-        $hasList = [];
-        if (!empty($_hasList)) {
-            foreach ($_hasList as $v) {
-                array_push($hasList, $v['site_id']);
-            }
-        }
-
-        $data = [
-            'info' => $info,
-            'list' => $list,
-            'haiList' => $hasList,
-        ];
-
-        return $this->fetch('auth', $data);
     }
 
     public function handle()

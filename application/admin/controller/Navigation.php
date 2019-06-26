@@ -46,7 +46,7 @@ class Navigation extends Admin
         // 列表
         $list = $nav
             ->where($map)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->select();
 
         // 获取栏目列表
@@ -103,19 +103,19 @@ class Navigation extends Admin
         if (!empty($request['ids'])) {
             foreach ($request['ids'] as $k => $v) {
                 $menu = $obj::get($v['id']);
-                $menu->weighing = $k;
+                $menu->sort = $k;
                 $menu->pid = 0;
                 $menu->save();
                 if (!empty($v['children'])) {
                     foreach ($v['children'] as $kk => $vv) {
                         $menu = $obj::get($vv['id']);
-                        $menu->weighing = $kk;
+                        $menu->sort = $kk;
                         $menu->pid = $v['id'];
                         $menu->save();
                         if (!empty($vv['children'])) {
                             foreach ($vv['children'] as $kkk => $vvv) {
                                 $menu = $obj::get($vvv['id']);
-                                $menu->weighing = $kkk;
+                                $menu->sort = $kkk;
                                 $menu->pid = $vv['id'];
                                 $menu->save();
                             }
@@ -152,7 +152,7 @@ class Navigation extends Admin
                     'site_id' => $this->site_id,
                     'name'    => $category->title,
                     'type'    => 1,
-                    'url'     => $category->cid,
+                    'url'     => '',
                 ];
             }
 
@@ -231,7 +231,7 @@ class Navigation extends Admin
                         $updateData = [
                             'id'       => $data['id'][$k],
                             'name'     => $data['name'][$k],
-                            'weighing' => $data['weighing'][$k],
+                            'sort' => $data['sort'][$k],
                         ];
                         $result = SiteConfig::updateCategoryConfig($this->site_id, $this->category, $updateData);
                     }
@@ -241,7 +241,7 @@ class Navigation extends Admin
                     foreach ($data['temp_name'] as $k => $v) {
                         $insertData = [
                             'name'     => $v,
-                            'weighing' => $data['temp_weighing'][$k],
+                            'sort' => $data['temp_sort'][$k],
                         ];
                         $result = SiteConfig::insertCategoryConfig($this->site_id, $this->category, $insertData);
                     }

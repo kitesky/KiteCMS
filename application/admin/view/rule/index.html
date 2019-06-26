@@ -1,0 +1,99 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Permission')}</a></li>
+      <li class=""><a href="{:url('admin/rule/create')}">{:lang('Create')}</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active table-responsive no-padding">
+        <table class="table table-condensed table-hover" id="permission">
+            <thead>
+                <tr>
+                    <th>{:lang('Name')} 
+                        <a href="#" onclick="jQuery('#permission').treetable('expandAll'); return false;" class="btn btn-flat btn-default btn-xs"><i class="fa fa-plus"></i></a>
+                        <a href="#" onclick="jQuery('#permission').treetable('collapseAll'); return false;" class="btn btn-flat btn-default btn-xs"><i class="fa fa-minus"></i></a>
+                    </th>
+                    <th>URL</th>
+                    <th>{:lang('Language variable')}</th>
+                    <th>{:lang('Menu')}</th>
+                    <th>{:lang('Action')}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {volist name="list" id="vo"}
+                <tr id = "tr_{$vo.id}" data-tt-id="{$vo.id}" data-tt-parent-id="{$vo.pid}">
+                    <td>{:lang($vo.lang_var)}</td>
+                    <td>{$vo.url}</td>
+                    <td>{$vo.lang_var}</td>
+                    <td>
+                        {switch vo.menu}
+                            {case 1}<small class="label bg-light-blue"><i class="fa fa-check"></i></small>{/case}
+                            {case 0}<small class="label bg-gray"><i class="fa fa-times"></i></small>{/case}
+                            {default /}
+                        {/switch}
+                    </td>
+                    <td>
+                        <a href="{:url('admin/rule/edit', ['id' => $vo['id']])}">{:lang('Edit')}</a>
+                        <a onclick="remove('{$vo.id}')" href="#">{:lang('Delete')}</a>
+                    </td>
+                </tr>
+                {/volist}
+            </tbody>
+        </table>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#permission").treetable({ expandable: true });
+        $("#permission").treetable('expandAll');
+    });
+
+    function remove(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+          if (result.value) {
+            $.ajax({
+                url:"{:Url('admin/rule/remove')}",
+                data:{'id':id},
+                type:'post',
+                dataType:'json',
+                success: function(xhr){
+                    if(xhr.code == 200){
+                        swal(xhr.msg, "","success").then(function(value){
+                            $("#tr_" + id).remove();
+                        });
+                    }else{
+                        swal(xhr.msg, "", "error");
+                    }
+                }
+            })
+          }
+        })
+    }
+</script>
+{/block}

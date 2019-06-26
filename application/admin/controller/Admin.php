@@ -56,7 +56,7 @@ class Admin extends Common
         View::share('current', $end['lang_var']);
 
         // 站点赋值
-        View::share('site_list', Auth::site($session['uid']));
+        View::share('site_list', Auth::getSite($session['uid']));
         View::share('site_id', isset($site->site_id) ? $site->site_id : null);
         View::share('site_name', isset($site->name) ? $site->name : null);
         View::share('site_url', isset($site->domain) ? $site->domain : null);
@@ -151,13 +151,13 @@ class Admin extends Common
     
     /**
      * 扫描目录中的文件
-     * @params $templateName string 目模板目录名称
+     * @params $templateDir string 目模板目录名称
      * @return array
      */
-    public function getTpl($template, $type = '')
+    public function getTpl($templateDir, $type = '')
     {
-        $template = $template ? $template : 'default';
-        $dir = Env::get('root_path') . 'theme' . DIRECTORY_SEPARATOR . $template;
+        $templateDir = $templateDir ? $templateDir : 'default';
+        $dir = Env::get('root_path') . 'theme' . DIRECTORY_SEPARATOR . $templateDir;
         $files = $this->scanFiles($dir);
 
         $list = [];

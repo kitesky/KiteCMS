@@ -33,6 +33,7 @@
                     <td>
                         <a href="{:url('admin/role/edit', ['id' => $vo['role_id']])}">{:lang('Edit')}</a>
                         <a href="{:url('admin/role/auth', ['id' => $vo['role_id']])}">{:lang('Authorize')}</a>
+                        <a href="{:url('admin/role/siteAuth', ['id' => $vo['role_id']])}">{:lang('Site authorize')}</a>
                         <a onclick="remove('{$vo.role_id}')" href="#">{:lang('Delete')}</a>
                     </td>
                 </tr>

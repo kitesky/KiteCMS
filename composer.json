@@ -22,7 +22,8 @@
         "topthink/think-image": "^1.0",
         "aliyuncs/oss-sdk-php": "^2.3",
         "qiniu/php-sdk": "^7.2",
-        "phpmailer/phpmailer": "^6.0"
+        "phpmailer/phpmailer": "^6.0",
+        "zzstudio/think-addons": "dev-master"
     },
     "autoload": {
         "psr-4": {

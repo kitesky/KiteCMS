@@ -17,62 +17,32 @@ class Document extends Admin
     {
         $request = Request::param();
 
-        $documentObj = new DocumentContent;
+        $query = [
+            'site_id' => $this->site_id,
+            'cid'     => isset($request['cid']) ? $request['cid'] : '',
+            'q'       => isset($request['q']) ? $request['q'] : '',
+            'option'  => isset($request['option']) ? $request['option'] : '',
+        ];
 
-        $map    = [];
-        $params = [];
-        $search = [];
-
-        // 关键词
-        if (isset($request['q'])) {
-            $q           = ['title','like','%'.$request['q'].'%'];
-            $params['q'] = $request['q'];
-            $search['q'] = $request['q'];
-            array_push($map, $q);
-        }else {
-            $q = [];
-            $search['q'] = '';
-        }
-
-        // 类别
-        if (isset($request['cid']) && is_numeric($request['cid'])) {
-            $cid           = ['cid','=',$request['cid']];
-            $params['cid'] = $request['cid'];
-            $search['cid'] = $request['cid'];
-            array_push($map, $cid);
-        }else {
-            $cid = '';
-            $search['cid'] = '';
-        }
-
-        // 选项
-        if (isset($request['option']) && !is_numeric($request['option'])) {
-            $option           = [$request['option'],'=',1];
-            $params['option'] = $request['option'];
-            $search['option'] = $request['option'];
-            array_push($map, $option);
-        }else {
-            $option = '';
-            $search['option'] = '';
-        }
+        $args = [
+            'query'  => $query,
+            'field'  => '',
+            'order'  => 'id desc',
+            'params' => $query,
+            'limit'  => 20,
+        ];
 
         // 分页列表
-        $list = $documentObj
-            ->where($map)
-            ->where('site_id', 'eq', $this->site_id)
-            ->order('id desc')
-            ->paginate(20, false, [
-                'type'     => 'bootstrap',
-                'var_page' => 'page',
-                'query'    => $params,
-            ]);
+        $documentObj = new DocumentContent;
+        $list = $documentObj->select($args);
+
 
         // 获取分类列表
         $cateObj = new DocumentCategory;
         $category = $cateObj->getCategoryForLevel($this->site_id);
 
         $data = [
-            'search'   => $search,
+            'search'   => $query,
             'category' => $category,
             'list'     => $list,
             'page'     => $list->render(),

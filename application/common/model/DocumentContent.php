@@ -23,6 +23,66 @@ class DocumentContent extends Model
         return self::where('cid', $cid)->count();
     }
 
+    public function select($request)
+    {
+        $query = []; 
+
+        // title
+        if (isset($request['query']['q']) && is_numeric($request['query']['q'])) {
+            $query[] = ['title','like','%'.$request['query']['q'].'%'];
+        }
+
+        // cid
+        if (!empty($request['query']['cid'])) {
+            $query[] = ['cid', 'eq', $request['query']['cid']];
+        }
+
+        // site_id
+        if (!empty($request['query']['site_id'])) {
+            $query[] = ['site_id', 'eq', $request['query']['site_id']];
+        }
+
+        // option
+        if (!empty($request['query']['option'])) {
+            $query[] = [$request['query']['option'], 'eq', 1];
+        }
+
+        // 字段过滤
+        $field = '*';
+        if (!empty($request['field'])) {
+            $field = $request['field'];
+        }
+
+        // 排序
+        $order = 'id desc';
+        if (!empty($request['order'])) {
+            $order = $request['order'];
+        }
+
+        // 分页参数
+        $params = [];
+        if (!empty($request['params'])) {
+            $params = $request['params'];
+        }
+
+        // 每页数量
+        $limit = 20;
+        if (!empty($request['limit'])) {
+            $limit = $request['limit'];
+        }
+
+        $list = self::where($query)
+            ->field($field)
+            ->order($order)
+            ->paginate($limit, true, [
+                'type'     => 'bootstrap',
+                'var_page' => 'page',
+                'query'    => $params,
+            ]);
+
+        return $list;
+    }
+
     public function remove($site_id, $id)
     {
         $document = self::where('id', $id)->find();

@@ -18,7 +18,7 @@ class DocumentCategory extends Model
     public function getCategoryChildByPid($pid)
     {
         return self::where('pid', $pid)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->select();
     }
 
@@ -27,7 +27,7 @@ class DocumentCategory extends Model
         $list = self::where('c.site_id', $site_id)
             ->field('c.*, m.name as model_name')
             ->alias('c')
-            ->order('weighing asc')
+            ->order('sort asc')
             ->join('document_model m','c.model_id = m.id')
             ->select();
 

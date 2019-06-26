@@ -6,6 +6,8 @@ use think\Model;
 
 class AuthUserRole extends Model
 {
+    protected $pk = 'role_id';
+
     public function getRoleList($uid)
     {
         return Db::name('auth_user_role')
@@ -13,7 +15,7 @@ class AuthUserRole extends Model
             ->alias('ur')
             ->join('auth_role r','r.role_id = ur.role_id')
             ->where('ur.uid', $uid)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->select();
     }
 

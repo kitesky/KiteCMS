@@ -79,7 +79,7 @@ class SiteConfig extends Model
 
         if (isset($value->v)) {
             $list = json_decode($value->v, true);
-            array_multisort(array_column($list, 'weighing'),SORT_ASC,$list);
+            array_multisort(array_column($list, 'sort'),SORT_ASC,$list);
             return $list;
         } else {
             return false;
@@ -100,7 +100,7 @@ class SiteConfig extends Model
             $list = [];
             $id = 1;
         }
-        if (isset($data['name']) && isset($data['weighing'])) {
+        if (isset($data['name']) && isset($data['sort'])) {
             $data['id'] = $id;
             array_push($list, $data);
             $v = json_encode($list, JSON_UNESCAPED_UNICODE);
@@ -118,7 +118,7 @@ class SiteConfig extends Model
         foreach ($list as $v) {
             if ($v['id'] == $data['id']) {
                 $v['name'] = $data['name'];
-                $v['weighing'] = $data['weighing'];
+                $v['sort'] = $data['sort'];
             }
 
             $newList[] = $v;

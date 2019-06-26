@@ -54,7 +54,7 @@ class DocumentField extends Admin
         // 分页列表
         $list = $fieldObj
             ->where($map)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->paginate(20, false, [
                 'type'     => 'bootstrap',
                 'var_page' => 'page',
@@ -204,7 +204,7 @@ class DocumentField extends Admin
                         $updateData = [
                             'id'       => $data['id'][$k],
                             'name'     => $data['name'][$k],
-                            'weighing' => $data['weighing'][$k],
+                            'sort' => $data['sort'][$k],
                         ];
                         $result = SiteConfig::updateCategoryConfig($this->site_id, $this->category, $updateData);
                     }
@@ -214,7 +214,7 @@ class DocumentField extends Admin
                     foreach ($data['temp_name'] as $k => $v) {
                         $insertData = [
                             'name'     => $v,
-                            'weighing' => $data['temp_weighing'][$k],
+                            'sort' => $data['temp_sort'][$k],
                         ];
                         $result = SiteConfig::insertCategoryConfig($this->site_id, $this->category, $insertData);
                     }

@@ -60,7 +60,7 @@ class Category extends Admin
 
         // 获取模型列表
         $modelObj = new DocumentModel;
-        $model = $modelObj->where('site_id', $this->site_id)->order('weighing asc')->select();
+        $model = $modelObj->where('site_id', $this->site_id)->order('sort asc')->select();
 
         // 查询站点模版
         $siteObj = new Site;
@@ -69,8 +69,8 @@ class Category extends Admin
         $data = [
             'category'  => $category,
             'model'     => $model,
-            'list_tpl'   => $this->getTpl($template, 'list'),
-            'detail_tpl' => $this->getTpl($template, 'detail'),
+            'list_tpl'   => $this->getTpl($template, 'category'),
+            'detail_tpl' => $this->getTpl($template, 'document'),
         ];
 
         return $this->fetch('create', $data);
@@ -107,7 +107,7 @@ class Category extends Admin
 
         // 获取模型列表
         $modelObj = new DocumentModel;
-        $model = $modelObj->where('site_id', $this->site_id)->order('weighing asc')->select();
+        $model = $modelObj->where('site_id', $this->site_id)->order('sort asc')->select();
 
         // 获取分类信息
         $info = $cateObj::get($id);
@@ -120,8 +120,8 @@ class Category extends Admin
             'category' => $category,
             'model'    => $model,
             'info'     => $info,
-            'list_tpl'   => $this->getTpl($template, 'list'),
-            'detail_tpl' => $this->getTpl($template, 'detail'),
+            'list_tpl'   => $this->getTpl($template, 'category'),
+            'detail_tpl' => $this->getTpl($template, 'document'),
         ];
 
         return $this->fetch('edit', $data);

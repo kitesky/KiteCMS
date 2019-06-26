@@ -36,7 +36,7 @@
                                 <input class="form-control input-sm" name="name[]" type="text" value="{$vo.name}">
                             </td>
                             <td>
-                                <input class="form-control input-sm" name="weighing[]" type="text" value="{$vo.weighing}">
+                                <input class="form-control input-sm" name="sort[]" type="text" value="{$vo.sort}">
                             </td>
                             <td>
                                 <button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm">
@@ -57,7 +57,7 @@
                                 <input class="form-control input-sm" name="temp_name[]" type="text">
                             </td>
                             <td>
-                                <input class="form-control input-sm" name="temp_weighing[]" type="text">
+                                <input class="form-control input-sm" name="temp_sort[]" type="text">
                             </td>
                             <td>
                                 <button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm">
@@ -109,7 +109,7 @@
     function temp_add(obj){
         var html = '<tr><td></td>';
         html += '<td><input class="form-control input-sm" name="temp_name[]" type="text"></td>';
-        html += '<td><input class="form-control input-sm" name="temp_weighing[]" type="text"></td>';
+        html += '<td><input class="form-control input-sm" name="temp_sort[]" type="text"></td>';
         html += '<td><button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm"><i class="fa fa-fw fa-plus-circle"></i></button></td>';
         html += '<td><button onclick="temp_del(this);" type="button" class="btn btn-block btn-default btn-flat input-sm"><i class="fa fa-fw fa-minus"></i></button>';
         html += '</td></tr>';
@@ -137,17 +137,17 @@
         $('input[name="name[]"]').each(function(){ 
             chk_name.push($(this).val()); 
         });
-        var chk_weighing =[]; 
-        $('input[name="weighing[]"]').each(function(){ 
-            chk_weighing.push($(this).val()); 
+        var chk_sort =[]; 
+        $('input[name="sort[]"]').each(function(){ 
+            chk_sort.push($(this).val()); 
         });
         var temp_name =[]; 
         $('input[name="temp_name[]"]').each(function(){ 
             temp_name.push($(this).val()); 
         });
-        var temp_weighing =[]; 
-        $('input[name="temp_weighing[]"]').each(function(){ 
-            temp_weighing.push($(this).val()); 
+        var temp_sort =[]; 
+        $('input[name="temp_sort[]"]').each(function(){ 
+            temp_sort.push($(this).val()); 
         });
         var type = $('#type option:selected').val() ;
         if(chk_id.length < 1 && temp_name.length < 1){
@@ -176,9 +176,9 @@
                         'type':type,
                         'id':chk_id,
                         'name':chk_name,
-                        'weighing':chk_weighing,
+                        'sort':chk_sort,
                         'temp_name':temp_name,
-                        'temp_weighing':temp_weighing
+                        'temp_sort':temp_sort
                     },
                     type:'post',
                     dataType:'json',

@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
-    'think\\' => array($vendorDir . '/topthink/think-image/src'),
+    'think\\' => array($vendorDir . '/topthink/think-image/src', $vendorDir . '/zzstudio/think-addons/src'),
     'app\\' => array($baseDir . '/application'),
     'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),

@@ -1,0 +1,155 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/rule/index')}">{:lang('Permission')}</a></li>
+      <li class="active"><a href="#">{:lang('Create')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{:lang('Parent')}</label>
+              <div class="row">
+              <div class="col-md-2">
+              <select name="pid" class="form-control input-sm">
+                <option value="0">{:lang('Root')}</option>
+                {volist name="list" id="vo"}
+                <option value="{$vo.id}">
+                    {eq name="vo.pid" value="0"}
+                        <{$vo.name}>
+                    {else/}
+                        {$vo.html} {$vo.name}
+                    {/eq}
+                </option>
+                {/volist}
+              </select>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Name')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-4">
+              <input type="text" name="name" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label>URL <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-4">
+              <input type="text" name="url" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block">{:lang('Example')}："admin/index/index"，"#"。</p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Language variable')} <span class="text-red">*</span></label>
+              <div class="row">
+              <div class="col-md-4">
+              <input type="text" name="lang_var" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block">{:lang('Example')}：Control panel</p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Icon')}</label>
+              <div class="row">
+              <div class="col-md-4">
+              <input type="text" name="icon" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block">{:lang('Example')}：fa fa-home</p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Remark')}</label>
+              <div class="row">
+              <div class="col-md-4">
+              <input type="text" name="description" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Menu')}</label>
+              <div class="row">
+              <div class="col-md-2">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="menu" value="1"> {:lang('Yes')}
+                    </label>
+                    <label>
+                        <input type="radio" name="menu" checked="" value="0"> {:lang('No')}
+                    </label>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Sort')}</label>
+              <div class="row">
+              <div class="col-md-2">
+              <input type="text" name="sort" class="form-control input-sm" placeholder="">
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="submit"> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/rule/create')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

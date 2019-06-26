@@ -1,0 +1,130 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/hooks/index')}">{:lang('Hooks')}</a></li>
+      <li class=""><a href="{:url('admin/hooks/create')}">{:lang('Create')}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+          <div class="form-group">
+            <label>{:lang('Name')}</label>
+            <div class="row">
+            <div class="col-md-6">
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="text" name="name" class="form-control input-sm" value="{$info.name}">
+            </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{:lang('Description')}</label>
+            <div class="row">
+            <div class="col-md-6">
+              <textarea class="form-control input-sm" name="description" rows="10">{$info.description}</textarea></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{:lang('Type')}</label>
+            <div class="row">
+            <div class="col-md-2">
+            <select name="type" class="form-control">
+              <option {eq name="info.type" value="1"}selected{/eq} value="1">控制器</option>
+              <option {eq name="info.type" value="2"}selected{/eq} value="2">视图</option>
+            </select>
+            </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{:lang('Addons')}</label>
+            <div class="row">
+            <div class="col-md-2">
+              <input type="hidden" name="addons" value="{$info.addons}">
+              {notempty name="addons"}
+              <div class="dd" data-plugin="nestable">
+                <ol class="dd-list">
+                  {volist name="addons" id="vo"}
+                  <li class="dd-item dd-item-alt" data-id="{$vo}">
+                    <div class="dd-handle"></div>
+                    <div class="dd-content">{$vo}</div>
+                  </li>
+                  {/volist}
+                </ol>
+              </div>
+              {else /}
+              暂无挂载当前钩子的插件
+              {/notempty}
+            </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    $('.dd').nestable({ 
+        maxDepth:1,
+    });
+    $('.dd').on('change', function() {
+        var data = $('.dd').nestable('serialize');console.log(data);
+        var arr = [];
+        for (var i=0;i<data.length;i++){ 
+            arr[i] = data[i].id;
+        }
+        $("[name='addons']").val(arr.join(","));
+        
+    });
+
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/hooks/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

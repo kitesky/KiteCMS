@@ -256,7 +256,7 @@ class Kite
      * @param $pid int 栏目pid
      * @return array
      */
-    public function getAllCategoryTree($site_id = 1, $pid = 0, $order = 'weighing asc')
+    public function getAllCategoryTree($site_id = 1, $pid = 0, $order = 'sort asc')
     {
         $cateObj = new DocumentCategory;
         $docObj = new DocumentContent;
@@ -331,7 +331,7 @@ class Kite
         $list = $cateObj
             ->where('site_id', $site_id)
             ->where('status', 1)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->select();
 
         // 获取栏目ID 及所有父级ID
@@ -364,7 +364,7 @@ class Kite
      * @param $cid int 栏目pid
      * @return array
      */
-    public function getLinkList($site_id = 1, $cid = 0, $limit = 10, $order = 'weighing asc')
+    public function getLinkList($site_id = 1, $cid = 0, $limit = 10, $order = 'sort asc')
     {
         $linkObj = new Link;
         return $linkObj
@@ -382,7 +382,7 @@ class Kite
      * @param $cid int 栏目pid
      * @return array
      */
-    public function getSiteList($order = 'weighing asc')
+    public function getSiteList($order = 'sort asc')
     {
         $site = new Site;
         return $site
@@ -397,7 +397,7 @@ class Kite
      * @param $cid int 栏目pid
      * @return array
      */
-    public function getSliderList($site_id = 1, $cid = 0, $limit = 3, $order = 'weighing asc')
+    public function getSliderList($site_id = 1, $cid = 0, $limit = 3, $order = 'sort asc')
     {
         $sliderObj = new Slider;
         return $sliderObj
@@ -431,7 +431,7 @@ class Kite
      * @param $cid int 导航菜单ID
      * @return array
      */
-    public function getNavigationForTree($site_id = 1, $cid = 0, $order = 'weighing asc')
+    public function getNavigationForTree($site_id = 1, $cid = 0, $order = 'sort asc')
     {
         $cat_id = Request::param('cat_id');
 

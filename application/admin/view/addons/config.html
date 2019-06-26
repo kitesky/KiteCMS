@@ -1,0 +1,277 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+
+
+    <form role="form" id="operate">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">插件配置 [ {$data.title} ]</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                    {empty name="custom_config"}
+                    {foreach $data.config as $k=>$v }
+                        {switch v.type}
+                          {case text}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                <div class="col-md-4">
+                                <input type="text" name="{$k}" value="{$v.value}" class="form-control input-sm">
+                                </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case password}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                <div class="col-md-4">
+                                <input type="password" name="{$k}" value="{$v.value}" class="form-control input-sm">
+                                </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case hidden}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                <div class="col-md-4">
+                                <input type="hidden" name="{$k}" value="{$v.value}" class="form-control input-sm">
+                                </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case radio}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="radio">
+                                      {foreach $v.options as $opt_k=>$opt_v}
+                                      <label class="radio-inline">
+                                        <input type="radio" {in name="opt_k" value="$v.value"}checked{/in} name="{$k}" value="{$opt_k}"> {$opt_v}
+                                      </label>
+                                      {/foreach}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case checkbox}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="radio">
+                                      {foreach $v.options as $opt_k=>$opt_v}
+                                        <label class="checkbox-inline">
+                                          <input type="checkbox" name="{$k}" {in name="opt_k" value="$v.value"}checked{/in} value="{$opt_k}"> {$opt_v}
+                                        </label>
+                                      {/foreach}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case select}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <select name="{$k}" class="form-control">
+                                      {foreach $v.options as $opt_k=>$opt_v}
+                                        <option {in name="opt_k" value="$v.value"}selected{/in} value="{$opt_k}">{$opt_v}</option>
+                                      {/foreach}
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case textarea}
+                              <div class="form-group">
+                                <label>{$v.title}</label>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <textarea class="form-control input-sm" name="{$k}" rows="3">{$v.value}</textarea>
+                                  </div>
+                                </div>
+                              </div>
+                          {/case}
+                          {case group}
+                              <div class="nav-tabs-custom">
+                                  <ul class="nav nav-tabs">
+                                    {volist name="v.options" id="li"}
+                                    <li {eq name="i" value="1"}class="active"{/eq}><a href="#tab_{$i}" data-toggle="tab">{$li.title}</a></li>
+                                    {/volist}
+                                  </ul>
+                                  <div class="tab-content">
+                                    {volist name="v.options" id="tab"}
+                                    <div class="tab-pane {eq name='i' value='1'}active{/eq}" id="tab_{$i}">
+                                          {foreach $tab.options as $tab_k => $tab_v}
+                                            {switch tab_v.type}
+                                              {case text}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                    <div class="col-md-4">
+                                                    <input type="text" name="{$tab_k}" value="{$tab_v.value}" class="form-control input-sm">
+                                                    </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case password}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                    <div class="col-md-4">
+                                                    <input type="password" name="{$tab_k}" value="{$tab_v.value}" class="form-control input-sm">
+                                                    </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case hidden}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                    <div class="col-md-4">
+                                                    <input type="hidden" name="{$tab_k}" value="{$tab_v.value}" class="form-control input-sm">
+                                                    </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case radio}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                      <div class="col-md-4">
+                                                        <div class="radio">
+                                                          {foreach $tab_v.options as $opt_k=>$opt_v}
+                                                          <label class="radio-inline">
+                                                            <input type="radio" {in name="opt_k" value="$tab_v.value"}checked{/in} name="{$tab_k}" value="{$opt_k}"> {$opt_v}
+                                                          </label>
+                                                          {/foreach}
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case checkbox}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                      <div class="col-md-4">
+                                                        <div class="radio">
+                                                          {foreach $tab_v.options as $opt_k=>$opt_v}
+                                                            <label class="checkbox-inline">
+                                                              <input type="checkbox" name="{$tab_k}" {in name="opt_k" value="$tab_v.value"}checked{/in} value="{$opt_k}"> {$opt_v}
+                                                            </label>
+                                                          {/foreach}
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case select}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                      <div class="col-md-4">
+                                                        <select name="{$tab_k}" class="form-control">
+                                                          {foreach $tab_v.options as $opt_k=>$opt_v}
+                                                            <option {in name="opt_k" value="$tab_v.value"}selected{/in} value="{$opt_k}">{$opt_v}</option>
+                                                          {/foreach}
+                                                        </select>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                              {case textarea}
+                                                  <div class="form-group">
+                                                    <label>{$tab_v.title}</label>
+                                                    <div class="row">
+                                                      <div class="col-md-4">
+                                                        <textarea class="form-control input-sm" name="{$tab_k}" rows="3">{$tab_v.value}</textarea>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              {/case}
+                                            {/switch}
+                                          {/foreach}
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    {/volist}
+                                  </div>
+                                  <!-- /.tab-content -->
+                              </div>
+                          {/case}
+                          {default /}
+                      {/switch}
+                    {/foreach}
+                    {else /}
+                      {present name="custom_config"}
+                        {$custom_config}
+                      {/present>
+                    {/empty}
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="btn-group">
+                            <input type="hidden" name="id" value="{$data.id}">
+                            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/addons/config')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

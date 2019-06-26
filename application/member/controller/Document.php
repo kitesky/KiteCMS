@@ -90,7 +90,7 @@ class Document extends Base
                 $v->url = url('index/document/index', ['id' => $v->id]);;
                 $cate = $cateObj->getCategoryById($this->site_id, $v->cid);
                 $v->cate_name = $cate->title;
-                $v->cate_url  = url('index/category/index', ['cate_id' =>$cate->id]);
+                $v->cate_url  = url('index/category/index', ['cat_id' =>$cate->id]);
             }
         }
 

@@ -62,7 +62,7 @@ class DocumentModel extends Model
             ->alias('mf')
             ->join('document_field f','f.id = mf.field_id')
             ->where('mf.model_id', $model_id)
-            ->order('mf.weighing asc')
+            ->order('mf.sort asc')
             ->select();
     }
 
@@ -71,7 +71,7 @@ class DocumentModel extends Model
     {
         $fields = Db::name('document_model_field')
             ->where('model_id', $model_id)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->select();
         // echo Db::name('document_model_field')->getLastSql();die;
         $list = [];

@@ -1,5 +1,5 @@
 <?php
-namespace app\Common\controller;
+namespace app\common\controller;
 
 use think\facade\View;
 use think\facade\Request;
@@ -51,13 +51,11 @@ class IndexCommon extends Common
 
         // 站点信息赋值
         $this->site_id    = $siteInfo->id;
-        $this->site_alias = $siteInfo->alias;
         $this->site_name  = $siteInfo->name;
         $this->theme      = $siteInfo->theme ? $siteInfo->theme : 'default';
 
         // 设置session
         Session::set('site_id', $siteInfo->id, 'index');
-        Session::set('site_alias', $siteInfo->alias, 'index');
 
         $user_auth = Session::get('user_auth', 'index');
         $this->uid = isset($user_auth) ? $user_auth['uid'] : null;

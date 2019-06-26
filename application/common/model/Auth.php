@@ -6,6 +6,10 @@ use think\Db;
 use think\facade\Session;
 use think\facade\Request;
 use think\facade\Url;
+use app\common\model\AuthRole;
+use app\common\model\AuthUser;
+use app\common\model\AuthRule;
+use app\common\model\Site;
 
 class Auth extends Model
 {
@@ -16,23 +20,23 @@ class Auth extends Model
      */
     static public function check($resource)
     {
-        // 获取permission_id
-        $permission_id = Db::name('auth_permission')
+        // 获取rule_id
+        $rule_id = Db::name('auth_rule')
             ->where('url', 'like', $resource)
             ->value('id');
 
-        // 当permission_id在权限控制表中 进行权限校验
+        // 当rule_id在权限控制表中 进行权限校验
         $bool = false;
-        if (is_numeric($permission_id)) {
+        if (is_numeric($rule_id)) {
             // 校验资源权限
             $session = Session::get('user_auth', 'admin');
-            $permission = self::getPermission($session['uid']);
+            $rule = self::getRule($session['uid']);
             $ids = [];
-            if (!empty($permission)) {
-                foreach ($permission as $v) {
+            if (!empty($rule)) {
+                foreach ($rule as $v) {
                     array_push($ids, $v['id']);
                 }
-                if (in_array($permission_id, $ids)) {
+                if (in_array($rule_id, $ids)) {
                     $bool = true;
                 } else {
                     $bool = false;
@@ -67,22 +71,22 @@ class Auth extends Model
      */
     static public function breadcrumb()
     {
-        $permission = Db::name('auth_permission')
+        $rule = Db::name('auth_rule')
             ->field('id,pid,name,description,url,lang_var')
             ->where('url', get_path_url())
             ->find();
 
-        $permission_list = Db::name('auth_permission')
+        $rule_list = Db::name('auth_rule')
             ->field('id,pid,name,description,url,lang_var')
             ->select();
 
         // 获取当前URL所有父ID
-        $praents = get_parents($permission_list, $permission['id']);
+        $praents = get_parents($rule_list, $rule['id']);
 
         $breadcrumb = [];
         if (!empty($praents)) {
             foreach ($praents as $v) {
-                if ($v['id'] == $permission['id']) {
+                if ($v['id'] == $rule['id']) {
                     $v['active'] = 'active';
                 } else {
                     $v['active'] = '';
@@ -102,7 +106,7 @@ class Auth extends Model
      */
     static public function menu()
     {
-        $permission_id = Db::name('auth_permission')
+        $rule_id = Db::name('auth_rule')
             ->where('url', get_path_url())
             ->value('id');
 
@@ -110,13 +114,13 @@ class Auth extends Model
         $session = Session::get('user_auth', 'admin');
 
         // 获取所有权限集合
-        $permission = self::getPermission($session['uid']);
-        if (empty($permission)) {
+        $rule = self::getRule($session['uid']);
+        if (empty($rule)) {
             return false;
         }
 
          // 获取当前URL所有父ID
-        $praents = get_parents($permission, $permission_id);
+        $praents = get_parents($rule, $rule_id);
         $ids = [];
         if (!empty($praents)) {
             foreach ($praents as $v) {
@@ -126,7 +130,7 @@ class Auth extends Model
 
         // 遍历数组 增加active标识
         $menu = array();
-        foreach($permission as $v) {
+        foreach($rule as $v) {
             // 给父级ID添加ACTIVE表示
             if(in_array($v['id'], $ids)) {
                 $v['active'] = 'active'; // 该栏目是否高亮
@@ -169,7 +173,7 @@ class Auth extends Model
     static public function createSession($user)
     {
         // 设置默认站点SESSION
-        $site = self::site($user['uid']);
+        $site = self::getSite($user['uid']);
         if (isset($site)) {
             $default = reset($site);
             Session::set('site_id', $default['id'], 'admin');
@@ -196,15 +200,43 @@ class Auth extends Model
      * @params $uid int 用户UID
      * @return array
      */
-    static public function site($uid)
+    static public function getSite($uid)
     {
-        return Db::name('auth_user_site')
-            ->alias('us')
-            ->field('s.id,s.name,s.alias,s.domain,s.theme')
-            ->where('us.uid', $uid)
-            ->join('site s','s.id = us.site_id')
-            ->order('s.weighing', 'asc')
-            ->select();
+        $userObj = new AuthUser;
+        $user = $userObj->find($uid);
+        $siteList = [];
+        if (!empty($user['role'])) {
+            foreach ($user['role'] as $v) {
+                if (!empty($v['site_ids'])) {
+                    $ids = explode(',', $v['site_ids']);
+                    $siteList = array_merge($siteList, $ids);
+                }
+            }
+        }
+
+        $newSiteList = [];
+        $siteList = array_unique($siteList);
+        if (!empty($siteList)) {
+            foreach ($siteList as $v) {
+                $newSiteList[] = Site::get($v);
+            }
+        }
+
+        return $newSiteList;
+    }
+    
+    public function getSiteIds($uid)
+    {
+        $site_list = self::getSite($uid);
+
+        $ids = [];
+        if (is_array($site_list)) {
+            foreach ($site_list as $v) {
+                $ids[] = $v['id'];
+            }
+        }
+
+        return $ids;
     }
     
     /**
@@ -213,32 +245,29 @@ class Auth extends Model
      * @params $uid int 用户UID
      * @return array
      */
-    static public function getPermission($uid)
-    {
-        $roleList = Db::name('auth_user_role')
-            ->where('uid', $uid)
-            ->select();
-
-        $permissionList = [];
-        if (!empty($roleList)) {
-            foreach ($roleList as $v) {
-                $auth_role_permission = Db::name('auth_role_permission')
-                    ->alias('rp')
-                    ->field('p.*')
-                    ->where('rp.role_id', $v['role_id'])
-                    ->join('auth_permission p','p.id = rp.permission_id')
-                    ->order('p.weighing', 'asc')
-                    ->select();
-                if (!empty($auth_role_permission)) {
-                    foreach ($auth_role_permission as $vv) {
-                        if (!in_array($vv, $permissionList))
-                        array_push($permissionList, $vv);
-                    }
+    static public function getRule($uid)
+    {   
+        $userObj = new AuthUser;
+        $user = $userObj->find($uid);
+        $ruleList = [];
+        if (!empty($user['role'])) {
+            foreach ($user['role'] as $v) {
+                if (!empty($v['rule_ids'])) {
+                    $ids = explode(',', $v['rule_ids']);
+                    $ruleList = array_merge($ruleList, $ids);
                 }
             }
         }
 
-        return $permissionList;
+        $newRuleList = [];
+        $ruleList = array_unique($ruleList);
+        if (!empty($ruleList)) {
+            foreach ($ruleList as $v) {
+                $newRuleList[] = AuthRule::get($v);
+            }
+        }
+
+        return $newRuleList;
     }
 
 }

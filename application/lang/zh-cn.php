@@ -38,7 +38,8 @@ return [
     'Add'                    => '添加',
     'Check all'              => '全选',
     'Validate'               => '验证',
-
+    'Remove'                 => '删除',
+    'Handle'                 => '操作',
 
     // 文档类型
     'Image'                  => '图片',
@@ -99,6 +100,7 @@ return [
     'Model field'            => '模型字段',
     'Icon'                   => '图标',
     'Remark'                 => '备注',
+    'Mark'                   => '标识',
     'Logo'                   => '网站标志',
     'Theme'                  => '主题',
     'Time zone'              => '时区',
@@ -182,6 +184,7 @@ return [
     'Document total'         => '文档数量',
     'Comments total'         => '评论数量',
     'Member total'           => '会员数量',
+    'Site total'             => '站点数量',
     'Server'                 => '服务器信息',
     'System'                 => '操作系统',
     'Software'               => '环境信息',
@@ -195,8 +198,16 @@ return [
     'Server port'            => '服务器端口',
     'Website'                => '官方网站',
     'Community'              => '社区支持',
-    'Version'                => '系统版本',
+    'Version'                => '版本',
     'Devoloper'              => '系统设计',
+    'Author'                 => '作者',
+    'Install'                => '安装',
+    'Uninstall '             => '卸载',
+    'Enable'                 => '启用',
+    'Disable'                => '禁用',
+    'Damage'                 => '损坏',
+    'Config'                 => '配置',
+    'Manage'                 => '管理',
 
     // member permission
     'Member index'          => '会员中心',
@@ -211,6 +222,17 @@ return [
     'Mobile bind'           => '手机绑定',
     'Email bind'            => 'Email绑定',
     'Password update'       => '密码更新',
+    
+    // addons
+    'Addons'                => '插件',
+    'Addons install'        => '安装插件',
+    'Addons uninstall'      => '插件卸载',
+    'Addons enable'         => '启用插件',
+    'Addons disable'        => '禁用插件',
+    'Addons config'         => '插件配置',
+    'Hooks'                 => '钩子',
+    
+    
 
     // Mysql Field
     'System'                        => '系统',
@@ -230,7 +252,6 @@ return [
     'Permission update'             => '权限编辑',
     'Delete site'                   => '删除站点',
     'Update site'                   => '更新站点',
-    'Site authorization'            => '站点授权',
     'User batch operation'          => '批量操作用户',
     'Delete User'                   => '删除用户',
     'Update User'                   => '更新用户',
@@ -299,4 +320,7 @@ return [
     'Navigation category'           => '菜单管理',
     'Remove navigation category'    => '删除菜单',
     'Handle navigation category'    => '菜单操作',
+    'Batch operation'               => '批量操作',
+    'Menu'                          => '菜单',
+    'Site authorize'                => '站点授权',
 ];

@@ -22,7 +22,7 @@ class Navigation extends Model
             ->value('id');
     }
 
-    public function getNavigation($site_id, $cid, $order = 'weighing asc')
+    public function getNavigation($site_id, $cid, $order = 'sort asc')
     {
         return self::where('site_id', $site_id)
             ->where('cid', $cid)

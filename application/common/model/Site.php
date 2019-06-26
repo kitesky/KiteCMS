@@ -17,11 +17,16 @@ class Site extends Model
 
     public function getSiteByDomain($domain)
     {
-        return self::where('domain', $domain)->find();
+        return Site::where('domain', $domain)->find();
     }
 
     public function getDefaultSite()
     {
-        return self::where('id', '>', 0)->order('id', 'asc')->find();
+        return Site::where('id', '>', 0)->order('id', 'asc')->find();
+    }
+
+    public function getSiteList()
+    {
+        return Site::all();
     }
 }

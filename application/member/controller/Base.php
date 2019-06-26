@@ -21,16 +21,14 @@ class Base extends IndexCommon
     }
     protected function getMemberMenu()
     {
-        $url = strtolower(Request::module() . '/' . Request::controller() . '/' .Request::action());
+        $rule = Db::name('user_nav')->select();
 
-        $permission = Db::name('user_nav')->select();
-
-        $permission_id = Db::name('user_nav')
-            ->where('url', $url)
+        $rule_id = Db::name('user_nav')
+            ->where('url', get_path_url())
             ->value('id');
 
          // 获取当前URL所有父ID
-        $praents = get_parents($permission, $permission_id);
+        $praents = get_parents($rule, $rule_id);
         $ids = [];
         if (!empty($praents)) {
             foreach ($praents as $v) {
@@ -40,7 +38,7 @@ class Base extends IndexCommon
 
         // 遍历数组 增加active标识
         $menu = array();
-        foreach($permission as $v) {
+        foreach($rule as $v) {
             // 给父级ID添加ACTIVE表示
             if(in_array($v['id'], $ids)) {
                 $v['active'] = 'active'; // 该栏目是否高亮

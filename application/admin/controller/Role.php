@@ -12,7 +12,7 @@ class Role extends Admin
 {
     public function index()
     {
-        $list = Db::name('auth_role')->order('weighing asc')->select();
+        $list = Db::name('auth_role')->order('sort asc')->select();
         return view('index', ['list' => $list]);
     }
 
@@ -23,56 +23,54 @@ class Role extends Admin
             $request = Request::param();
 
             // 如果为空 管理站点全部置空
-            if (empty($request['ids'])) {
-                $del = Db::name('auth_role_permission')->where('role_id', $request['role_id'])->delete();
-                if (is_numeric($del)) {
-                    return $this->response(200, Lang::get('Success'));
-                }else {
-                    return $this->response(201, Lang::get('Fail'));
-                }
+            $ids = isset($request['ids']) ? implode(',', $request['ids']) : '';
+            $upstatus = AuthRole::where('role_id', $request['role_id'])->update(['rule_ids' => $ids]);
+
+            if (!is_numeric($upstatus)) {
+                return $this->response(201, Lang::get('Fail'));
             } else {
-                // 先删除全部
-                $del = Db::name('auth_role_permission')->where('role_id', $request['role_id'])->delete();
-
-                foreach ($request['ids'] as $v) {
-                    $insertData = [
-                        'role_id'       => $request['role_id'],
-                        'permission_id' => $v,
-                    ];
-
-                    $ins = Db::name('auth_role_permission')
-                        ->where('role_id', $request['role_id'])
-                        ->insert($insertData);
-                }
-
-                if ($del !== false && $ins !== false) {
-                    return $this->response(200, Lang::get('Success'));
-                } else {
-                    return $this->response(201, Lang::get('Fail'));
-                }
+                return $this->response(200, Lang::get('Success'));
             }
         }
 
         // 当前角色信息
         $id = Request::param('id');
-        $info = Db::name('auth_role')
-            ->where('role_id', $id)
-            ->find();
+        $info = Db::name('auth_role')->where('role_id', $id)->find();
 
         // 所有权限列表
-        $query = Db::name('auth_permission')->order('weighing asc')->select();
+        $query = Db::name('auth_rule')->order('sort asc')->select();
         $list = list_for_level($query);
+        $rule = explode(',', $info['rule_ids']);
 
-        // 查询角色拥有的权限集合
-        $tmp_permission = Db::name('auth_role_permission')->field('permission_id')->where('role_id', $id)->select();
-        $permission = [];
-        if (!empty($tmp_permission)) {
-            foreach ($tmp_permission as $v) {
-                array_push($permission, $v['permission_id']);
+        return view('auth', ['info' => $info, 'list' => $list, 'rule' => $rule]);
+    }
+
+    public function siteAuth()
+    {
+        // 处理AJAX提交数据
+        if (Request::isAjax()) {
+            $request = Request::param();
+
+            // 如果为空 管理站点全部置空
+            $ids = isset($request['ids']) ? implode(',', $request['ids']) : '';
+            $upstatus = AuthRole::where('role_id', $request['role_id'])->update(['site_ids' => $ids]);
+
+            if (!is_numeric($upstatus)) {
+                return $this->response(201, Lang::get('Fail'));
+            } else {
+                return $this->response(200, Lang::get('Success'));
             }
         }
 
-        return view('auth', ['info' => $info, 'list' => $list, 'permission' => $permission]);
+        // 当前角色信息
+        $id = Request::param('id');
+        $info = Db::name('auth_role')->where('role_id', $id)->find();
+
+        // 所有权限列表
+        $list = Db::name('site')->order('sort asc')->select();
+        $site = explode(',', $info['site_ids']);
+
+        return view('site_auth', ['info' => $info, 'list' => $list, 'site' => $site]);
     }
 
     public function remove()
@@ -142,7 +140,7 @@ class Role extends Admin
 
         }
 
-        $query = Db::name('auth_permission')->order('weighing asc')->select();
+        $query = Db::name('auth_rule')->order('sort asc')->select();
         $list = list_for_level($query);
         return view('create', ['list' => $list]);
     }

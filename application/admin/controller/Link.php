@@ -229,7 +229,7 @@ class Link extends Admin
                         $updateData = [
                             'id'       => $data['id'][$k],
                             'name'     => $data['name'][$k],
-                            'weighing' => $data['weighing'][$k],
+                            'sort' => $data['sort'][$k],
                         ];
                         $result = SiteConfig::updateCategoryConfig($this->site_id, $this->category, $updateData);
                     }
@@ -239,7 +239,7 @@ class Link extends Admin
                     foreach ($data['temp_name'] as $k => $v) {
                         $insertData = [
                             'name'     => $v,
-                            'weighing' => $data['temp_weighing'][$k],
+                            'sort' => $data['temp_sort'][$k],
                         ];
                         $result = SiteConfig::insertCategoryConfig($this->site_id, $this->category, $insertData);
                     }

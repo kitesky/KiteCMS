@@ -15,6 +15,10 @@ kiteCMS
 > 运行环境要求PHP5.6以上。
 
 ## 安装说明
+
+开发文档
+https://www.kancloud.cn/kite/book/710856
+
 1 创建数据库
 2 运行 xx.com/install
 

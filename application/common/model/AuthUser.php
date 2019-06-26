@@ -3,7 +3,7 @@ namespace app\common\model;
 
 use think\Model;
 use think\Db;
-use app\common\model\AuthUserRole;
+use app\common\model\AuthRole;
 
 class AuthUser extends Model
 {
@@ -23,6 +23,18 @@ class AuthUser extends Model
         return self::where('uid', $uid)->setField('score', $number);
     }
 
+    public function find($pk) {
+        $user = AuthUser::where('uid|username', $pk)->find();
+        if (!empty($user['role_ids'])) {
+            $ids = explode(',', $user['role_ids']);
+            foreach ($ids as $v) {
+                $role[] = AuthRole::get($v);
+            }
+        }
+        $user['role'] = $role;
+
+        return $user;
+    }
     public function getUserRole($uid)
     {
         $obj = new AuthUserRole;

@@ -47,7 +47,7 @@ class Search extends Base
             $commObj = new DocumentComments;
             foreach ($list as $v) {
                 $v->category = $cateObj->where('id', $v->cid)->find();
-                $v->category->url = BuildUrl::instance($this->site_id)->categoryUrl(['alias' => $v->category->alias]);
+                $v->category->url = BuildUrl::instance($this->site_id)->categoryUrl(['cat_id' => $v->category->id]);
                 $v->comments = $commObj->getCommentsCount($v->id);
                 $v->url = BuildUrl::instance($this->site_id)->documentUrl(['id' => $v->id]);
                 array_push($newList,$v);

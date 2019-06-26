@@ -7,7 +7,7 @@ use think\facade\Session;
 use think\facade\Lang;
 use think\facade\Config;
 use app\common\model\Site as SiteModel;
-use app\common\model\AuthUserSite;
+use app\common\model\Auth;
 use app\admin\controller\Admin;
 use app\common\model\SiteConfig;
 use app\common\validate\SiteValidate;
@@ -143,12 +143,6 @@ class Site extends Admin
             }
 
             $siteObj = new SiteModel;
-
-            $exist = $siteObj->where('alias', $request['alias'])->value('id');
-            if (is_numeric($exist) && $exist != $request['id']) {
-                return $this->response(201, Lang::get('This record already exists'));
-            }
-
             $siteObj->isUpdate(true)->allowField(true)->save($request);
 
             if (is_numeric($siteObj->id)) {
@@ -183,12 +177,6 @@ class Site extends Admin
             }
 
             $siteObj = new SiteModel;
-
-            $exist = $siteObj->where('alias', $request['alias'])->value('id');
-            if (is_numeric($exist) && $exist != $request['id']) {
-                return $this->response(201, Lang::get('This record already exists'));
-            }
-
             $siteObj->isUpdate(true)->allowField(true)->save($request);
 
             if (is_numeric($siteObj->id)) {
@@ -202,8 +190,8 @@ class Site extends Admin
         $info = SiteModel::get($id);
 
         $data = [
-            'info'          => $info,
-            'theme'      => $this->getThemeList(),
+            'info'  => $info,
+            'theme' => $this->getThemeList(),
         ];
 
         return $this->fetch('edit', $data);
@@ -231,8 +219,8 @@ class Site extends Admin
         }
 
         // 验证是否有权限管理该站点 (预防AJAX提交不属于自己管理的站点ID)
-        $userSiteObj = new AuthUserSite;
-        $ids = $userSiteObj->getMySiteIds($this->uid);
+        $auth = new Auth;
+        $ids = $auth->getSiteIds($this->uid);
         if (!in_array($request['id'], $ids)) {
             return $this->response(201, Lang::get('Fail'));
         }
@@ -240,10 +228,8 @@ class Site extends Admin
         // 判断站点是否存在并设置session
         $siteObj = new SiteModel;
         $site =$siteObj
-            ->alias('s')
-            ->field('s.id,s.city_id,s.name,s.alias,s.domain,s.theme')
+            ->field('id,city_id,name,alias,domain,theme')
             ->where('id', $request['id'])
-            ->join('auth_user_site us','us.site_id = s.id')
             ->find();
 
         if(isset($site)) {
@@ -316,14 +302,14 @@ class Site extends Admin
         }
 
         // 验证是否有权限管理该站点 (预防AJAX提交不属于自己管理的站点ID)
-        $userSiteObj = new AuthUserSite;
-        $ids = $userSiteObj->getMySiteIds($this->uid);
+        $auth = new Auth;
+        $ids = $auth->getSiteIds($this->uid);
 
         // 分页列表
         $list = $siteObj
             ->whereOr('name|alias','like','%'.$q.'%')
             ->where('id', 'in', $ids)
-            ->order('weighing asc')
+            ->order('sort asc')
             ->paginate(20, false, [
                 'type'     => 'bootstrap',
                 'var_page' => 'page',

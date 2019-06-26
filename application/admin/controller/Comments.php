@@ -17,40 +17,27 @@ class Comments extends Admin
     {
         $request = Request::param();
 
-        $obj = new DocumentComments;
-
         // 查询条件
-        $map    = [];
-        $params = [];
-        $search = [];
-
-        // 状态
-        if (isset($request['status']) && is_numeric($request['status'])) {
-            $status           = ['status','=',$request['status']];
-            $params['status'] = $request['status'];
-            $search['status'] = $request['status'];
-            array_push($map, $status);
-        }else {
-            $status = [];
-            $search['status'] = '';
-        }
+        $query = [
+            'site_id' => $this->site_id,
+            'status'  => isset($request['status']) ? $request['status'] : '',
+        ];
+        $args = [
+            'query'  => $query,
+            'field'  => '',
+            'order'  => 'id desc',
+            'params' => $query,
+            'limit'  => 15,
+        ];
 
         // 分页列表
-        $list = $obj
-            ->where($map)
-            ->where('site_id', 'eq', $this->site_id)
-            ->order('id desc')
-            ->paginate(20, false, [
-                'type'     => 'bootstrap',
-                'var_page' => 'page',
-                'query'    => $params,
-            ]);
+        $obj = new DocumentComments;
+        $list = $obj->select($args);
 
         $data = [
-            'search'   => $search,
+            'search'   => $query,
             'list'     => $list,
             'page'     => $list->render(),
-        
         ];
 
         return $this->fetch('index', $data);
