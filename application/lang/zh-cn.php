@@ -202,7 +202,7 @@ return [
     'Devoloper'              => '系统设计',
     'Author'                 => '作者',
     'Install'                => '安装',
-    'Uninstall '             => '卸载',
+    'Uninstall'             => '卸载',
     'Enable'                 => '启用',
     'Disable'                => '禁用',
     'Damage'                 => '损坏',
