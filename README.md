@@ -1,4 +1,4 @@
-KiteCMS开源网站内容管理系统，系统基于框架ThinkPHP5.1.x版本开发，适用个人、企业快速建站及开发需求。
+KiteCMS系统基于Thinkphp 5.1.37 版本开发，真正的开源免费，可以用于商业目的，无需任何授权。后续会不断的完善优化系统，开发更多实用的模块，插件，模板。。
 
 ##### 运行环境
 > 运行环境 Apache/Nginx + PHP + MySQL
@@ -48,6 +48,4 @@ KiteCMS开源网站内容管理系统，系统基于框架ThinkPHP5.1.x版本开
 *   [API接口](https://www.kancloud.cn/kite/book/710882)
 
 如果您对CMS系统不熟悉，可以查看帮助文档。如果您需要模板制作，可以参考模板标签调用方法。
-更多文档资料： [开发使用文档](https://www.kancloud.cn/kite/book/1136594)
-
-
+更多文档资料： [文档资料](https://www.kancloud.cn/kite/book/1136594)

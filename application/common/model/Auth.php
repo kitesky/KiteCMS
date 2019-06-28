@@ -120,13 +120,7 @@ class Auth extends Model
         }
 
          // 获取当前URL所有父ID
-        $praents = get_parents($rule, $rule_id);
-        $ids = [];
-        if (!empty($praents)) {
-            foreach ($praents as $v) {
-                array_push($ids, $v['id']);
-            }
-        }
+        $ids = get_parents_id($rule, $rule_id);
 
         // 遍历数组 增加active标识
         $menu = array();
@@ -263,7 +257,10 @@ class Auth extends Model
         $ruleList = array_unique($ruleList);
         if (!empty($ruleList)) {
             foreach ($ruleList as $v) {
-                $newRuleList[] = AuthRule::get($v);
+                $detail = AuthRule::get($v);
+                if (!empty($detail)) {
+                    $newRuleList[] = $detail;
+                }
             }
         }
 

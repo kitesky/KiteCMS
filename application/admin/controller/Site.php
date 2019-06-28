@@ -14,7 +14,7 @@ use app\common\validate\SiteValidate;
 
 class Site extends Admin
 {
-    public function email()
+    public function config()
     {
         // 处理AJAX提交数据
         if (Request::isAjax()) {
@@ -31,136 +31,25 @@ class Site extends Admin
             }
         }
 
-        $config = Config::get('site.email');
-        $data = SiteConfig::getAll($this->site_id, $config);
+        $config_menu = [
+            'email'      => Lang::get('Email'), 
+            'sms'        => Lang::get('Sms'), 
+            'captcha'    => Lang::get('Captcha'), 
+            'imageWater' => Lang::get('Watermarking'), 
+            'uploadFile' => Lang::get('Upload'),
+            'memberScore'=> Lang::get('Score'),
+        ];
+        $config_name = Request::param('config_name', 'email');
+        $config = Config::get('site.' . $config_name);
+        $config_option = SiteConfig::getAll($this->site_id, $config);
 
-        return $this->fetch('email', $data);
-    }
-
-    public function sms()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            foreach ($request as $k => $v) {
-                $res = SiteConfig::saveCofig($this->site_id, $k, $v);
-            }
-
-            if (is_numeric($res)) {
-                return $this->response(200, Lang::get('Success'));
-            } else {
-                return $this->response(201, Lang::get('Fail'));
-            }
-        }
-
-        $config = Config::get('site.sms');
-        $data = SiteConfig::getAll($this->site_id, $config);
-
-        return $this->fetch('sms', $data);
-    }
-
-    public function captcha()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            foreach ($request as $k => $v) {
-                $res = SiteConfig::saveCofig($this->site_id, $k, $v);
-            }
-
-            if (is_numeric($res)) {
-                return $this->response(200, Lang::get('Success'));
-            } else {
-                return $this->response(201, Lang::get('Fail'));
-            }
-        }
-
-        $config = Config::get('site.captcha');
-        $data = SiteConfig::getAll($this->site_id, $config);
-
-        return $this->fetch('captcha', $data);
-    }
-
-    public function imageWater()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            foreach ($request as $k => $v) {
-                $res = SiteConfig::saveCofig($this->site_id, $k, $v);
-            }
-
-            if (is_numeric($res)) {
-                return $this->response(200, Lang::get('Success'));
-            } else {
-                return $this->response(201, Lang::get('Fail'));
-            }
-        }
-
-        $config = Config::get('site.imageWater');
-        $data = SiteConfig::getAll($this->site_id, $config);
-
-        return $this->fetch('image_water', $data);
-    }
-
-    public function uploadFile()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            foreach ($request as $k => $v) {
-                $res = SiteConfig::saveCofig($this->site_id, $k, $v);
-            }
-
-            if (is_numeric($res)) {
-                return $this->response(200, Lang::get('Success'));
-            } else {
-                return $this->response(201, Lang::get('Fail'));
-            }
-        }
-
-        $config = Config::get('site.uploadFile');
-        $data = SiteConfig::getAll($this->site_id, $config);
-
-        return $this->fetch('upload_file', $data);
-    }
-
-    public function info()
-    {
-        // 处理AJAX提交数据
-        if (Request::isAjax()) {
-            $request = Request::param();
-
-            // 验证数据
-            $validate = new SiteValidate();
-            $validateResult = $validate->scene('edit')->check($request);
-            if (!$validateResult) {
-                return $this->response(201, $validate->getError());
-            }
-
-            $siteObj = new SiteModel;
-            $siteObj->isUpdate(true)->allowField(true)->save($request);
-
-            if (is_numeric($siteObj->id)) {
-                return $this->response(200, Lang::get('Success'));
-            } else {
-                return $this->response(201, Lang::get('Fail'));
-            }
-        }
-
-        $info = SiteModel::get($this->site_id);
         $data = [
-            'info'          => $info,
-            'timezone'      => isset($info['timezone']) ? $info['timezone'] : date_default_timezone_get(),
-            'timezone_list' => timezone_identifiers_list(),
-            'theme'      => $this->getThemeList(),
+            'config_name'   => $config_name,
+            'config_menu'   => $config_menu,
+            'config_option' => $config_option,
         ];
 
-        return $this->fetch('info', $data);
+        return $this->fetch('config', $data);
     }
 
     public function edit()

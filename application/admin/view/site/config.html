@@ -1,0 +1,818 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+
+<form role="form" id="operate">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      {volist name="config_menu" id="vo"}
+      <li class="{eq name='config_name' value='$key'}active{/eq}"><a href="{:url('admin/site/config', ['config_name' => $key])}">{$vo}</a></li>
+      {/volist}
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active no-padding">
+        {switch config_name}
+          {case email}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Mail server')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_host" value="{$config_option.email_host}" class="form-control">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('SSL port')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_port" value="{$config_option.email_port}" class="form-control">
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Account')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_username" value="{$config_option.email_username}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Password')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="password" name="email_password" value="{$config_option.email_password}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Send mail')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_from_email" value="{$config_option.email_from_email}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Sender')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" name="email_from_name" value="{$config_option.email_from_name}" class="form-control">
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Register notification')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.send_email_register" value="1"}checked{/eq} name="send_email_register" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.send_email_register" value="0"}checked{/eq} name="send_email_register" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Verification code template')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="email_code_template" rows="3" placeholder="">{$config_option.email_code_template}</textarea>
+                              </div>
+                              </div>
+                              <p class="help-block">${username} ，${code}</p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Register notification template')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <textarea class="form-control input-sm" name="email_register_template" rows="3" placeholder="">{$config_option.email_register_template}</textarea>
+                              </div>
+                              </div>
+                              <p class="help-block">${username}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {/case}
+          {case sms}
+              <div class="form-group">
+                <label>{:lang('SMS')} <span class="text-red">*</span></label>
+                <div class="row">
+                <div class="col-md-2">
+                  <select name="sms_type" class="form-control">
+                      <option {eq name="config_option.sms_type" value="dysms"}selected{/eq} value="dysms">阿里云短信</option>
+                  </select>
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>AccessKey ID</label>
+                <div class="row">
+                <div class="col-md-4">
+                <input type="text" name="ali_access_key" value="{$config_option.ali_access_key}" class="form-control input-sm" placeholder="">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Access Key Secret</label>
+                <div class="row">
+                <div class="col-md-4">
+                <input type="text" name="ali_access_key_secret" value="{$config_option.ali_access_key_secret}" class="form-control input-sm" placeholder="">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>{:lang('Sign')}</label>
+                <div class="row">
+                <div class="col-md-4">
+                <input type="text" name="ali_sign_name" value="{$config_option.ali_sign_name}" class="form-control input-sm" placeholder="">
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label> {:lang('Template ID')}</label>
+                <div class="row">
+                <div class="col-md-4">
+                <input type="text" name="ali_template_code" value="{$config_option.ali_template_code}" class="form-control input-sm" placeholder="">
+                </div>
+                </div>
+              </div>
+          {/case}
+          {case captcha}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Chinese')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useZh" value="1"}checked{/eq} name="captcha_useZh" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useZh" value="0"}checked{/eq} name="captcha_useZh" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Background')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useImgBg" value="1"}checked{/eq} name="captcha_useImgBg" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useImgBg" value="0"}checked{/eq} name="captcha_useImgBg" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Curve')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useCurve" value="1"}checked{/eq} name="captcha_useCurve" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useCurve" value="0"}checked{/eq} name="captcha_useCurve" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Noise')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useNoise" value="1"}checked{/eq} name="captcha_useNoise" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_useNoise" value="0"}checked{/eq} name="captcha_useNoise" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Font size')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" name="captcha_fontSize" value="{$config_option.captcha_fontSize}" class="form-control">
+                                    <span class="input-group-addon">px</span>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Height')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" name="captcha_imageH" value="{$config_option.captcha_imageH}" class="form-control">
+                                    <span class="input-group-addon">px</span>
+                                </div>
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Width')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" name="captcha_imageW" value="{$config_option.captcha_imageW}" class="form-control">
+                                    <span class="input-group-addon">px</span>
+                                </div>
+                              </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Length')}</label>
+                              <div class="row">
+                              <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" name="captcha_length" value="{$config_option.captcha_length}" class="form-control">
+                                    <span class="input-group-addon">{:lang('Character')}</span>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Register')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_member_register" value="1"}checked{/eq} name="captcha_member_register" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_member_register" value="0"}checked{/eq} name="captcha_member_register" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Login')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_member_login" value="1"}checked{/eq} name="captcha_member_login" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_member_login" value="0"}checked{/eq} name="captcha_member_login" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Publish')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_publish_document" value="1"}checked{/eq} name="captcha_publish_document" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_publish_document" value="0"}checked{/eq} name="captcha_publish_document" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Comments')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_publish_comment" value="1"}checked{/eq} name="captcha_publish_comment" value="1"> {:lang('ON')}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" {eq name="config_option.captcha_publish_comment" value="0"}checked{/eq} name="captcha_publish_comment" value="0"> {:lang('OFF')}
+                                    </label>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {/case}
+          {case imageWater}
+            <div class="form-group">
+              <label>{:lang('Status')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" {eq name="config_option.water_status" value="1"}checked{/eq} name="water_status" value="1"> {:lang('ON')}
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" {eq name="config_option.water_status" value="0"}checked{/eq} name="water_status" value="0"> {:lang('OFF')}
+                    </label>
+                </div>
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Image')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="layui-upload-drag" id="water_logo">
+                  <input type="hidden" name="water_logo" value="{$config_option.water_logo}">
+                  <div class="layui-upload-list" id="preview">
+                  {empty name="config_option.water_logo"}
+                  <p>{:lang('Upload')}</p>
+                  {else /}
+                  <img class="img-responsive" src="{$config_option.water_logo}" />
+                  {/empty}
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Position')}</label>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="1"}checked{/eq} name="water_position" value="1"> {:lang('North west')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="2"}checked{/eq} name="water_position" value="2"> {:lang('North')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="3"}checked{/eq} name="water_position" value="3"> {:lang('North east')}
+                              </label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="4"}checked{/eq} name="water_position" value="4"> {:lang('West')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="5"}checked{/eq} name="water_position" value="5"> {:lang('Center')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="6"}checked{/eq} name="water_position" value="6"> {:lang('East')}
+                              </label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="7"}checked{/eq} name="water_position" value="7"> {:lang('South west')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="8"}checked{/eq} name="water_position" value="8"> {:lang('South')}
+                              </label>
+                          </td>
+                          <td>
+                              <label class="radio-inline">
+                                  <input type="radio" {eq name="config_option.water_position" value="9"}checked{/eq} name="water_position" value="9"> {:lang('South east')}
+                              </label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Quality')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">{:lang('Range')}</span>
+                    <input type="text" name="water_quality" value="{$config_option.water_quality}" class="form-control">
+                </div>
+              </div>
+              </div>
+              <p class="help-block">{:lang('Range')}：（0~100）</p>
+            </div>
+          {/case}
+          {case uploadFile}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-solid no-border">
+                        <div class="box-body">
+                            <div class="form-group">
+                              <label>{:lang('Upload driver')} <span class="text-red">*</span></label>
+                              <div class="row">
+                              <div class="col-md-6">
+                                <select name="upload_type" class="form-control">
+                                    <option {eq name="config_option.upload_type" value="local"}selected{/eq} value="local">{:lang('Local upload')} </option>
+                                    <option {eq name="config_option.upload_type" value="alioss"}selected{/eq} value="alioss">AliOSS</option>
+                                    <option {eq name="config_option.upload_type" value="qiniuoss"}selected{/eq} value="qiniuoss">QiqiuOSS</option>
+                                </select>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Image extension')} </label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_image_ext" value="{$config_option.upload_image_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:jpg,png,gif</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_image_size" value="{$config_option.upload_image_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Video extension')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_video_ext" value="{$config_option.upload_video_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:rm,rmvb,wmv,3gp,mp4,mov,avi,flv</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_video_size" value="{$config_option.upload_video_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Attachment extension')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_attach_ext" value="{$config_option.upload_attach_ext}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">{:lang('Example')}:doc,xls,rar,zip</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>{:lang('Maximum')}</label>
+                                      <div class="row">
+                                      <div class="col-md-12">
+                                      <input type="text" name="upload_attach_size" value="{$config_option.upload_attach_size}" class="form-control input-sm" placeholder="">
+                                      </div>
+                                      </div>
+                                      <p class="help-block">1MB = 1024Kb</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#tab_1" data-toggle="tab">{:lang('Local upload')}</a></li>
+                          <li><a href="#tab_2" data-toggle="tab">AliOSS</a></li>
+                          <li><a href="#tab_3" data-toggle="tab">QiqiuOSS</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="tab_1">
+                                <div class="form-group">
+                                  <label>{:lang('Storage path')}</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="upload_path" value="{$config_option.upload_path}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <div class="tab-pane" id="tab_2">
+                                <div class="form-group">
+                                  <label>AccessKey ID</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_key" value="{$config_option.alioss_key}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Access Key Secret</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_secret" value="{$config_option.alioss_secret}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>EndPoint</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_endpoint" value="{$config_option.alioss_endpoint}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Bucket</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="alioss_bucket" value="{$config_option.alioss_bucket}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <div class="tab-pane" id="tab_3">
+                                <div class="form-group">
+                                  <label>AK</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_ak" value="{$config_option.qiniu_ak}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>SK</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_sk" value="{$config_option.qiniu_sk}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Bucket</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_bucket" value="{$config_option.qiniu_bucket}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Domain</label>
+                                  <div class="row">
+                                  <div class="col-md-8">
+                                  <input type="text" name="qiniu_domain" value="{$config_option.qiniu_domain}" class="form-control input-sm" placeholder="">
+                                  </div>
+                                  </div>
+                                  <p class="help-block"></p>
+                                </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                </div>
+            </div>
+          {/case}
+          {case memberScore}
+            <div class="form-group">
+              <label>{:lang('Register')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">{:lang('Score')}</span>
+                    <input type="text" name="register_score" value="{$config_option.register_score}" class="form-control">
+                </div>
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Login')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">{:lang('Score')}</span>
+                    <input type="text" name="login_score" value="{$config_option.login_score}" class="form-control">
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Publish')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">{:lang('Score')}</span>
+                    <input type="text" name="publish_score" value="{$config_option.publish_score}" class="form-control">
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Comments')}</label>
+              <div class="row">
+              <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">{:lang('Score')}</span>
+                    <input type="text" name="comment_score" value="{$config_option.comment_score}" class="form-control">
+                </div>
+              </div>
+              </div>
+            </div>
+          {/case}
+          {default /}
+        {/switch}
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+                <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right">  </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</form>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+
+<script>
+  layui.use('upload', function(){
+    var $ = layui.jquery
+    ,upload = layui.upload;
+    //拖拽上传
+    upload.render({
+      elem: "#water_logo"
+      ,accept: 'file'
+      ,multiple: false
+      ,number: 1
+      ,url: "{:url('admin/upload/uploadFile')}"
+      ,done: function(res){
+        if (res.code == 200) {
+          $("[name='water_logo']").val(res.data.url);
+          $("#preview").html("<img class=\'img-responsive\' src=\'"+res.data.url+"\'>");
+        } else {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: res.msg,
+            showConfirmButton: false,
+            toast:false,
+            timer: 2000
+          });
+        }
+      }
+    });
+    
+  });
+</script>
+<script type="text/javascript">
+
+    // 选择上传方式
+    (function (){
+        var type = $('[name="upload_type"]');
+        var selected = $('option:selected').val();
+        setActive(selected)
+
+        type.change(function(){
+            setActive(type.val());
+
+        })
+
+        function setActive(selected) {
+            switch(selected){
+                case 'local':
+                    $('[href="#tab_1"]').tab('show');
+                break;
+                case 'alioss':
+                    $('[href="#tab_2"]').tab('show');
+                break;
+                case 'qiniuoss':
+                    $('[href="#tab_3"]').tab('show');
+                break;
+            }
+        }
+    }());
+
+
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/site/sms')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}
