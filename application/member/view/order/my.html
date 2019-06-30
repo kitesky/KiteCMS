@@ -1,0 +1,73 @@
+{extend name="public:base" /}
+{block name="title"}会员首页{/block}
+
+{block name="content"}
+    <section class="content">
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">我的订单</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding table-responsive">
+          <table class="table table-condensed table-hover">
+              <thead>
+                  <tr>
+                      <th>#ID</th>
+                      <th>{:lang('Order number')}</th>
+                      <th>{:lang('Status')}</th>
+                      <th>{:lang('Payment type')}</th>
+                      <th>{:lang('Payment number')}</th>
+                      <th>{:lang('Creation date')}</th>
+                      <th>{:lang('Action')}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {volist name="list" id="vo"}
+                  <tr id = "tr_{$vo.order_id}">
+                      <td>{$vo.order_id}</td>
+                      <td>{$vo.out_trade_no}</td>
+                      <td>
+                          {switch vo.status}
+                              {case 1}{:lang('Status')}{:lang('Paid')}{/case}
+                              {case 0}{:lang('Status')}{:lang('Non-payment')}{/case}
+                              {default /}
+                          {/switch}
+                      </td>
+                      <td>
+                          {switch vo.payment_type}
+                              {case 1}{:lang('Alipay')}{/case}
+                              {case 2}{:lang('Wxpay')}{/case}
+                              {default /}
+                          {/switch}
+                      </td>
+                      <td>{$vo.trade_no}</td>
+                      <td>{$vo.create_at}</td>
+                      <td>
+                          <a href="{:url('member/order/detail', ['order_id' => $vo['order_id']])}"></i> {:lang('Detail')}</a>
+                      </td>
+                  </tr>
+                  {/volist}
+                  {empty name="list"}
+                  <tr>
+                      <td colspan="7" class="text-center">{:lang("No record")}</td>
+                  </tr>
+                  {/empty}
+              </tbody>
+          </table>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+              <div class="col-md-6">
+                {$page}
+              </div>
+              <div class="col-md-6">
+                
+              </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    </section>
+{/block}

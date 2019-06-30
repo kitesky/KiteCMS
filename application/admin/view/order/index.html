@@ -1,0 +1,153 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Document')}</a></li>
+    </ul>
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">{:lang('Filter')}</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form action="#" method="get" class="form-inline">
+              <div class="form-group">
+                  <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">{:lang('Status')}</span>
+                  <select name="status" class="form-control">
+                    <option>--{:lang('Not specified')}--</option>
+                    <option {eq name="search.status" value="0"}selected{/eq} value="0">{:lang('Non-payment')}</option>
+                    <option {eq name="search.status" value="1"}selected{/eq} value="1">{:lang('Paid')}</option>
+                  </select>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">{:lang('Type')}</span>
+                  <select name="payment_type" class="form-control">
+                    <option>--{:lang('Not specified')}--</option>
+                    <option {eq name="search.payment_type" value="1"}selected{/eq} value="1">支付宝</option>
+                    <option {eq name="search.payment_type" value="2"}selected{/eq} value="2">微信</option>
+                  </select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <input type="text" name="q" value="{$search.q}" class="form-control" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary btn-flat"> <i class="fa fa-search"></i> {:lang('Search')}</button>
+            </form>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active table-responsive no-padding">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>{:lang('Order number')}</th>
+                        <th>{:lang('Status')}</th>
+                        <th>{:lang('Payment type')}</th>
+                        <th>{:lang('Payment number')}</th>
+                        <th>{:lang('Creation date')}</th>
+                        <th>{:lang('Action')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr id = "tr_{$vo.order_id}">
+                        <td>{$vo.order_id}</td>
+                        <td>{$vo.out_trade_no}</td>
+                        <td>
+                            {switch vo.status}
+                                {case 1}{:lang('Status')}{:lang('Paid')}{/case}
+                                {case 0}{:lang('Status')}{:lang('Non-payment')}{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                        <td>
+                            {switch vo.payment_type}
+                                {case 1}{:lang('Alipay')}{/case}
+                                {case 2}{:lang('Wxpay')}{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                        <td>{$vo.trade_no}</td>
+                        <td>{$vo.create_at}</td>
+                        <td>
+                            <a href="{:url('admin/order/edit', ['order_id' => $vo['order_id']])}"></i> {:lang('Detail')}</a>
+                            <a onclick="remove('{$vo.order_id}')" href="#"> {:lang('Delete')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    {empty name="list"}
+                    <tr>
+                        <td colspan="7" class="text-center">{:lang("No record")}</td>
+                    </tr>
+                    {/empty}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+          <div class="col-md-6">
+            {$page}
+          </div>
+          <div class="col-md-6">
+            
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function remove(order_id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+          if (result.value) {
+            $.ajax({
+                url:"{:Url('admin/order/remove')}",
+                data:{'order_id':order_id},
+                type:'post',
+                dataType:'json',
+                success: function(xhr){
+                    if(xhr.code == 200){
+                        swal(xhr.msg, "","success").then(function(value){
+                            $("#tr_" + order_id).remove();
+                        });
+                    }else{
+                        swal(xhr.msg, "", "error");
+                    }
+                }
+            })
+          }
+        })
+    }
+</script>
+{/block}

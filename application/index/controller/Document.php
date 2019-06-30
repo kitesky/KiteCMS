@@ -27,7 +27,16 @@ class Document extends Base
         $commLikeObj = new DocumentCommentsLike;
         $document = $docObj->getDocumentById($this->site_id, $id);
         if (!isset($document)) {
-            throw new HttpException(404, 'The page can not be found');
+              $this->error(404);
+        } else if($document->role_id !== 0) {
+              $role_ids = [];
+              if (!empty($this->role)) {
+                  $role_ids =  array_column($this->role, 'role_id');
+              }
+
+              if (!in_array($document->role_id, $role_ids)) {
+                  $this->error(Lang::get('Your role does not have access'));
+              }
         } else {
             // 访问量+1
             $document->pv = $document->pv + 1;

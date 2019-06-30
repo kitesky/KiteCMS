@@ -20,7 +20,12 @@ class DocumentContent extends Model
 
     public function getDocumentTotalByCid($cid)
     {
-        return self::where('cid', $cid)->count();
+        return DocumentContent::where('cid', $cid)->count();
+    }
+
+    public function find($docement_id)
+    {
+        
     }
 
     public function select($request)
@@ -71,21 +76,16 @@ class DocumentContent extends Model
             $limit = $request['limit'];
         }
 
-        $list = self::where($query)
-            ->field($field)
-            ->order($order)
-            ->paginate($limit, true, [
-                'type'     => 'bootstrap',
-                'var_page' => 'page',
-                'query'    => $params,
-            ]);
-
-        return $list;
+        return $this->where($query)->field($field)->order($order)->paginate($limit, true, [
+            'type'     => 'bootstrap',
+            'var_page' => 'page',
+            'query'    => $params,
+        ]);
     }
 
     public function remove($site_id, $id)
     {
-        $document = self::where('id', $id)->find();
+        $document = $this->where('id', $id)->find();
 
         if (!empty($document)) {
             // 删除自定义信息
@@ -115,14 +115,14 @@ class DocumentContent extends Model
 
     public function getDocumentById($site_id, $id)
     {
-        return self::where('site_id', '=', $site_id)
+        return $this->where('site_id', '=', $site_id)
             ->where('id', $id)
             ->find();
     }
 
     public function getDocumentPrevious($site_id, $id)
     {
-        return self::where('site_id','=',$site_id)
+        return $this->where('site_id','=',$site_id)
             ->where('id','<',$id)
             ->order('id desc')
             ->find();
@@ -130,7 +130,7 @@ class DocumentContent extends Model
 
     public function getDocumentNext($site_id, $id)
     {
-        return self::where('site_id','=',$site_id)
+        return $this->where('site_id','=',$site_id)
             ->where('id','>',$id)
             ->order('id asc')
             ->find();
@@ -138,14 +138,11 @@ class DocumentContent extends Model
     
     public function getDocumentPaginate($site_id, $cid)
     {
-        return self::where('site_id','=',$site_id)
-            ->where('cid',$cid)
-            ->where('status',1)
-            ->order('id desc')
-            ->paginate(20, false, [
-                'type'     => 'bootstrap',
-                'var_page' => 'page',
-            ]);
+        return $this->where('site_id','=',$site_id) ->where('cid',$cid)->where('status',1)->order('id desc')
+        ->paginate(20, false, [
+            'type'     => 'bootstrap',
+            'var_page' => 'page',
+        ]);
     }
 
     public function getDocmentPaginateByFilter($site_id, $cid, $request)
@@ -203,17 +200,10 @@ class DocumentContent extends Model
         }
 
         // 查询数据列表
-        $list = self::where('site_id',$site_id)
-            ->where('status',1)
-            ->where($categoryMap)
-            ->where($map)
-            ->order('id desc')
-            ->paginate(20, false, [
+        return $this->where('site_id',$site_id)->where('status',1)->where($categoryMap)->where($map)->order('id desc')->paginate(20, false, [
                 'type'     => 'bootstrap',
                 'var_page' => 'page',
                 // 'query'    => $request,
             ]);
-        // echo self::getLastSql();
-        return $list;
     }
 }

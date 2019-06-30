@@ -10,6 +10,7 @@ use app\common\model\DocumentCategory;
 use app\common\model\DocumentContentExtra;
 use app\admin\controller\Admin;
 use app\common\validate\DocumentContentValidate;
+use app\common\model\AuthRole;
 
 class Document extends Admin
 {
@@ -47,7 +48,6 @@ class Document extends Admin
             'list'     => $list,
             'page'     => $list->render(),
             'option'   => Config::get('site.document_option'),
-        
         ];
 
         return $this->fetch('index', $data);
@@ -127,8 +127,13 @@ class Document extends Admin
         $cateObj = new DocumentCategory;
         $category = $cateObj->getCategoryForLevel($this->site_id);
 
+        // 获取角色组
+        $roleObj = new AuthRole;
+        $role = $roleObj->select();
+
         $data = [
             'category' => $category,
+            'role'     => $role,
         ];
 
         return $this->fetch('create', $data);
@@ -219,9 +224,15 @@ class Document extends Admin
         $contentObj = new DocumentContent;
         $info = $contentObj->where('id', $request['id'])->find();
 
+        // 获取角色组
+        $roleObj = new AuthRole;
+        $role = $roleObj->select();
+
+
         $data = [
             'category' => $category,
             'info'     => $info,
+            'role'     => $role,
         ];
 
         return $this->fetch('edit', $data);

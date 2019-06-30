@@ -1,0 +1,101 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/order/index')}">{:lang('Order')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>{:lang('Title')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.title}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Price')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.total_amount}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Order number')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.out_trade_no}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Creation date')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.create_at}
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>{:lang('Account')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.username}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Status')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.status_text}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Payment type')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.payment_type_text}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Payment number')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.trade_no}
+                      </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+
+{/block}

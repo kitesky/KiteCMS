@@ -107,6 +107,7 @@ return [
     'Copyright'              => '版权',
     'ICP'                    => 'ICP备案号',
     'Domain'                 => '域名',
+    'Payment'                => '支付',
     
     
     
@@ -202,12 +203,14 @@ return [
     'Devoloper'              => '系统设计',
     'Author'                 => '作者',
     'Install'                => '安装',
-    'Uninstall'             => '卸载',
+    'Uninstall'              => '卸载',
     'Enable'                 => '启用',
     'Disable'                => '禁用',
     'Damage'                 => '损坏',
     'Config'                 => '配置',
     'Manage'                 => '管理',
+    'Reading limit'          => '阅读限制',
+    'Price'                  => '售价',
 
     // member permission
     'Member index'          => '会员中心',
@@ -236,6 +239,7 @@ return [
 
     // Mysql Field
     'System'                        => '系统',
+    'Detail'                        => '详情',
     'Information'                   => '信息',
     'Member'                        => '会员',
     'Extended'                      => '扩展',
@@ -323,4 +327,18 @@ return [
     'Batch operation'               => '批量操作',
     'Menu'                          => '菜单',
     'Site authorize'                => '站点授权',
+    
+    'Your role does not have access' => '您所在的角色组没有访问权限',
+    
+    // 订单
+    'Order'                         => '订单',
+    'Order number'                  => '订单号',
+    'Payment type'                  => '付款方式',
+    'Payment number'                => '支付流水号',
+    'Menu'                          => '菜单',
+    'Alipay'                        => '支付宝',
+    'Wxpay'                         => '微信支付',
+    'Paid'                          => '已付款',
+    'Non-payment'                   => '未支付',
+    
 ];

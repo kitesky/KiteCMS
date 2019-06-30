@@ -7,7 +7,6 @@ use app\common\controller\IndexCommon;
 
 class Base extends IndexCommon
 {
-
     /**
      * 重载模板fetch父方法
      * 模板加载规则

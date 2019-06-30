@@ -11,10 +11,6 @@ class Base extends IndexCommon
 {
     public function __construct()
     {
-        if (!is_login()) {
-            $this->redirect('member/passport/login');
-        }
-
         View::share('menu', $this->getMemberMenu());
 
         parent::__construct();
@@ -26,15 +22,17 @@ class Base extends IndexCommon
         $rule_id = Db::name('user_nav')
             ->where('url', get_path_url())
             ->value('id');
-
-         // 获取当前URL所有父ID
-        $praents = get_parents($rule, $rule_id);
-        $ids = [];
-        if (!empty($praents)) {
-            foreach ($praents as $v) {
-                array_push($ids, $v['id']);
+        
+        // 验证登录
+        if (in_array($rule_id, array_column($rule, 'id'))){
+            if (!is_login()) {
+                $this->redirect('member/passport/login');
             }
         }
+
+
+         // 获取当前URL所有父ID
+        $ids = get_parents_id($rule, $rule_id);
 
         // 遍历数组 增加active标识
         $menu = array();

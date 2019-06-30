@@ -7,6 +7,16 @@
  * 所以，您需要更改配置请到系统后台进行修改，修改此配置仅在数据表中没有配置项时候生效。
  */
 return [
+  
+    // 支付宝
+    'payment' => [
+        'ali_appid'       => '',
+        'ali_private_key' => '',
+        'ali_public_key'  => '',
+        'ali_notify_url'  => '',
+        'ali_return_url'  => '',
+    ],
+
 
     // 字段类型
     'filedType' => [

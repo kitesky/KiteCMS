@@ -17,6 +17,14 @@ use think\facade\App;
 use think\Loader;
 
     /**
+     * 生成订单号
+     * @return strng 订单号
+     */
+    function make_order_no(){
+        return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+    }
+
+    /**
      * 字符串转换为数组，主要用于把分隔符调整到第二个参数
      * @param  string $str  要分割的字符串
      * @param  string $glue 分割符

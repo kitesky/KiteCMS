@@ -1,0 +1,88 @@
+{extend name="public:base" /}
+{block name="title"}会员首页{/block}
+
+{block name="content"}
+    <section class="content">
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">订单详情</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>{:lang('Title')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.title}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Price')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.total_amount}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Order number')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.out_trade_no}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Creation date')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.create_at}
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>{:lang('Account')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.username}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Status')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.status_text}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Payment type')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.payment_type_text}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{:lang('Payment number')}</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {$info.trade_no}
+                      </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    </section>
+{/block}

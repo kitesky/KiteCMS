@@ -38,6 +38,7 @@ class Site extends Admin
             'imageWater' => Lang::get('Watermarking'), 
             'uploadFile' => Lang::get('Upload'),
             'memberScore'=> Lang::get('Score'),
+            'payment'    => Lang::get('Payment'),
         ];
         $config_name = Request::param('config_name', 'email');
         $config = Config::get('site.' . $config_name);
