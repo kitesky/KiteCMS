@@ -1,7 +1,7 @@
 {extend name="compact:base" /}
-{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
-{block name='keywords'}{$catinfo.keywords}{/block}
-{block name='description'}{$catinfo.description}{/block}
+{block name="title"}{kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
+{block name='description'}{kite:siteinfo var='description' /}{/block}
 
 {block name="content"}
         <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
@@ -28,45 +28,30 @@
             <div class="container">
                 <div class="row"> 
                     <div class="col-md-9">
-                        <div class="blog-list">
-                            {foreach $doclist as $key=>$vo }
-                            <!-- post begin -->
-                            <article>
-                                <div class="post-media">
-                                    <a href="{$vo.url}"><img src="{:thumb($vo.image, 370, 277)}" class="img-responsive"></a>
-                                    <div class="post-date">
-                                    <span class="date-day">{$vo.create_at|get_date="d"}</span>
-                                    <span class="date-month">{$vo.create_at|get_date="m"}</span>
-                                    </div>
-                                </div>
-                                <div class="post-content">
-                                    <div class="post-title">
-                                        <h5><a href="{$vo.url}">{$vo.title}</a></h5>
-                                    </div>
-                                    <div class="post-metadata">
-                                        <span class="byline">
-                                            <i class="fa fa-user"></i>
-                                            {$vo.uid|get_username}
-                                        </span>
-                                        <span class="cat-links">
-                                            <i class="fa fa-folder-open"></i>
-                                            <a href="{$catinfo.url}">{$catinfo.title}</a>
-                                        </span>
-                                        <span class="comment-link"> 
-                                            <i class="fa fa-calendar"></i>
-                                            {$vo.create_at}
-                                        </span>    
-                                    </div>
-                                    <div class="post-entry">
-                                        <p>{$vo.description}</p>
-                                        <p><a class="btn btn-border" href="{$vo.url}">阅读</a></p>
-                                    </div>
-                                </div>
-                            </article>
-                            <!-- post close -->
-                            {/foreach}
-                        </div>
-
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>标题</th>
+                              <th>栏目</th>
+                              <th>日期</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {notempty name="name"}
+                            {volist name="document" id="vo"}
+                            <tr>
+                              <td><a href="{$vo.url}">{$vo.title}</a></td>
+                              <td><a href="{$catinfo.url}">{$catinfo.title}</a></td>
+                              <td>{$vo.create_at}</td>
+                            </tr>
+                            {/volist}
+                            {else /}
+                            <tr>
+                              <td colspan="3">暂无内容</td>
+                            </tr>
+                            {/notempty}
+                          </tbody>
+                        </table>
                         <!-- pagination begin -->
                         <div class="pagination-ourter text-center">
                             {$docpage}

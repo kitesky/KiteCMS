@@ -1,0 +1,60 @@
+{extend name="compact:base" /}
+{block name="title"}搜索 - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{/block}
+{block name='description'}{/block}
+
+{block name="content"}
+        <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>搜索</h1>
+                        <ul class="breadcrumbs">
+                          {kite:crumb var="vo"}
+                            {eq name="vo.active" value="active"} 
+                            <li class="{$vo.active}">{$vo.title}</li>
+                            {else /}
+                            <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            {/eq}
+                          {/kite:crumb}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- content begin -->
+        <div id="content">
+            <div class="container">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>标题</th>
+                      <th>日期</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {notempty name="name"}
+                    {volist name="document" id="vo"}
+                    <tr>
+                      <td><a href="{$vo.url}">{$vo.title}</a></td>
+                      <td>{$vo.create_at}</td>
+                    </tr>
+                    {/volist}
+                    {else /}
+                    <tr>
+                      <td colspan="2">暂无 "{$search.q}" 相关内容</td>
+                    </tr>
+                    {/notempty}
+                  </tbody>
+                </table>
+
+              <!-- pagination begin -->
+              <div class="pagination-ourter text-center">
+                  {$page}
+              </div>
+              <!-- pagination close -->
+            </div>
+        </div>
+        <!-- content close -->
+{/block}

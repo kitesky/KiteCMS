@@ -346,6 +346,7 @@ class Kite
             $doc = $docObj->where('id', $docId)->find();
             $parents = get_parents($list, $doc->cid);
         }
+
         // 如果栏目不为空 push到面包导航中
         if (isset($parents)) {
             foreach ($parents as $v) {
@@ -358,6 +359,16 @@ class Kite
                 }
                 array_push($tree, $cate);
             }
+        }
+
+        // 搜索
+        if (strtolower(Request::controller()) == 'search') {
+            $cate = [
+                'url'    =>  url('index/search/index'),
+                'title'  => '搜索',
+                'active' => 'active',
+            ];
+            array_push($tree, $cate);
         }
 
         return array_filter($tree);
@@ -439,6 +450,11 @@ class Kite
     public function getNavigationForTree($site_id = 1, $cid = 0, $order = 'sort asc')
     {
         $cat_id = Request::param('cat_id');
+        if (!isset($cat_id)) {
+            $doc_id = Request::param('id');
+            $docObj = new DocumentContent;
+            $cat_id = $docObj->where('id', $doc_id)->value('cid');
+        }
 
         $navObj = new Navigation;
         $list = $navObj->getNavigation($site_id, $cid, $order);

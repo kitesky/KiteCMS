@@ -1,7 +1,7 @@
 {extend name="compact:base" /}
-{block name="title"}{kite:siteinfo var='title' /}{/block}
-{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
-{block name='description'}{kite:siteinfo var='description' /}{/block}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
 
 {block name="content"}
         <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
@@ -50,8 +50,8 @@
                             <div class="post-media">
                                 <a href="{$vo.url}"><img  alt="" src="{:thumb($vo.image, 370, 277)}" class="img-responsive"></a>
                                 <div class="post-date">
-                                    <span class="date-day">22</span>
-                                    <span class="date-month">May</span>
+                                    <span class="date-day">{$vo.create_at|get_date="d"}</span>
+                                    <span class="date-month">{$vo.create_at|get_date="m"}</span>
                                 </div>
                             </div>
                             <div class="post-content">

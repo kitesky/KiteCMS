@@ -1,7 +1,7 @@
 {extend name="compact:base" /}
-{block name="title"}{kite:siteinfo var='title' /}{/block}
-{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
-{block name='description'}{kite:siteinfo var='description' /}{/block}
+{block name="title"}{$docinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$docinfo.keywords}{/block}
+{block name='description'}{$docinfo.description}{/block}
 
 {block name="content"}
         <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
@@ -38,7 +38,7 @@
                                     <div class="post-metadata">
                                         <span class="cat-links">
                                             <i class="fa fa-folder-open"></i>
-                                            <a href="#">{$catinfo.title}</a>
+                                            <a href="{$catinfo.url}">{$catinfo.title}</a>
                                         </span>
                                         <span class="byline">
                                             <i class="fa fa-user"></i>
@@ -53,7 +53,10 @@
                                     <div class="post-entry">
                                         {$docinfo.content}
                                     </div>
+                                    
                                     <div class="footer-entry clearfix">
+                                        购买本站模板后，如果您不懂得如何配置安装，请联系客服人员帮助。
+                                        <!--
                                         <div class="single-tags pull-left">
                                             <i class="fa fa-tags"></i>
                                             <a href="#">Development</a>,
@@ -65,8 +68,9 @@
                                             <a href="#" ><i class="fa fa-google-plus"></i></a>
                                             <a href="#" ><i class="fa fa-linkedin"></i></a>
                                         </div>
+                                        -->
                                     </div>
-                                    <nav class="navigation post-navigation">                                        
+                                    <nav class="navigation post-navigation">
                                         <div class="nav-links">
                                             <div class="nav-previous">
                                                 <a href="{$prev.url}">
