@@ -57,7 +57,7 @@
                         {kite:navbar var="vo" cid="1"}
                         {notempty name="vo.child"}
                         <li class="dropdown dropdown-v1">
-                            <a href="{$vo.url}" class="dropdown-toggle" data-toggle="dropdown">{$vo.name} <span class="fa fa-angle-down"></span></a>
+                            <a class="{$vo.active}" href="{$vo.url}" class="dropdown-toggle" data-toggle="dropdown">{$vo.name} <span class="fa fa-angle-down"></span></a>
                             <ul class="dropdown-menu">
                                 {volist name="vo.child" id="child"}
                                 {notempty name="child.child"}
@@ -76,7 +76,7 @@
                             </ul>
                         </li>
                         {else /}
-                        <li><a href="{$vo.url}">{$vo.name}</a></li>
+                        <li><a class="{$vo.active}" href="{$vo.url}">{$vo.name}</a></li>
                         {/notempty}
                         {/kite:navbar}
                     </ul>

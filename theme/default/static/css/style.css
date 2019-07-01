@@ -181,6 +181,11 @@ p.small {
 	line-height: 20px;
 }
 
+.header .navbar-nav .active {
+  color: #2ec5f0 !important;
+}
+
+
 .header .navbar-nav > li > a:hover {
 	background:transparent !important;
 }
