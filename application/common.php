@@ -17,6 +17,14 @@ use think\facade\App;
 use think\Loader;
 
     /**
+     * 获取用户名
+     * @return strng
+     */
+    function get_username($uid){
+        return \app\common\model\AuthUser::where('uid', $uid)->value('username');
+    }
+
+    /**
      * 生成订单号
      * @return strng 订单号
      */

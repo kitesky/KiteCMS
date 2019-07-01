@@ -20,9 +20,9 @@ class Category extends Base
 
         // 当前栏目信息
         $cateObj = new DocumentCategory;
-        $category = $cateObj->getCategoryById($this->site_id, $cat_id);
-        if (!isset($category)) {
-            throw new HttpException(404, 'The page can not be found');
+        $category = $cateObj->find($cat_id);
+        if (empty($category)) {
+            $this->error('您访问的页面不正确');
         }
 
         // 筛选条件

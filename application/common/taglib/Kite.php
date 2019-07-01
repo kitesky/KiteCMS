@@ -130,7 +130,7 @@ class Kite extends TagLib{
     }
 
     /**
-     * 站点列表标签
+     * 站点导航标签
      *
      */
     public function tagNavbar($tag, $content)

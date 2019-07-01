@@ -34,6 +34,13 @@ class DocumentCategory extends Model
         return list_for_level($list);
     }
 
+    public function find($cat_id)
+    {
+        $catInfo = $this->where('id', $cat_id)->find();
+        $catInfo->url = url('index/category/index', ['cat_id' => $catInfo->id]);
+        return $catInfo;
+    }
+  
     public function getCategoryById($site_id, $id)
     {
         return self::where('site_id', '=', $site_id)

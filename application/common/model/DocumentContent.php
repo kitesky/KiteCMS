@@ -152,10 +152,15 @@ class DocumentContent extends Model
 
         $categoryMap = [];
         // 分类参数 存在子栏目ID就查子栏目信息 否则查询当前栏目下所有子栏目
+        $cateList = Db::name('document_category')->field('id,pid')->select();
         if (isset($request['cat_id']) && is_numeric($request['cat_id'])) {
-            $categoryMap = [['cid', '=', $request['cat_id']]];
+            $catIds = get_childs_id($cateList, $request['cat_id']);
+            $catIds[] = $request['cat_id'];
+            $categoryMap = array(['cid', 'in', $catIds]);
         } else {
-            $categoryMap = [['cid', '=', $cid]];
+            $catIds = get_childs_id($cateList, $cid);
+            $catIds[] = $cid;
+            $categoryMap = array(['cid', 'in', $catIds]);
         }
 
         // 自定义字段参数 构造子查询语句

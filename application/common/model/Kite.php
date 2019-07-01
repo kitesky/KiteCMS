@@ -268,7 +268,7 @@ class Kite
         ];
 
         if (isset($pid) && $pid != 0) {
-            $map[] = ['pid', 'in', [$pid]];
+            array_push($map, ['pid', 'in', [$pid]]);
         }
 
         $list = $cateObj
@@ -282,7 +282,7 @@ class Kite
         // 如果获取不到栏目ID 根据文章ID获取cid
         if (!isset($cid)) {
             $docId = Request::param('id');
-            $cid = $docObj->where('id', $docId)->value('cid');
+            $cid = $docObj->where('id', $docId)->value('cid');            
         }
 
         $parents = get_parents($list, $cid);
@@ -317,40 +317,45 @@ class Kite
      */
     public function getCrumb($site_id = 1)
     {
-        // 面包导航数组
         $tree = [];
 
         // 默认首页
         $home = [
-            'title' => '网站首页',
+            'title' => '首页',
+            'active' => '',
             'url' => BuildUrl::instance($site_id)->siteUrl(),
         ];
         array_push($tree, $home);
 
         $cateObj = new DocumentCategory;
-        $list = $cateObj
-            ->where('site_id', $site_id)
-            ->where('status', 1)
-            ->order('sort asc')
-            ->select();
+        $map = [
+            'site_id' => $site_id,
+            'status' => 1,
+        ];
+        $list = $cateObj->field('id,pid,title')->where($map)->order('sort asc')->select();
 
         // 获取栏目ID 及所有父级ID
-        $cid = Request::param('cid');
+        $cid = Request::param('cat_id');
         $docId = Request::param('id');
         $parents = [];
+        if (isset($cid)) {
+            $parents = get_parents($list, $cid);
+        }
         if (isset($docId)) {
             $docObj = new DocumentContent;
             $doc = $docObj->where('id', $docId)->find();
             $parents = get_parents($list, $doc->cid);
-        } else if (isset($cid)) {
-            $parents = get_parents($list, $cid);
         }
-
         // 如果栏目不为空 push到面包导航中
         if (isset($parents)) {
             foreach ($parents as $v) {
                 $cate['url'] = BuildUrl::instance($site_id)->categoryUrl(['cat_id' => $v->id]);
                 $cate['title'] = $v->title;
+                if ($cid == $v->id) {
+                    $cate['active']  = 'active';
+                } else {
+                    $cate['active']  = '';
+                }
                 array_push($tree, $cate);
             }
         }
@@ -437,10 +442,16 @@ class Kite
 
         $navObj = new Navigation;
         $list = $navObj->getNavigation($site_id, $cid, $order);
+        $navMap = [
+            'site_id' => $site_id,
+            'cid' => $cid,
+            'cat_id' => $cat_id,
+        ];
+        $nav_id = $navObj->where($navMap)->value('id');
 
         // 获取所有父级ID
         $ids = [];
-        $ids = get_parents_id ($list, $cat_id);
+        $ids = get_parents_id ($list, $nav_id);
 
         if (!empty($list)) {
             foreach ($list as $v) {
