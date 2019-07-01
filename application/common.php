@@ -98,6 +98,28 @@ use think\Loader;
     }
 
     /**
+     * 获取日期的某一部分
+     * @param string $time 时间戳
+     * @return string
+     */
+    function get_date($time, $t = 'y') {
+        $time = strtotime($time);
+        switch ($t) {
+            case 'y':
+                return date('Y', $time);
+                break;
+            case 'm':
+                return date('M', $time);
+                break;
+            case 'd':
+                return date('d', $time);
+                break;
+            default:
+            return date('y-m-d', $time);
+        }
+    }
+
+    /**
      * 时间戳格式化
      * @param string $time 时间戳
      * @return string
