@@ -1,0 +1,123 @@
+/* jQuery Countdown styles 2.0.0. */
+/* modified */
+
+.is-countdown {
+}
+.countdown-rtl {
+	direction: rtl;
+}
+.countdown-holding span {
+	color: #555555;
+}
+.countdown-row {
+	clear: both;
+	width: 100%;
+	padding: 0px 2px;
+	text-align: center;
+}
+.countdown-show1 .countdown-section {
+	width: 98%;
+}
+.countdown-show2 .countdown-section {
+	width: 48%;
+}
+.countdown-show3 .countdown-section {
+	width: 32.5%;
+}
+.countdown-show4 .countdown-section {
+	width: 24.5%;
+}
+.countdown-show5 .countdown-section {
+	width: 19.5%;
+}
+.countdown-show6 .countdown-section {
+	width: 16.25%;
+}
+.countdown-show7 .countdown-section {
+	width: 14%;
+}
+.countdown-section {
+	display: block;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	color:#555555;
+	text-transform:uppercase;
+	letter-spacing:1px;
+}
+.countdown-amount {
+	font-family:"Dosis";
+    font-size: 72px;
+    line-height: 30px;
+	color:#29b6f6;
+}
+.countdown-period {
+	font-family:"Dosis";
+    display: block;
+    font-size: 12px;
+    line-height: 24px;
+	width:70px;
+	margin:0 auto;
+	margin-top:5px;
+}
+.countdown-descr {
+	display: block;
+	width: 100%;
+}
+ul.countdown {
+    position: relative;
+    width: auto;
+    display: inline-block;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+ul.countdown li {
+    display: table-cell;
+    vertical-align: middle;
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.04);
+  margin-left: 15px;
+  margin-right:15px;
+}
+ul.countdown li span {
+    font-family: "Dosis";
+    font-size: 70px;
+    line-height: 80px;    
+    color:#29b6f6;
+}
+ul.countdown li p {
+    font-family: "Dosis";
+    color: #555555;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+ul.countdown li.seperator {
+    font-size: 10px;
+    width: 0px;
+    text-align: center;
+    line-height: 20px;
+    vertical-align: top;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 0px solid rgba(0, 0, 0, 0.04);
+}
+@media only screen and (max-width: 992px) {
+	
+}
+@media only screen and (max-width: 767px) {
+	.countdown-section {
+		font-size: 12px;
+	}
+	.countdown-amount {
+		font-size: 36px;
+	}
+}
+@media only screen and (max-width: 480px) {
+
+}

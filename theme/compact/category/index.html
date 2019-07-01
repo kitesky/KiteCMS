@@ -1,0 +1,104 @@
+{extend name="compact:base" /}
+{block name="title"}{kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
+{block name='description'}{kite:siteinfo var='description' /}{/block}
+
+{block name="content"}
+        <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{$catinfo.title}</h1>
+                        <ul class="breadcrumbs">
+                          {kite:crumb var="vo"}
+                            {eq name="vo.active" value="active"} 
+                            <li class="{$vo.active}">{$vo.title}</li>
+                            {else /}
+                            <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            {/eq}
+                          {/kite:crumb}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- content begin -->
+        <div id="content">
+            <div class="container">
+                <div class="row"> 
+                    <div class="col-md-9">
+                        <div class="blog-list">
+                            {foreach $doclist as $key=>$vo }
+                            <!-- post begin -->
+                            <article>
+                                <div class="post-media">
+                                    <a href="{$vo.url}"><img src="{:thumb($vo.image, 370, 277)}" class="img-responsive"></a>
+                                    <div class="post-date">
+                                        <span class="date-day">22</span>
+                                        <span class="date-month">May</span>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <div class="post-title">
+                                        <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                    </div>
+                                    <div class="post-metadata">
+                                        <span class="byline">
+                                            <i class="fa fa-user"></i>
+                                            {$vo.uid|get_username}
+                                        </span>
+                                        <span class="cat-links">
+                                            <i class="fa fa-folder-open"></i>
+                                            <a href="{$catinfo.url}">{$catinfo.title}</a>
+                                        </span>
+                                        <span class="comment-link"> 
+                                            <i class="fa fa-calendar"></i>
+                                            {$vo.create_at}
+                                        </span>    
+                                    </div>
+                                    <div class="post-entry">
+                                        <p>{$vo.description}</p>
+                                        <p><a class="btn btn-border" href="{$vo.url}">阅读</a></p>
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- post close -->
+                            {/foreach}
+                        </div>
+
+                        <!-- pagination begin -->
+                        <div class="pagination-ourter text-center">
+                            {$docpage}
+                        </div>
+                        <!-- pagination close -->
+                    </div>
+                    <div class="col-md-3">
+                        <div class="main-sidebar">
+                            <aside class="widget widget_search">
+                                <form action="{:url('index/search/index')}" class="search-form" method="get" role="search">
+                                    <input type="search" name="q"  placeholder="关键词 …" class="search-field">   
+                                    <button class="search-submit" type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </aside>
+                            <aside class="widget widget_categories">
+                                <h3 class="widget-title">栏目</h3> 
+                                <div class="tiny-border"></div>   
+                                <ul>
+                                  {kite:catlist var="vo" pid="0" order="sort asc"}
+                                    <li class="cat-item {$vo.active}"><a href="{$vo.url}">{$vo.title}</a> ({$vo.document_total})</li>
+                                  {/kite:catlist}
+                                </ul>
+                            </aside>
+                            <aside class="widget widget_text">
+                                <div class="textwidget">
+                                    <a href="#"><img src="__THEME__/compact/static/images/news/ads.jpg" alt="" class="img-responsive"></a>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <!-- content close -->
+{/block}

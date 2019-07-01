@@ -1,0 +1,236 @@
+{extend name="compact:base" /}
+{block name="title"}{kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
+{block name='description'}{kite:siteinfo var='description' /}{/block}
+
+{block name="content"}
+        <!-- slider -->
+        <div id="slider">
+            <!-- revolution slider begin -->
+            <div class="fullwidthbanner-container">
+                <div id="revolution-slider">
+                    <ul>
+                        <li data-transition="fade" data-slotamount="7" data-masterspeed="2500" data-delay="5000">
+                            <!--  BACKGROUND IMAGE -->
+                            <img src="__THEME__/compact/static/img-rev-slider/bg-1.jpg" alt="">
+
+                            <div class="tp-caption lft custom-font-2"
+                                data-x="center"
+                                data-y="184"
+                                data-speed="800"
+                                data-start="800"
+                                data-easing="easeInOutCubic">
+                                开源免费PHP网站管理系统
+                            </div>
+
+                            <div class="tp-caption sfb custom-font-2"
+                                data-x="center"
+                                data-y="250"
+                                data-speed="800"
+                                data-start="1400"
+                                data-easing="easeInOutCubic">
+                                KiteCMS
+                            </div>
+
+                            <div class="tp-caption sfb"
+                                data-x="center"
+                                data-y="330"
+                                data-speed="800"
+                                data-start="1600"
+                                data-easing="easeInOutCubic">
+                                <a class="btn btn-slider" href="https://github.com/Kitesky/KiteCMS">Github</a>&nbsp;&nbsp;<a class="btn btn-border-slider" href="https://gitee.com/kitesky/kitecms">Gitee</a>
+                            </div>
+                        </li>
+
+                        <li data-transition="fade" data-slotamount="7" data-masterspeed="2500" data-delay="5000">
+                            <!--  BACKGROUND IMAGE -->
+                            <img src="__THEME__/compact/static/img-rev-slider/bg-2.jpg" alt="">
+
+                            <div class="tp-caption lft custom-font-2"
+                                data-x="center"
+                                data-y="184"
+                                data-speed="800"
+                                data-start="800"
+                                data-easing="easeInOutCubic">
+                                响应式模板，根据设备自适应，模板定制服务。
+                            </div>
+
+                            <div class="tp-caption sfb custom-font-2"
+                                data-x="center"
+                                data-y="250"
+                                data-speed="800"
+                                data-start="1400"
+                                data-easing="easeInOutCubic">
+                                QQ40069925
+                            </div>
+
+                            <div class="tp-caption sfb"
+                                data-x="center"
+                                data-y="330"
+                                data-speed="800"
+                                data-start="1600"
+                                data-easing="easeInOutCubic">
+                                <a class="btn btn-slider" href="https://github.com/Kitesky/KiteCMS">Github</a>&nbsp;&nbsp;<a class="btn btn-border-slider" href="https://gitee.com/kitesky/kitecms">Gitee</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- revolution slider close -->
+        </div>
+        <!-- slider close -->
+
+        <div class="clearfix"></div>
+
+        <!-- content begin -->
+        <div id="content" class="no-padding">
+
+            <!-- section begin -->
+            <!-- 这个是自定义图片
+            <section id="section-service">
+                <div class="container">
+                    <div class="row"> 
+                        <div class="col-md-4">
+                            <div class="service-box">
+                                <img src="__THEME__/compact/static/images/services/thumb-1.png" alt="" class="img-responsive">
+                                <div class="service-content">
+                                    <h3>Mobile Ready</h3>
+                                    <p>Fusce at accumsan justo. Nulla lacus efficitur vel aliquam sed, fringilla sit amet neque.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="service-box">
+                                <img src="__THEME__/compact/static/images/services/thumb-2.png" alt="" class="img-responsive">
+                                <div class="service-content">
+                                    <h3>Very Easy Customizie</h3>
+                                    <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="service-box">
+                                <img src="__THEME__/compact/static/images/services/thumb-3.png" alt="" class="img-responsive">
+                                <div class="service-content">
+                                    <h3>Free Icon Font Awesome</h3>
+                                    <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+            -->
+            <!-- section close -->
+
+            <!-- section begin -->
+            <section id="section-featured">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature no-margin">
+                                <i class="fa fa-bar-chart"></i>
+                                <h3>开源免费</h3>
+                                <p>系统100%开源，商业使用无需授权.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature no-margin">
+                                <i class="fa fa-diamond"></i>
+                                <h3>二次开发</h3>
+                                <p>底层框架基于ThinkPHP5.1.37，方便二次开发扩展.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature no-margin">
+                                <i class="fa fa-bullhorn"></i>
+                                <h3>模板标签</h3>
+                                <p>内容调取采用标签，即使不懂PHP也能制作模板.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </section>
+            <!-- section close -->
+
+            <!-- section begin -->
+            <section id="section-about" class="bg-grey">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <img src="__THEME__/compact/static/images/computer.png" alt="about image" class="img-responsive">
+                        </div>                        
+                        <div class="col-md-6 col-sm-6">
+                          <div class="about-box">
+                              <h2 class="box-title">系统介绍</h2>
+                              <div class="tiny-border"></div>
+                              <p>KiteCMS系统基于Thinkphp 5.1.37 版本开发，真正的开源免费，可以用于商业目的，无需任何授权。后续会不断的完善优化系统，开发更多实用的模块，插件，模板。</p>
+                              <ul class="list-style-1">
+                                  <li>模板标签化</li>
+                                  <li>多站点管理</li>
+                                  <li>自定义模型字段</li>
+                                  <li>插件扩展</li>
+                                  <li>角色权限</li>
+                              </ul>
+                              <div class="divider-single"></div>
+                              <a href="https://gitee.com/kitesky/kitecms" class="btn btn-primary btn-small">系统下载</a>
+                          </div>
+                    </div>
+                </div>
+            </section>
+            <!-- section close -->
+
+
+            <!-- section begin -->
+            <section id="section-project">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="latest-projects clearfix">
+                                <div class="latest-projects-intro">
+                                    <h2 class="box-title">最新模板</h2>
+                                    <div class="tiny-border-light"></div>            
+                                    <p>我们会定期发布适用于各行业的模板风格，如果没有您想要的风格，可以联系我们（QQ40069925）进行模板定制服务。</p>
+                                </div>
+                                <div class="latest-projects-wrapper">
+                                    <div id="latest-projects-items" class="latest-projects-items">
+                                        {kite:doclist var='vo' cid='8' order='id desc' limit='6'}
+                                        <div class="item">
+                                            <img src="{$vo.image|thumb=285,213}" alt="" class="img-responsive">
+                                            <div class="project-details">
+                                                <p class="folio-title"><a href="{$vo.url}">{$vo.title}</a></p>
+                                                <p class="folio-cate"><i class="fa fa-tag"></i><a href="#">Finance</a>, <a href="#">Marketing</a></p>
+                                                <div class="folio-buttons">
+                                                    <a href="{$vo.image}" title="{$vo.title}" class="folio"><i class="fa fa-search"></i></a>
+                                                    <a href="{$vo.url}"><i class="fa fa-link"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/kite:doclist}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </section>
+            <!-- section close -->
+
+            <!-- section begin -->
+            <section id="section-cta">
+                <div class="sep-background-mask"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="cal-to-action text-center">
+                                <span>我们已经为我们的客户完成了<b>100+</b> 个项目。, 如果你有兴趣的话?</span>
+                                <a href="//shang.qq.com/wpa/qunwpa?idkey=23394e77a9a3ab8e16d268c91da479371ac1df49e9ebba0d387f1a0037fc9558" class="btn btn-border-light">在线咨询</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- section close -->
+        </div>
+        <!-- content close -->
+{/block}

@@ -1,0 +1,62 @@
+<header class="header-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-5 col-lg-2">
+                <!-- Start Logo Area -->
+                <div class="logo-area">
+                    <a href="{kite:siteinfo var='url' /}"><img src="__THEME__/company/static/img/logo.png" alt="Businex-Logo"></a>
+                </div>
+                <!-- End Logo Area -->
+            </div>
+
+            <div class="col-lg-7 d-none d-lg-block">
+                <!-- Start Navigation Area -->
+                <div class="navigation-area mt-lg-3">
+                    <ul class="main-menu nav pull-left">
+                    <!--
+                    {kite:catlist var="vo" pid="0"}
+                        {notempty name="vo.child"}
+                        <li class="has-submenu"><a href="{$vo.url}">{$vo.title}</a>
+                            <ul class="submenu-nav">
+                            {volist name="vo.child" id="child"}
+                                <li><a href="{$child.url}">{$child.title}</a></li>
+                            {/volist}
+                            </ul>
+                        </li>
+                        {else /}
+                        <li><a href="{$vo.url}">{$vo.title}</a></li>
+                        {/notempty}
+                    {/kite:catlist}
+                    -->
+
+                    {kite:navbar var="vo" cid="1"}
+                        {notempty name="vo.child"}
+                        <li class="has-submenu"><a class="{$vo.active}" href="#">{$vo.name}</a>
+                            <ul class="submenu-nav">
+                            {volist name="vo.child" id="child"}
+                                <li><a href="{$child.url}" class="{$child.active}">{$child.name}</a></li>
+                            {/volist}
+                            </ul>
+                        </li>
+                        {else /}
+                        <li><a class="{$vo.active}" href="{$vo.url}">{$vo.name}</a></li>
+                        {/notempty}
+                    {/kite:navbar}
+
+                    </ul>
+                </div>
+                <!-- End Navigation Area -->
+            </div>
+
+            <div class="col-7 col-lg-3">
+                <!-- Start Header Action Area -->
+                <div class="header-action mt-lg-3 text-right">
+                    <a href="tel:18780221108" class="tel-no">18780221108</a>
+                    <button class="btn-cog"><i class="fa fa-cog"></i></button>
+                    <button class="btn-menu d-lg-none"><i class="fa fa-bars"></i></button>
+                </div>
+                <!-- End Header Action Area -->
+            </div>
+        </div>
+    </div>
+</header>

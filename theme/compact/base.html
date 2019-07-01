@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="www.kitesky.com">
+
+    <title>{block name="title"}{/block} - Powered by KiteCMS</title>
+    <meta name="keywords" content="{block name='keywords'}{/block}">
+    <meta name="description" content="{block name='description'}{/block}">
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="icon" href="__THEME__/compact/static/images/favicon.png" type="image/x-icon">    
+    <!-- LOAD CSS FILES -->
+    <link href="__THEME__/compact/static/style.css" rel="stylesheet" type="text/css">  
+
+</head>
+
+<body>
+    <div id="wrapper">
+        {include file="compact:header" /}
+
+        {block name="content"}{/block}
+
+        {include file="compact:footer" /}
+    </div>
+
+    <a id="to-the-top" ><i class="fa fa-angle-up"></i></a>
+
+    <!-- LOAD JS FILES -->
+    <script src="__THEME__/compact/static/js/jquery.min.js"></script>
+    <script src="__THEME__/compact/static/js/bootstrap.min.js"></script>
+    <script src="__THEME__/compact/static/js/imagesloaded.pkgd.min.js"></script>
+    <script src="__THEME__/compact/static/js/easing.js"></script>
+    <script src="__THEME__/compact/static/js/owl.carousel.js"></script>
+    <script src="__THEME__/compact/static/js/jquery.fitvids.js"></script>    
+    <script src="__THEME__/compact/static/js/wow.min.js"></script>
+    <script src="__THEME__/compact/static/js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Waypoints-->
+    <script src="__THEME__/compact/static/js/jquery.waypoints.min.js"></script>
+    <script src="__THEME__/compact/static/js/sticky.min.js"></script>
+    <script src="__THEME__/compact/static/js/tipper.js"></script>
+    <script src="__THEME__/compact/static/js/compact.js"></script>
+    <script src="__THEME__/compact/static/js/custom-index1.js"></script>
+
+    <!-- SLIDER REVOLUTION SCRIPTS  -->
+    <script type="text/javascript" src="__THEME__/compact/static/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="__THEME__/compact/static/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="__THEME__/compact/static/js/revslider-custom.js"></script> 
+
+</body>
+</html>

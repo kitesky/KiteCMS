@@ -1,0 +1,121 @@
+{extend name="company:base" /}
+{block name="title"}{$docinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$docinfo.keywords}{/block}
+{block name='description'}{$docinfo.description}{/block}
+
+{block name="content"}
+<!--== Start Page Header Area ==-->
+<div class="page-header-area bg-img" data-bg="__THEME__/company/static/img/page-header.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-8 m-auto text-center">
+                <div class="page-header-content-inner">
+                    <div class="page-header-content">
+                        <h2>内容详情</h2>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Header Area ==-->
+
+
+<!--== Start Blog Details Page Content ==-->
+<div class="blog-details-page-content sp-y">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3">
+                <aside class="sidebar-area-wrapper mt-md-80 mt-sm-60">
+                    <!-- Start Single Sidebar Wrap -->
+                    <div class="single-sidebar-item-wrap">
+                        <h3 class="sidebar-title">栏目分类</h3>
+                        <div class="sidebar-body">
+                            <ul class="sidebar-list">
+                            {kite:catlist var="vo" pid="9" order="sort asc"}
+                                <li class="{$vo.active}"><a href="{$vo.url}">{$vo.title}</a></li>
+                             {/kite:catlist}
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Single Sidebar Wrap -->
+
+                    <!-- Start Single Sidebar Wrap -->
+                    <div class="single-sidebar-item-wrap">
+                        <h3 class="sidebar-title">推荐文章</h3>
+                        <div class="sidebar-body">
+                            <div class="latest-blog-widget">
+                                {kite:doclist var='vo' cid='1,2,3,4' recommend_flag='1' order='id desc' limit='3' order='id desc'}
+                                <div class="single-blog-item">
+                                    <div class="post-thumb">
+                                        <a href="{$vo.url}">
+                                            <img src="{$vo.image|thumb=65,56}" alt="Thumb"/>
+                                        </a>
+                                    </div>
+
+                                    <div class="post-info">
+                                        <h6><a href="{$vo.url}">{$vo.title}</a></h6>
+                                        <span class="post-date"><i class="fa fa-clock-o"></i>{$vo.create_at}</span>
+                                    </div>
+                                </div>
+                                {/kite:doclist}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Sidebar Wrap -->
+
+                    <!-- Start Single Sidebar Wrap -->
+                    <div class="single-sidebar-item-wrap">
+                        <div class="sidebar-body">
+                            <a href="#"><img src="__THEME__/company/static/img/banner-poster.jpg" alt="Poster"></a>
+                        </div>
+                    </div>
+                    <!-- End Single Sidebar Wrap -->
+                </aside>
+            </div>
+
+            <div class="col-lg-9">
+                <article class="blog-post-details">
+
+                    <div class="blog-post-txt">
+                        <h2 class="h3">{$docinfo.title}</h2>
+                        {$docinfo.content}
+                    </div>
+
+                    <!-- 
+                    <div class="share-article text-center">
+                        <h6>分享文章</h6>
+                        <div class="member-social-icons justify-content-center">
+                            <a class="facebook" href="#"><i class="mdi mdi-facebook"></i></a>
+                            <a class="twitter" href="#"><i class="mdi mdi-twitter"></i></a>
+                            <a class="reddit" href="#"><i class="mdi mdi-reddit"></i></a>
+                            <a class="pinterest" href="#"><i class="mdi mdi-pinterest"></i></a>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="pagination-wrap">
+                        <ul class="pagination">
+                            {notempty name="prev"}
+                            <li class="prev"><a href="{$prev.url}"><i class="fa fa-long-arrow-left"></i> {$prev.title}</a></li>
+                            {else /}
+                            <li class="prev disabled"><a href="#"><i class="fa fa-long-arrow-left"></i> 暂无</a></li>
+                            {/notempty}
+
+                            {notempty name="next"}
+                            <li class="next"><a href="{$next.url}">{$next.title} <i class="fa fa-long-arrow-right"></i></a></li>
+                            {else /}
+                            <li class="next"><a href="#"><i class="fa fa-long-arrow-left"></i> 暂无</a></li>
+                            {/notempty}
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--== End Blog Details Page Content ==-->
+{/block}

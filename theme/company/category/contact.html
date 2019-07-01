@@ -1,0 +1,119 @@
+{extend name="company:base" /}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
+
+{block name="content"}
+<!--== Start Page Header Area ==-->
+<div class="page-header-area bg-img" data-bg="__THEME__/company/static/img/page-header.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-8 m-auto text-center">
+                <div class="page-header-content-inner">
+                    <div class="page-header-content">
+                        <h2>联系方式</h2>
+                        <p>如果您在使用过程中有任何问题，请加入官方QQ群在线提问。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Header Area ==-->
+
+<!--== Start Contact Page Area Wrapper ==-->
+<div class="contact-page-area-wrapper sp-y">
+    <div class="container">
+        <div class="contact-content-wrap">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="contact-form-area contact-method">
+                        <h3>在线反馈</h3>
+
+                        <div class="contact-form-wrap">
+                            <form action="__THEME__/company/static/php/mail.php" method="post"
+                                  id="contact-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="single-input-item">
+                                            <label>
+                                                <input type="text" name="name" placeholder="姓名 *"
+                                                       required/>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="single-input-item">
+                                            <label>
+                                                <input type="email" name="email" placeholder="电子邮箱 *" required/>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="single-input-item">
+                                            <label>
+                                                <input type="text" name="qq" placeholder="QQ *"
+                                                       required/>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="single-input-item">
+                                            <label>
+                                                <input type="text" name="phone" placeholder="手机号"/>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="single-input-item">
+                                            <label for="con_message" class="sr-only m-0"></label>
+                                            <textarea name="content" id="content" cols="30" rows="7" placeholder="反馈内容 *" required></textarea>
+                                        </div>
+
+                                        <div class="single-input-item mb-0 mt-40">
+                                            <button class="btn-outline">提交</button>
+                                        </div>
+
+                                        <div class="form-message"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="contact-information contact-method">
+                        <div class="contact-info-con">
+                            <h3>联系信息</h3>
+
+                            <div class="widget-item m-0">
+                                <address>
+                                    中国 · 成都市高新区
+                                    <br>
+                                    邮箱：kite@kitesky.com
+                                    <br>
+                                    QQ ：40069925
+                                    <br>
+                                    官方QQ交流群：3337800 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=f8ba25a30af29e8844b81624dc0cac795c40e8d5ad691d0e61292b3e38600f8b"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="KiteCMS官方群1" title="KiteCMS官方群1"></a>
+                                </address>
+                            </div>
+                            <div class="member-social-icons mt-30">
+                                <a href="#"><i class="mdi mdi-facebook"></i></a>
+                                <a href="#"><i class="mdi mdi-twitter"></i></a>
+                                <a href="#"><i class="mdi mdi-linkedin"></i></a>
+                                <a href="#"><i class="mdi mdi-pinterest"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Contact Page Area Wrapper ==-->
+{/block}

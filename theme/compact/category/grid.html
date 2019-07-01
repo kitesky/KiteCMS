@@ -1,0 +1,94 @@
+{extend name="compact:base" /}
+{block name="title"}{kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
+{block name='description'}{kite:siteinfo var='description' /}{/block}
+
+{block name="content"}
+        <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{$catinfo.title}</h1>
+                        <ul class="breadcrumbs">
+                          {kite:crumb var="vo"}
+                            {eq name="vo.active" value="active"} 
+                            <li class="{$vo.active}">{$vo.title}</li>
+                            {else /}
+                            <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            {/eq}
+                          {/kite:crumb}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- content begin -->
+        <div id="content">
+            <div class="container">
+
+                {notempty name="filter"}
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    {foreach $filter as $key=>$vo }
+                    <ul class="nav nav-pills" id="filter">
+                        <li>{$vo.name}</li>
+                        {foreach $vo.select as $k=>$v }
+                        <li><a href="{$v.url}" class="{eq name='v.active' value='active'}current{/eq}" title="">{$v.value}</a></li>
+                        {/foreach}
+                    </ul>
+                    {/foreach}
+                  </div>
+                </div>
+                {/notempty}
+
+                <div class="row"> 
+                    <div id="blog-grid" class="blog-grid">
+                        {foreach $doclist as $key=>$vo }
+                        <!-- post begin -->
+                        <article class="item col-md-4 col-sm-6">
+                            <div class="post-media">
+                                <a href="{$vo.url}"><img  alt="" src="{:thumb($vo.image, 370, 277)}" class="img-responsive"></a>
+                                <div class="post-date">
+                                    <span class="date-day">22</span>
+                                    <span class="date-month">May</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <div class="post-title">
+                                    <h5><a href="{$vo.url}">{$vo.title}</a></h5>
+                                </div>
+                                <div class="post-metadata">
+                                    <span class="byline">
+                                        <i class="fa fa-user"></i>
+                                        <a href="#">{$vo.uid|get_username}</a>
+                                    </span>
+                                    <span class="cat-links">
+                                        <i class="fa fa-folder-open"></i>
+                                        <a href="#">{$catinfo.title}</a>
+                                    </span>
+                                       
+                                </div>
+                                <!-- 
+                                <div class="post-entry">
+                                    {$vo.description}
+                                </div>
+                                -->
+                            </div>
+                        </article>
+                        <!-- post close -->
+                        {/foreach}
+
+                    </div>
+
+                </div>
+
+                <!-- pagination begin -->
+                <div class="pagination-ourter text-center">
+                    {$docpage}
+                </div>
+                <!-- pagination close -->
+            </div> 
+        </div>
+        <!-- content close -->
+{/block}

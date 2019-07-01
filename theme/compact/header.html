@@ -1,0 +1,125 @@
+        <!-- header begin -->
+        <header class="site-header-1 site-header">
+            <!-- Main bar start -->
+            <div id="sticked-menu" class="main-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <!-- logo begin -->
+                            <div id="logo" class="pull-left">
+                                <a href="{kite:siteinfo var='url' /}">
+                                    <img src="{kite:siteinfo var='logo'  /}" alt="" class="logo">
+                                </a>
+                            </div>
+                            <!-- logo close -->
+
+                            <!-- btn-mobile menu begin -->
+                            <a id="show-mobile-menu" class="btn-mobile-menu hidden-lg hidden-md"><i class="fa fa-bars"></i></a>
+                            <!-- btn-mobile menu close -->  
+
+                            <!-- mobile menu begin -->
+                            <nav id="mobile-menu" class="site-mobile-menu hidden-lg hidden-md">
+                                <ul></ul>
+                            </nav>  
+                            <!-- mobile menu close -->
+
+                            <!-- desktop menu begin -->
+                            <nav id="desktop-menu" class="site-desktop-menu hidden-xs hidden-sm">
+                                <ul class="clearfix">
+                                <!-- 分类--
+                                {kite:catlist var="vo" pid="0"}
+                                    {notempty name="vo.child"}
+                                    <li class=""><a class="{$vo.active}" href="#">{$vo.title}</a>
+                                        <ul>
+                                        {volist name="vo.child" id="child"}
+                                            <li><a href="{$child.url}">{$child.title}</a></li>
+                                        {/volist}
+                                        </ul>
+                                    </li>
+                                    {else /}
+                                    <li><a class="{$vo.active}" href="{$vo.url}">{$vo.title}</a></li>
+                                    {/notempty}
+                                {/kite:catlist}
+                                -->
+
+                                {kite:navbar var="vo" cid="1"}
+                                    {notempty name="vo.child"}
+                                    <li><a class="{$vo.active}" href="{$vo.url}">{$vo.name}</a>
+                                        <ul>
+                                        {volist name="vo.child" id="child"}
+                                            <li><a href="{$child.url}">{$child.name}</a></li>
+                                        {/volist}
+                                        </ul>
+                                    </li>
+                                    {else /}
+                                    <li><a class="{$vo.active}" href="{$vo.url}">{$vo.name}</a></li>
+                                    {/notempty}
+                                {/kite:navbar}
+                                </ul>
+                            </nav>
+                            <!-- desktop menu close -->
+                            
+                            <!-- Header Group Button Right begin -->
+                            <div class="header-buttons pull-right hidden-xs hidden-sm">
+                                
+                                <div class="header-contact">
+                                    <ul class="clearfix">
+                                        <li class="phone"><i class="fa fa-phone"></i> <span>028-40069925</span></li>
+                                        <li class="border-line">|</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Button Modal popup searchbox -->
+                                <div class="search-button">
+                                    <!-- Trigger the modal with a button -->
+                                    <a href="" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i></a>
+                                </div>
+
+                                <!-- Button Menu OffCanvas right -->
+                                <div class="navright-button">
+                                    <a href="" id="btn-offcanvas-menu"><i class="fa fa-user"></i></a>
+                                </div> 
+
+                            </div>
+                            <!-- Header Group Button Right close -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header close -->
+        <div class="gray-line"></div>
+
+
+        <!-- Modal Search begin -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="modal-dialog myModal-search">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form role="search" method="get" class="search-form" action="{:url('index/search/index')}">
+                        <input type="search" class="search-field" name="q" placeholder="Search here..." />
+                        <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Search close -->
+
+        <!-- Menu OffCanvas right begin -->
+        <div class="navright-button hidden-sm">
+            <div class="compact-menu-canvas" id="offcanvas-menu">
+                <h3>会员中心</h3><a id="btn-close-canvasmenu"><i class="fa fa-close"></i></a>
+                <nav>
+                  <ul class="clearfix">
+                        <li><a href="{:url('member/passport/login')}">登录</a></li>
+                        <li><a href="{:url('member/passport/register')}">注册</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div> 
+        <!-- Menu OffCanvas right close -->

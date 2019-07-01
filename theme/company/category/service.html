@@ -1,0 +1,77 @@
+{extend name="company:base" /}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
+
+{block name="content"}
+<!--== Start Page Header Area ==-->
+<div class="page-header-area bg-img" data-bg="__THEME__/company/static/img/page-header.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-8 m-auto text-center">
+                <div class="page-header-content-inner">
+                    <div class="page-header-content">
+                        <h2>服务项目</h2>
+                        <p>承接网站开发，小程序，APP各类系统的开发工作</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Header Area ==-->
+
+<!--== Start Page Content Area Wrapper ==-->
+<div class="page-content-wrapper">
+    <div class="service-details-wrapper sm-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="service-details-content">
+                        <div class="service-details-info">
+                            <h4>服务项目</h4>
+                            <p>1</p>
+
+                            <div class="about-service mt-50 mt-sm-35">
+                                <h4>网站开发</h4>
+                                <p>2</p>
+                            </div>
+
+                            <div class="about-service mt-50 mt-sm-35">
+                                <h4>模板定制</h4>
+                                <p>2</p>
+                            </div>
+
+                            <div class="how-we-works-wrap mt-50 mt-sm-35">
+                                <h4>APP开发</h4>
+                                <p>3</p>
+                            </div>
+
+                            <div class="how-we-works-wrap mt-50 mt-sm-35">
+                                <h4>网站运维</h4>
+                                <p>3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mtn-40">
+                    <div class="sidebar-wrap mt-sm-90 mt-md-100">
+                        <!-- Start Sidebar Item -->
+                        <div class="sidebar-single">
+                            <h3 class="sidebar-heading">服务项目</h3>
+                            <div class="sidebar-body">
+                                <ul class="service-list">
+                                    <li><a href="service-details.html">网站开发</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Sidebar Item -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Content Area Wrapper ==-->
+{/block}

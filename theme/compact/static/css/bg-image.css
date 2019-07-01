@@ -1,0 +1,43 @@
+/* section background
+/* -------------------------------------------------- */
+section, #subheader{
+	-webkit-background-size: 100% !important;
+	-moz-background-size: 100% !important;
+	-o-background-size: 100% !important;
+	background-size: 100% !important;
+	position: relative;
+}
+section > .container{position: relative;z-index: 2;}
+#subheader {background:url(../images/bg/bg-1.jpg) top fixed;}
+#section-cta {background:url(../images/bg/bg-team.jpg) top fixed;}
+#section-pricing {background:url(../images/bg/bg-1.jpg) top scroll;}
+#about-intro {background:url(../images/bg/bg-about.jpg);}
+#service-intro {background:url(../images/bg/bg-service.jpg);}
+#section-coming-soon {
+	background-image:url(../images/bg/commingsoon.jpg);
+	-webkit-background-size:cover !important;
+	-moz-background-size: cover !important;
+	-o-background-size: cover !important;
+	background-size: cover !important;
+	background-attachment: scroll !important;
+}
+.sep-background-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #29b6f6;
+    opacity: .9;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 992px) {
+	section,#subheader{
+		-webkit-background-size:cover !important;
+		-moz-background-size: cover !important;
+		-o-background-size: cover !important;
+		background-size: cover !important;
+		background-attachment: scroll !important;
+	}
+}

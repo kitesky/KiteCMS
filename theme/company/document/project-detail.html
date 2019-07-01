@@ -1,0 +1,94 @@
+{extend name="company:base" /}
+{block name="title"}{$docinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$docinfo.keywords}{/block}
+{block name='description'}{$docinfo.description}{/block}
+
+{block name="content"}
+<!--== Start Page Header Area ==-->
+<div class="page-header-area bg-img" data-bg="__THEME__/company/static/img/page-header.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-8 m-auto text-center">
+                <div class="page-header-content-inner">
+                    <div class="page-header-content">
+                        <h2>主题详情</h2>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Page Header Area ==-->
+
+
+<!--== Start Blog Details Page Content ==-->
+<div class="blog-details-page-content sp-y">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <article class="blog-post-details">
+                    <!--
+                    <figure class="blog-post-thumb">
+                        <img src="__THEME__/company/static/img/blog/blog-details-1.jpg" alt="Blog"/>
+                    </figure>
+                    -->
+
+                    <div class="blog-post-txt-wrap">
+                        <div class="row">
+                            <div class="col-md-9 col-lg-9 m-auto order-0">
+                                <div class="blog-post-txt">
+                                    <h2 class="h3">{$docinfo.title}</h2>
+                                    {$docinfo.content}
+                                </div>
+
+                                <div class="pagination-wrap">
+                                    <ul class="pagination">
+                                        {notempty name="prev"}
+                                        <li class="prev"><a href="{$prev.url}"><i class="fa fa-long-arrow-left"></i> {$prev.title}</a></li>
+                                        {else /}
+                                        <li class="prev"><a href="#"><i class="fa fa-long-arrow-left"></i> 暂无</a></li>
+                                        {/notempty}
+
+                                        {notempty name="next"}
+                                        <li class="next"><a href="{$next.url}">{$next.title} <i class="fa fa-long-arrow-right"></i></a></li>
+                                        {else /}
+                                        <li class="next"><a href="#"><i class="fa fa-long-arrow-left"></i> 暂无</a></li>
+                                        {/notempty}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-lg-3 order-1 order-md-0">
+                                <div class="sidebar-wrap mt-sm-90 mt-md-100">
+                                    <div class="author-info mt-sm-40">
+                                        <div class="author-thumb">
+                                            <img src="__THEME__/company/static/img/team/02.jpg" alt="Businex-Author"/>
+                                        </div>
+                                        <div class="author-txt">
+                                            会员 <strong>{$docinfo.uid}</strong> 分享
+                                            <p class="designation">上传时间 : {$docinfo.create_at}</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Start Sidebar Item -->
+                                    <div class="sidebar-single">
+                                        <div class="sidebar-body">
+                                            <ul class="service-list">
+                                                <li><a href="https://gitee.com/kitesky/kitecms"><i class="fa fa-cloud-download"></i>普通下载</a></li>
+                                                <li><a href="#"><i class="fa fa-github"></i>模板演示</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- End Sidebar Item -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Blog Details Page Content ==-->
+{/block}

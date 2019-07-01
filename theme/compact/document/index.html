@@ -1,0 +1,134 @@
+{extend name="compact:base" /}
+{block name="title"}{kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
+{block name='description'}{kite:siteinfo var='description' /}{/block}
+
+{block name="content"}
+        <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{$docinfo.title}</h1>
+                        <ul class="breadcrumbs">
+                          {kite:crumb var="vo"}
+                            {eq name="vo.active" value="active"} 
+                            <li class="{$vo.active}">{$vo.title}</li>
+                            {else /}
+                            <li><a href="{$vo.url}">{$vo.title}</a></li>
+                            {/eq}
+                          {/kite:crumb}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- content begin -->
+        <div id="content">
+            <div class="container">
+                <div class="row"> 
+                    <div class="col-md-9">
+                        <div class="blog-single">
+                            <!-- post begin -->
+                            <article>
+                                <div class="post-content">
+                                    <div class="post-title">
+                                        <h1>{$docinfo.title}</h1>
+                                    </div>
+                                    <div class="post-metadata">
+                                        <span class="cat-links">
+                                            <i class="fa fa-folder-open"></i>
+                                            <a href="#">{$catinfo.title}</a>
+                                        </span>
+                                        <span class="byline">
+                                            <i class="fa fa-user"></i>
+                                            <a href="#">{$docinfo.uid|get_username}</a>
+                                        </span>
+                                        <span class="posted-on">
+                                            <i class="fa fa-clock-o"></i>
+                                            {$docinfo.create_at}
+                                        </span>
+                                    </div>
+                                    <div class="hr"></div>
+                                    <div class="post-entry">
+                                        {$docinfo.content}
+                                    </div>
+                                    <div class="footer-entry clearfix">
+                                        <div class="single-tags pull-left">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="#">Development</a>,
+                                            <a href="#">Maketing</a>
+                                        </div>
+                                        <div class="social-share pull-right">
+                                            <a href="#" ><i class="fa fa-facebook"></i></a>
+                                            <a href="#" ><i class="fa fa-twitter"></i></a>
+                                            <a href="#" ><i class="fa fa-google-plus"></i></a>
+                                            <a href="#" ><i class="fa fa-linkedin"></i></a>
+                                        </div>
+                                    </div>
+                                    <nav class="navigation post-navigation">                                        
+                                        <div class="nav-links">
+                                            <div class="nav-previous">
+                                                <a href="{$prev.url}">
+                                                    <span class="meta-nav"><i class="fa fa-angle-double-left"></i> </span> 
+                                                    <span class="post-title">{$prev.title}</span>
+                                                </a>
+                                            </div>
+                                            <div class="nav-next">
+                                                <a href="{$next.url}">
+                                                    <span class="meta-nav"><i class="fa fa-angle-double-right"></i></span>
+                                                    <span class="post-title">{$next.title}</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                    <div class="clearfix"></div>
+
+                            </article>
+                            <!-- post close -->
+                        </div>
+
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <div class="main-sidebar">
+                            <aside class="widget widget_search">
+                                <form action="{:url('index/search/index')}" class="search-form" method="get" role="search">
+                                    <input type="search" name="q" placeholder="关键词 …" class="search-field">   
+                                    <button class="search-submit" type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </aside>
+                            <aside class="widget widget_categories">
+                                <h3 class="widget-title">栏目</h3>
+                                <div class="tiny-border"></div>    
+                                <ul>
+                                  {kite:catlist var="vo" pid="0" order="sort asc"}
+                                    <li class="cat-item {$vo.active}"><a href="{$vo.url}">{$vo.title}</a> ({$vo.document_total})</li>
+                                  {/kite:catlist}
+                                </ul>
+                            </aside>
+                            <!--
+                            <aside class="widget widget_tag_cloud">
+                                <h3 class="widget-title">Tags</h3>
+                                <div class="tiny-border"></div>
+                                <div class="tagcloud">
+                                    <a href="#">audio</a>
+                                    <a href="#">gallery</a>
+                                    <a href="#">image</a>
+                                    <a href="#">music</a>
+                                    <a href="#">photo</a>
+                                    <a href="#">quote</a>
+                                    <a href="#">text</a>
+                                    <a href="#">video</a>
+                                    <a href="#">vimeo</a>
+                                    <a href="#">youtube</a>
+                                </div>
+                            </aside>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <!-- content close -->
+{/block}

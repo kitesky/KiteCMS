@@ -1,0 +1,84 @@
+        <!-- footer begin -->
+        <footer class="footer-1 bg-color-1">
+
+            <!-- main footer begin -->
+            <div class="main-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-6">
+                            <div class="compact-widget">                                                
+                                <div class="widget-inner">
+                                    <img class="logo-footer" src="__THEME__/compact/static/images/logo-footer.png" alt="compact company">
+                                    <p>{kite:siteinfo var='description' /}</p>
+                                    <div class="social-icons clearfix">
+                                        <a href="#" class="facebook tipped" data-title="facebook"  data-tipper-options='{"direction":"top","follow":"true"}'><i class="fa fa-facebook"></i></a>
+                                        <a href="#" class="twitter tipped" data-title="twitter"  data-tipper-options='{"direction":"top","follow":"true"}'><i class="fa fa-twitter"></i></a>
+                                        <a href="#" class="google tipped" data-title="google +"  data-tipper-options='{"direction":"top","follow":"true"}'><i class="fa fa-google-plus"></i></a>
+                                        <a href="#" class="youtube tipped" data-title="youtube"  data-tipper-options='{"direction":"top","follow":"true"}'><i class="fa fa-youtube-play"></i></a>
+                                        <a href="#" class="linkedin tipped" data-title="linkedin"  data-tipper-options='{"direction":"top","follow":"true"}'><i class="fa fa-linkedin"></i></a>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6">
+                            <div class="compact-widget">
+                                <h3 class="widget-title">关于我们</h3> 
+                                <div class="widget-inner">
+                                    <ul>
+                                        {kite:navbar var='vo' cid='2' limit='20' order='id asc' /}
+                                        <li><a href="{$vo.url}">{$vo.name}</a></li>
+                                        {/kite:navbar}
+                                    </ul>
+                                </div>                                                   
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6">
+                            <div class="compact-widget">
+                                <h3 class="widget-title">友情链接</h3> 
+                                <div class="widget-inner">
+                                    <ul>
+                                      <ul>
+                                          {kite:link var='vo' cid='1' limit='20' order='sort asc' /}
+                                              <li><a target="_blank" href="{$vo.url}">{$vo.name}</a></li>
+                                          {/kite:link}
+                                      </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="compact-widget">
+                                <h3 class="widget-title">联系我们</h3>
+                                <div class="widget-inner">
+                                    <p>地址: 中国 · 成都市高新区</p>
+                                    <p>电话: +(028) 1234 5678</p>
+                                    <p>QQ: +40069925</p>
+                                    <p>Email: kite@kitesky.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>            
+            <!-- main footer close -->
+
+            <!-- sub footer begin -->
+            <div class="sub-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {kite:siteinfo var='copyright' /}
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a target="_blank" href="http://beian.miit.gov.cn">{kite:siteinfo var='icp' /}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- sub footer close -->
+
+        </footer>
+        <!-- footer close -->        

@@ -1,0 +1,61 @@
+/* default color: #EF4234 */
+body, header.site-header, .site-header-1 .stuck, header.site-header-3 .stuck, 
+	nav.site-mobile-menu > ul, .cart-button .top_cart_list_product,
+	.pricing-item, .tabs > header > h4.active, nav.site-desktop-menu > ul > li > ul,
+	nav.site-desktop-menu > ul > li ul ul {border-top-color: #EF4234;}
+
+	.header-buttons .cart-button .mini-cart-counter, nav.site-mobile-menu > ul > li a:hover,
+	#myModal .close, .compact-menu-canvas nav ul li a:hover, #btn-close-canvasmenu,
+	.btn-primary, .feature:hover i, .latest-projects .latest-projects-intro, 
+	.latest-projects-wrapper .owl-theme .owl-controls .owl-buttons div, 
+	.owl-theme .owl-controls .owl-page span, .comments-area input[type=submit],
+	.pagination > li > span.current,
+	.pagination > li > a:hover, .pro-bar, .stripes .blue, .box-intro-video .btn-intro-video,
+	.tabs.tabs-2 > header > h4.active::before, .tabs.tabs-3 > header > h4.active,
+	.tabs.tabs-4 > header > h4.active, .newsletter form input[type="submit"],
+	#to-the-top:hover, nav.site-mobile-menu > ul > li a:hover, nav.site-desktop-menu > ul > li > ul a:hover,
+	a.btn-slider, .sep-background-mask {background-color: #EF4234;}
+
+	.header-buttons a:hover .fa, .cart_list.product_list_widget .product-detail a:hover,
+	.navright-button .isLeft i.fa-bars, .site-header-2 .search-bar .search-submit:hover,
+	.btn-border-grey:hover, .feature i, .project-details p.folio-cate i, .project-details p a:hover,
+	.latest-blog-post-img .latest-blog-post-date, .latest-blog-post-details p.title a:hover,
+	.latest-blog-post-details .latest-blog-post-data span.tags i, 
+	.latest-blog-post-details .latest-blog-post-data span.tags a:hover,
+	.latest-blog-post-details .latest-blog-post-data span.btn-read a:hover,
+	.latest-blog-post-details .latest-blog-post-data span.btn-read a i,
+	.post-content .post-title a:hover, .post-date .date-day, .post-metadata i,
+	.post-metadata a:hover, .single-tags .fa, .single-tags a:hover, .nav-links a:hover .post-title,
+	.comment-author .fn a:hover, .comment-reply-link:hover,
+	.comment-reply-link:focus, .main-sidebar .widget ul li a:hover, .widget .search-form .search-submit:hover,
+	.testi-boxes blockquote:before, .pricing-table-2 .plan-price, .team-box .team-inner ul li a:hover,
+	#filter li .current, #filter li a:hover, footer .main-footer .widget-inner ul li a:hover,
+	nav.site-desktop-menu > ul > li > a:hover, .project-details .folio-buttons i {color: #EF4234;}
+
+	.site-header .btn-mobile-menu:hover i,
+	.site-header .btn-mobile-menu.clicked i,
+	.social-share a:hover, .owl-theme .owl-controls.clickable .owl-buttons div:hover,
+	.compact-buttons div:hover, .tagcloud a:hover, .smk_accordion .accordion_in .acc_head:hover,
+	.smk_accordion .accordion_in.acc_active > .acc_head, footer.footer-2 .social-icons-2 a:hover {
+		background-color: #EF4234;
+		border-color: #EF4234;
+	}
+	.site-header-2 .search-bar .search-box input[type="search"]:focus,
+	.site-header-2 .search-bar .search-box input[type="search"]:active, 
+	.btn-border-grey:hover, .feature i, .project-details .folio-buttons i,
+	.wpcf7-form input[type=text]:focus,
+	.wpcf7-form input[type=email]:focus,
+	.wpcf7-form input[type=password]:focus,
+	.wpcf7-form textarea:focus, .newsletter form input[type="email"]:focus {
+		border-color: #EF4234;
+	}
+	blockquote{border-left-color: #EF4234;}
+	.tabs.tabs-4 > header{border-bottom-color: #EF4234;}
+.team-box .team-inner .mask,
+.social-icons a:hover, .box-intro-video .btn-intro-video:hover {
+  background: rgba(239, 66, 52, 0.8);
+}
+.btn-intro-video:hover {
+  background: rgba(239, 66, 52, 0.9);
+}
+/
