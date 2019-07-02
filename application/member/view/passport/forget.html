@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>会员登录</title>
+  <title>找回密码</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -33,29 +33,35 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">用户登录</p>
+    <p class="login-box-msg">找回密码</p>
 
     <form id="operate">
       <div class="form-group has-feedback">
-        <input type="text" name="username" class="form-control" placeholder="账户">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <input type="text" name="phone" class="form-control" placeholder="手机号码">
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+      </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group has-feedback">
+              <input type="text" name="code" class="form-control" placeholder="验证码">
+              <span class="glyphicon glyphicon-code form-control-feedback"></span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button type="button" onclick="sendEmail();" class="btn btn-default btn-block btn-flat">发送</button>
+          </div>
       </div>
       <div class="form-group has-feedback">
         <input type="password" name="password" class="form-control" placeholder="密码">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      {if ( $captcha == 1) }
       <div class="form-group has-feedback">
-        <input type="text" name="captcha" class="form-control" placeholder="验证码">
+        <input type="password" name="repassword" class="form-control" placeholder="确认密码">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="form-group">
-        {:index_captcha_img()}
-      </div>
-      {/if}
       <div class="row">
         <div class="col-xs-12">
-          <button type="button" onclick="operate();" class="btn btn-primary btn-block btn-flat">登录</button>
+          <button type="button" onclick="operate();" class="btn btn-primary btn-block btn-flat">重置密码</button>
         </div>
         <!-- /.col -->
       </div>
@@ -65,10 +71,10 @@
       <p>- OR -</p>
       <div class="row">
         <div class="col-xs-6">
-          <a href="{:url('member/passport/forget')}" >忘记密码？</a>
+          <a href="{:url('member/passport/register')}" >注册</a>
         </div>
         <div class="col-xs-6">
-          <a href="{:url('member/passport/register')}" >注册账户</a>
+          <a href="{:url('member/passport/login')}" >登录</a>
         </div>
       </div>
     </div>
@@ -96,11 +102,41 @@
         };
     });
 
+    function sendEmail(){
+        $.ajax({
+            url:"{:url('member/message/sendEmail')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
     // 登录
     function operate() {
         $.ajax({
             type:'post',
-            url: "{:url('member/passport/login')}",
+            url: "{:url('member/passport/forget')}",
             data: $("#operate").serialize(),
             success: function(r){
                 if (r.code == 200) {
@@ -112,7 +148,7 @@
                       toast:true,
                       timer: 1000
                     }).then(function(){
-                        window.location.href = "{:url('member/index/index')}";
+                        window.location.href = "{:url('member/passport/login')}";
                     });
                 } else {
                     swal({

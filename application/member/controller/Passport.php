@@ -4,6 +4,7 @@ namespace app\member\controller;
 use app\common\controller\IndexCommon;
 use app\common\model\SiteConfig;
 use app\common\model\SiteCaptcha;
+use app\common\model\SendMessage;
 use think\facade\Request;
 use think\facade\Session;
 use think\facade\Hook;
@@ -167,6 +168,37 @@ class Passport extends IndexCommon
     // 忘记密码找回
     public function forget()
     {
-        echo 11;
+        // 处理AJAX提交数据
+        if (Request::isPost()) {
+            $request = Request::param();
+
+            // 验证数据
+            $validate = new UserValidate();
+            $validateResult = $validate->scene('forget')->check($request);
+            if (!$validateResult) {
+                return $this->response(201, $validate->getError());
+            }
+
+            // 并查询用户信息
+            $obj = new AuthUser;
+            $userInfo = $obj->where('phone', $request['phone'])->find();
+
+            // 验证短信
+            $message = new SendMessage($this->site_id);
+            $check = $message->checkSMS($userInfo->phone, $request['code']);
+            if ($check != true) {
+                return $this->response(201, '动态码错误');
+            }
+
+            $userInfo->password = password_hash($request['password'], PASSWORD_DEFAULT);
+            $userInfo->save();
+            if (is_numeric($userInfo->uid)) {
+                return $this->response(200, '密码变更成功');
+            } else {
+                return $this->response(201, '密码变更失败');
+            }
+        }
+
+        return $this->fetch('passport/forget');
     }
 }

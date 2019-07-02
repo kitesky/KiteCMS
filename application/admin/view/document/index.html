@@ -26,8 +26,7 @@
                   <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">{:lang('List')}</span>
                   <select name="cid" class="form-control">
-                    <option>--{:lang('Any')}--</option>
-                    <option {eq name="search.cid" value="0"}selected{/eq} value="0">--{:lang('Not specified')}--</option>
+                    <option {eq name="search.cid" value="0"}selected{/eq} value="0">--{:lang('Any')}--</option>
                     {volist name="category" id="vo"}
                     <option {eq name="vo.id" value="$search.cid"}selected{/eq} value="{$vo.id}">
                         {eq name="vo.pid" value="0"}
