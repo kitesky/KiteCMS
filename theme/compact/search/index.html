@@ -34,8 +34,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {notempty name="name"}
-                    {volist name="document" id="vo"}
+                    {notempty name="doclist"}
+                    {volist name="doclist" id="vo"}
                     <tr>
                       <td><a href="{$vo.url}">{$vo.title}</a></td>
                       <td>{$vo.create_at}</td>
@@ -51,7 +51,7 @@
 
               <!-- pagination begin -->
               <div class="pagination-ourter text-center">
-                  {$page}
+                  {$docpage}
               </div>
               <!-- pagination close -->
             </div>

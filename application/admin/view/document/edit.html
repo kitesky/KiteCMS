@@ -32,7 +32,7 @@
                               </div>
                             </div>
                             <div class="form-group">
-                              <label>{:lang('Option')} <span class="text-red">*</span></label>
+                              <label>{:lang('Option')}</label>
                               <div class="row">
                               <div class="col-md-12">
                                 <label class="checkbox-inline">
@@ -82,8 +82,6 @@
                               <div class="row">
                               <div class="col-md-12">
                               <select name="cid" class="form-control">
-                                <option>--{:lang('Select')}--</option>
-                                <option value="0">--{:lang('Not specified')}--</option>
                                 {volist name="category" id="vo"}
                                 <option {eq name="info.cid" value="$vo.id"}selected{/eq} value="{$vo.id}">
                                     {eq name="vo.pid" value="0"}
@@ -111,6 +109,17 @@
                                   {/empty}
                                   </div>
                                 </div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Status')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                              <select name="status" class="form-control">
+                                <option {eq name="info.status" value="1"}selected{/eq} value="1">{:lang('Approval')}</option>
+                                <option {eq name="info.status" value="0"}selected{/eq} value="0">{:lang('Progress')}</option>
+                              </select>
                               </div>
                               </div>
                             </div>

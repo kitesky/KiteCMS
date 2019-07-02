@@ -32,6 +32,7 @@ class Site extends Admin
         }
 
         $config_menu = [
+            'base'       => Lang::get('Base'), 
             'email'      => Lang::get('Email'), 
             'sms'        => Lang::get('Sms'), 
             'captcha'    => Lang::get('Captcha'), 
@@ -40,7 +41,7 @@ class Site extends Admin
             'memberScore'=> Lang::get('Score'),
             'payment'    => Lang::get('Payment'),
         ];
-        $config_name = Request::param('config_name', 'email');
+        $config_name = Request::param('config_name', 'base');
         $config = Config::get('site.' . $config_name);
         $config_option = SiteConfig::getAll($this->site_id, $config);
 

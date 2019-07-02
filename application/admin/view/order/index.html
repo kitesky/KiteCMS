@@ -25,7 +25,7 @@
                   <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">{:lang('Status')}</span>
                   <select name="status" class="form-control">
-                    <option>--{:lang('Not specified')}--</option>
+                    <option>--{:lang('Any')}--</option>
                     <option {eq name="search.status" value="0"}selected{/eq} value="0">{:lang('Non-payment')}</option>
                     <option {eq name="search.status" value="1"}selected{/eq} value="1">{:lang('Paid')}</option>
                   </select>
@@ -35,7 +35,7 @@
                   <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">{:lang('Type')}</span>
                   <select name="payment_type" class="form-control">
-                    <option>--{:lang('Not specified')}--</option>
+                    <option>--{:lang('Any')}--</option>
                     <option {eq name="search.payment_type" value="1"}selected{/eq} value="1">支付宝</option>
                     <option {eq name="search.payment_type" value="2"}selected{/eq} value="2">微信</option>
                   </select>

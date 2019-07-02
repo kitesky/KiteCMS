@@ -1,7 +1,7 @@
 {extend name="default:base" /}
-{block name="title"}列表页{/block}
-{block name='keywords'}{/block}
-{block name='description'}{/block}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
 {block name="content"}
 <div class="inner-content">
     <div class="container">
@@ -41,7 +41,7 @@
                         <li>
                             <span style="width:100px;height:20px;display:inline-block ">{$vo.name} </span>
                             {foreach $vo.select as $k=>$v }
-                                <a style="margin-left:20px;text-align:left;color:{eq name='v.active' value='active'}red{/eq}" href="{$v.url}">{$v.value} </a> 
+                                <a style="margin-left:20px;text-align:left;color:{eq name='v.active' value='active'}#2ec5f0{/eq}" href="{$v.url}">{$v.value} </a> 
                             {/foreach}
                         </li>
                     {/foreach}
@@ -84,7 +84,7 @@
                 <div class="side-widget">
                     <div class="ad-banner">
                         <span>Advertisement</span>
-                        <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
+                        <img src="__THEME__/default/static/img/ads/1.jpg" class="img-responsive" alt="">
                     </div>
                 </div>
 

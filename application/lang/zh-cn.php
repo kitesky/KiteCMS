@@ -40,6 +40,7 @@ return [
     'Validate'               => '验证',
     'Remove'                 => '删除',
     'Handle'                 => '操作',
+    'Base'                   => '基础',
 
     // 文档类型
     'Image'                  => '图片',
@@ -110,7 +111,10 @@ return [
     'Payment'                => '支付',
     
     
-    
+    // base
+    'Member allow register'  => '是否允许注册',
+    'Member allow comment'   => '是否允许评论',
+    'List rows'              => '每页显示数量',
     
     // email
     'Mail server'                    => '邮件服务器',

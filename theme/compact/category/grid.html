@@ -48,7 +48,7 @@
                         <!-- post begin -->
                         <article class="item col-md-4 col-sm-6">
                             <div class="post-media">
-                                <a href="{$vo.url}"><img  alt="" src="{:thumb($vo.image, 370, 277)}" class="img-responsive"></a>
+                                <a href="{$vo.url}"><img  alt="" src="{$vo.image|thumb=370,277|default='__THEME__/compact/static/images/news/1.jpg'}" class="img-responsive"></a>
                                 <div class="post-date">
                                     <span class="date-day">{$vo.create_at|get_date="d"}</span>
                                     <span class="date-month">{$vo.create_at|get_date="m"}</span>

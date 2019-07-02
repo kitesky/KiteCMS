@@ -1,5 +1,5 @@
 {extend name="company:base" /}
-{block name="title"}{$docinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name="title"}{$docinfo.title} - {$catinfo.title} - {kite:siteinfo var='title' /}{/block}
 {block name='keywords'}{$docinfo.keywords}{/block}
 {block name='description'}{$docinfo.description}{/block}
 

@@ -1,7 +1,7 @@
 {extend name="compact:base" /}
-{block name="title"}{kite:siteinfo var='title' /}{/block}
-{block name='keywords'}{kite:siteinfo var='keywords' /}{/block}
-{block name='description'}{kite:siteinfo var='description' /}{/block}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
 
 {block name="content"}
         <section id="subheader" data-speed="8" data-type="background" class="padding-top-bottom subheader">

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>找回密码</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="__STATIC__/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="__STATIC__/admin/dist/css/AdminLTE.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="__STATIC__/admin/dist/js/html5shiv.min.js"></script>
+  <script src="__STATIC__/admin/dist/js/respond.min.js"></script>
+  <![endif]-->
+  <style>
+    .login_bg {
+        height:auto;
+        background: url(__STATIC__/admin/dist/img/boxed-bg.png) repeat center center;
+    }
+  </style>
+</head>
+<body class="layout-boxed login-page login_bg">
+<div class="login-box">
+  <div class="login-logo">
+    会员中心
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">找回密码</p>
+
+    <form id="operate">
+      <div class="form-group has-feedback">
+        <input type="text" name="phone" class="form-control" placeholder="手机号码">
+        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+      </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group has-feedback">
+              <input type="text" name="code" class="form-control" placeholder="验证码">
+              <span class="glyphicon glyphicon-code form-control-feedback"></span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button type="button" onclick="sendEmail();" class="btn btn-default btn-block btn-flat">发送</button>
+          </div>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password" class="form-control" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="repassword" class="form-control" placeholder="确认密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" onclick="operate();" class="btn btn-primary btn-block btn-flat">重置密码</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <div class="row">
+        <div class="col-xs-6">
+          <a href="{:url('member/passport/register')}" >注册</a>
+        </div>
+        <div class="col-xs-6">
+          <a href="{:url('member/passport/login')}" >登录</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="__STATIC__/jquery/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+<!-- Sweetalert 2.1.0 -->
+<script src="__STATIC__/sweetalert/promise.min.js"></script>
+<script src="__STATIC__/sweetalert/sweetalert.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        // 回车键登录
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) {
+                operate();
+            }
+        };
+    });
+
+    function sendEmail(){
+        $.ajax({
+            url:"{:url('member/message/sendEmail')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+    // 登录
+    function operate() {
+        $.ajax({
+            type:'post',
+            url: "{:url('member/passport/forget')}",
+            data: $("#operate").serialize(),
+            success: function(r){
+                if (r.code == 200) {
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: r.msg,
+                      showConfirmButton: false,
+                      toast:true,
+                      timer: 1000
+                    }).then(function(){
+                        window.location.href = "{:url('member/passport/login')}";
+                    });
+                } else {
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: r.msg,
+                      showConfirmButton: false,
+                      toast:true,
+                      timer: 2000
+                    })
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

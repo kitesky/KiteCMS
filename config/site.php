@@ -7,7 +7,15 @@
  * 所以，您需要更改配置请到系统后台进行修改，修改此配置仅在数据表中没有配置项时候生效。
  */
 return [
-  
+
+    // base
+    'base' => [
+        'member_allow_register' => 1,
+        'member_allow_comment'  => 1,
+        'list_rows'              => 15,
+    ],
+
+
     // 支付宝
     'payment' => [
         'ali_appid'       => '',

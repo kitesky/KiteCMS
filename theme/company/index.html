@@ -92,12 +92,12 @@
     <div class="service-content-area">
         <div class="container">
             <div class="row mtn-30">
-                {kite:doclist var='vo' cid='8' order='id desc' limit='6'}
+                {kite:doclist var='vo' order='id desc' limit='6'}
                 <div class="col-sm-6 col-lg-4">
                     <!-- Start Service Item -->
                     <div class="service-item">
                         <figure class="service-thumb">
-                            <a href="{$vo.url}"><img src="{$vo.image|thumb=370,317}" alt="Businex-Service"/></a>
+                            <a href="{$vo.url}"><img src="{$vo.image|thumb=370,317|default='__THEME__/company/static/img/service/02.jpg'}" alt="Businex-Service"/></a>
 
                             <figcaption class="service-txt">
                                 <h5>{$vo.title}</h5>
@@ -131,7 +131,7 @@
         </div>
 
         <div class="row mtn-35">
-            {kite:doclist var='vo' cid='1,2,3,4' order='id desc' limit='6'}
+            {kite:doclist var='vo' order='id desc' limit='6'}
             <div class="col-md-6 col-lg-4">
                 <div class="blog-item">
                     <div class="blog-content">

@@ -1,7 +1,7 @@
 {extend name="default:base" /}
-{block name="title"}详情页{/block}
-{block name='keywords'}{/block}
-{block name='description'}{/block}
+{block name="title"}{$docinfo.title} - {$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$docinfo.keywords}{/block}
+{block name='description'}{$docinfo.description}{/block}
 {block name="content"}
 <style>
 p img{background-size:contain|cover;width:100%;}
@@ -200,7 +200,7 @@ p img{background-size:contain|cover;width:100%;}
                     <div class="side-widget">
                         <div class="ad-banner">
                             <span>Advertisement</span>
-                            <img src="__STATIC__/default/img/ads/1.jpg" class="img-responsive" alt="">
+                            <img src="__THEME__/default/static/img/ads/1.jpg" class="img-responsive" alt="">
                         </div>
                     </div>
                     

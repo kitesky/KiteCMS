@@ -1,5 +1,5 @@
 {extend name="compact:base" /}
-{block name="title"}{$docinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name="title"}{$docinfo.title} - {$catinfo.title} - {kite:siteinfo var='title' /}{/block}
 {block name='keywords'}{$docinfo.keywords}{/block}
 {block name='description'}{$docinfo.description}{/block}
 
@@ -33,7 +33,7 @@
                             <article>
                                 <div class="post-content">
                                     <div class="post-title">
-                                        <h1>{$docinfo.title}</h1>
+                                        <h3>{$docinfo.title}</h3>
                                     </div>
                                     <div class="post-metadata">
                                         <span class="cat-links">

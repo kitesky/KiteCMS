@@ -4,6 +4,7 @@ namespace app\index\controller;
 use think\facade\Request;
 use app\common\model\BuildUrl;
 use app\common\model\Kite;
+use app\common\model\SiteConfig;
 use think\exception\HttpException;
 use app\index\controller\Base;
 use app\common\model\DocumentCategory;
@@ -35,7 +36,10 @@ class Category extends Base
         $extraObj = new DocumentContentExtra;
         $likeObj = new DocumentContentLike;
         $commObj = new DocumentComments;
-        $list = $docObj->getDocmentPaginateByFilter($this->site_id, $category->id, $request);
+        
+        $site_list_rows = !empty(SiteConfig::getCofig($this->site_id, 'list_rows')) ? SiteConfig::getCofig($this->site_id, 'list_rows') : 10;
+        $list_rows      = !empty($category->list_rows) ? $category->list_rows : $site_list_rows;
+        $list = $docObj->getDocmentPaginateByFilter($this->site_id, $category->id, $list_rows, $request);
 
         if (!$list->isEmpty()) {
             foreach ($list as $v) {

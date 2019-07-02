@@ -19,5 +19,6 @@ class DocumentContentValidate extends Validate
 
     protected $scene = [
         'create' => ['title', 'cid'],
+        'edit'   => ['title', 'cid'],
     ];
 }

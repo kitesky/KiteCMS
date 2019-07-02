@@ -196,7 +196,7 @@
                                     <div id="latest-projects-items" class="latest-projects-items">
                                         {kite:doclist var='vo' cid='8' order='id desc' limit='6'}
                                         <div class="item">
-                                            <img src="{$vo.image|thumb=285,213}" alt="" class="img-responsive">
+                                            <img src="{$vo.image|thumb=285,213|default='__THEME__/compact/static/images/projects/small-1.jpg'}" alt="" class="img-responsive">
                                             <div class="project-details">
                                                 <p class="folio-title"><a href="{$vo.url}">{$vo.title}</a></p>
                                                 <p class="folio-cate"><i class="fa fa-tag"></i><a href="{$vo.url}">{$vo.catname}</a></p>
