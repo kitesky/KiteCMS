@@ -21,6 +21,47 @@
     <div class="tab-content">
         <div class="tab-pane active no-padding">
         {switch config_name}
+          {case base}
+              <div class="form-group">
+                <label>{:lang('Member allow register')}</label>
+                <div class="row">
+                <div class="col-md-12">
+                  <div class="radio">
+                      <label class="radio-inline">
+                          <input type="radio" {eq name="config_option.member_allow_register" value="1"}checked{/eq} name="member_allow_register" value="1"> {:lang('ON')}
+                      </label>
+                      <label class="radio-inline">
+                          <input type="radio" {eq name="config_option.member_allow_register" value="0"}checked{/eq} name="member_allow_register" value="0"> {:lang('OFF')}
+                      </label>
+                  </div>
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>{:lang('Member allow comment')}</label>
+                <div class="row">
+                <div class="col-md-4">
+                  <div class="radio">
+                      <label class="radio-inline">
+                          <input type="radio" {eq name="config_option.member_allow_comment" value="1"}checked{/eq} name="member_allow_comment" value="1"> {:lang('ON')}
+                      </label>
+                      <label class="radio-inline">
+                          <input type="radio" {eq name="config_option.member_allow_comment" value="0"}checked{/eq} name="member_allow_comment" value="0"> {:lang('OFF')}
+                      </label>
+                  </div>
+                </div>
+                </div>
+              </div>
+               <div class="form-group">
+                <label>{:lang('List rows')}</label>
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="text" name="list_rows" value="{$config_option.list_rows}" class="form-control">
+                  </div>
+                </div>
+              </div>
+          {/case}
+          
           {case email}
             <div class="row">
                 <div class="col-md-6">

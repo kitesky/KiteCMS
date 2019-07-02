@@ -1,7 +1,7 @@
 {extend name="default:base" /}
-{block name="title"}列表页{/block}
-{block name='keywords'}{/block}
-{block name='description'}{/block}
+{block name="title"}{$catinfo.title} - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{$catinfo.keywords}{/block}
+{block name='description'}{$catinfo.description}{/block}
 {block name="content"}
 <div class="inner-content">
     <div class="container">

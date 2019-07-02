@@ -16,7 +16,10 @@ class Search extends Base
 
         $documentObj = new DocumentContent;
 
-        $map    = [];
+        $map = [
+            array('status', 'eq', 1),
+            array('site_id', 'eq', $this->site_id),
+        ];
         $params = [];
         $search = [];
 
@@ -34,7 +37,6 @@ class Search extends Base
         // 分页列表
         $list = $documentObj
             ->where($map)
-            ->where('site_id', 'eq', $this->site_id)
             ->order('id desc')
             ->paginate(20, false, [
                 'type'     => 'bootstrap',
@@ -55,8 +57,8 @@ class Search extends Base
         }
 
         $data = [
-            'document' => $newList,
-            'page'     => $list->render(),
+            'doclist' => $newList,
+            'docpage'     => $list->render(),
             'search'   => $search,
         ];
 

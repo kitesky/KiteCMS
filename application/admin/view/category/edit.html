@@ -136,6 +136,23 @@
                     <div class="box box-solid no-border">
                         <div class="box-body">
                             <div class="form-group">
+                              <label>{:lang('List rows')}</label>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" name="list_rows" value="{$info.list_rows}" class="form-control input-sm" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>{:lang('Sort')}</label>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" name="sort" value="{$info.sort}" class="form-control input-sm" placeholder="">
+                                </div>
+                              </div>
+                              <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
                               <label>{:lang('Status')}</label>
                               <div class="row">
                               <div class="col-md-12">
@@ -149,15 +166,6 @@
                                 </div>
                               </div>
                               </div>
-                            </div>
-                            <div class="form-group">
-                              <label>权重排序</label>
-                              <div class="row">
-                              <div class="col-md-12">
-                              <input type="text" name="sort" value="{$info.sort}" class="form-control input-sm" placeholder="">
-                              </div>
-                              </div>
-                              <p class="help-block">权重数值越大越靠后</p>
                             </div>
                         </div>
                         <!-- /.box-body -->

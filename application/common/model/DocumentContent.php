@@ -145,7 +145,7 @@ class DocumentContent extends Model
         ]);
     }
 
-    public function getDocmentPaginateByFilter($site_id, $cid, $request)
+    public function getDocmentPaginateByFilter($site_id, $cid, $list_rows = 10, $request)
     {
         $map = [];
         $subQuery = [];
@@ -205,7 +205,7 @@ class DocumentContent extends Model
         }
 
         // 查询数据列表
-        return $this->where('site_id',$site_id)->where('status',1)->where($categoryMap)->where($map)->order('id desc')->paginate(20, false, [
+        return $this->where('site_id',$site_id)->where('status',1)->where($categoryMap)->where($map)->order('id desc')->paginate($list_rows, false, [
                 'type'     => 'bootstrap',
                 'var_page' => 'page',
                 // 'query'    => $request,
