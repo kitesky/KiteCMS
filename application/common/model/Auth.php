@@ -172,7 +172,6 @@ class Auth extends Model
             $default = reset($site);
             Session::set('site_id', $default['id'], 'admin');
             Session::set('site_name', $default['name'], 'admin');
-            Session::set('site_alias', $default['alias'], 'admin');
         }
 
         // 生成用户数据SESSION

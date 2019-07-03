@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 
 use think\Db;
+use think\facade\Request;
 use app\admin\controller\Admin;
 
 class Index extends Admin
@@ -63,7 +64,7 @@ class Index extends Admin
         $data['zend_version']       = function_exists('Zend_Version') ? Zend_Version() : 'unkown';
         $data['mysql_version']      = !empty($mysqlVersion[0]['VERSION()']) ? $mysqlVersion[0]['VERSION()'] : 'unkown';
         $data['php_version']        = PHP_VERSION;
-        $data['SERVER_ADDR']        = $_SERVER['SERVER_ADDR'] ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
+        $data['SERVER_ADDR']        = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
         $data['SERVER_NAME']        = $_SERVER['SERVER_NAME'];
         $data['DOCUMENT_ROOT']      = $_SERVER['DOCUMENT_ROOT'];
         $data['SERVER_PORT']        = $_SERVER['SERVER_PORT'];

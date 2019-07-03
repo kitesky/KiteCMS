@@ -119,7 +119,7 @@ class Site extends Admin
         // 判断站点是否存在并设置session
         $siteObj = new SiteModel;
         $site =$siteObj
-            ->field('id,city_id,name,alias,domain,theme')
+            ->field('id,name,domain,theme')
             ->where('id', $request['id'])
             ->find();
 
@@ -191,7 +191,7 @@ class Site extends Admin
 
         // 分页列表
         $list = $siteObj
-            ->whereOr('name|alias','like','%'.$q.'%')
+            ->whereOr('name|title','like','%'.$q.'%')
             ->where('id', 'in', $ids)
             ->order('sort asc')
             ->paginate(20, false, [

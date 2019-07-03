@@ -188,11 +188,26 @@ class Index extends Controller
                     'username' => $request['user'],
                     'password' => password_hash($request['pass'], PASSWORD_DEFAULT),
                     'create_at' => time(),
+                    'update_at' => time(),
             ];
             $table = $request['prefix'] . 'auth_user';
-            $_updataAdminSql = "UPDATE %s SET username = '%s',password = '%s',create_at = %s  WHERE uid = 1";
-            $updataAdminSql = sprintf($_updataAdminSql, $table, $userData['username'], $userData['password'], $userData['create_at']);
+            $_updataAdminSql = "UPDATE %s SET username = '%s',password = '%s',create_at = %s ,update_at = %s WHERE uid = 1";
+            $updataAdminSql = sprintf($_updataAdminSql, $table, $userData['username'], $userData['password'], $userData['create_at'], $userData['update_at']);
             $conn->query($updataAdminSql);
+
+            // 设置默认站点
+            $siteData = [
+                'name' => '默认站点',
+                'title' => '默认站点',
+                'domain' => Request::domain(),
+                'theme' => 'default',
+                'create_at' => time(),
+                'update_at' => time(),
+            ];
+            $site_table = $request['prefix'] . 'site';
+            $_updataSiteSql = "UPDATE %s SET name = '%s',title = '%s',domain = '%s',theme = '%s' ,create_at = %s ,update_at = %s WHERE id = 1";
+            $updataSiteSql = sprintf($_updataSiteSql, $site_table, $siteData['name'], $siteData['title'], $siteData['domain'], $siteData['theme'], $siteData['create_at'], $siteData['update_at']);
+            $conn->query($updataSiteSql);
 
             // 生成lock文件
             $create_at = date('Y-m-d H:i:s');

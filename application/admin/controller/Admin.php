@@ -6,6 +6,7 @@ use think\facade\Env;
 use think\facade\Config;
 use think\facade\Session;
 use think\facade\Lang;
+use think\facade\Request;
 use app\common\model\BuildUrl;
 use app\common\model\Auth;
 use app\common\model\Site;
@@ -57,9 +58,9 @@ class Admin extends Common
 
         // 站点赋值
         View::share('site_list', Auth::getSite($session['uid']));
-        View::share('site_id', isset($site->site_id) ? $site->site_id : null);
-        View::share('site_name', isset($site->name) ? $site->name : null);
-        View::share('site_url', isset($site->domain) ? $site->domain : null);
+        View::share('site_id', !empty($site->site_id) ? $site->site_id : null);
+        View::share('site_name', !empty($site->name) ? $site->name : null);
+        View::share('site_url', !empty($site->domain) ? $site->domain : Request::domain());
 
         parent::__construct();
     }
