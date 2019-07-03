@@ -167,7 +167,7 @@ class Document extends Base
                 'content' => $contentData,
                 'extra'   => isset($request['extra']) ? $request['extra'] : [],
             ];
-            Hook::listen('user_create_document', $docData);
+            Hook::listen('create_document', $docData);
 
             if (is_numeric($contentObj->id)) {
                 return $this->response(200, Lang::get('success'));
@@ -254,7 +254,7 @@ class Document extends Base
                 'content' => $contentData,
                 'extra'   => isset($request['extra']) ? $request['extra'] : [],
             ];
-            Hook::listen('user_edit_document', $docData);
+            Hook::listen('edit_document', $docData);
 
             if (is_numeric($contentObj->id)) {
                 return $this->response(200, Lang::get('success'));

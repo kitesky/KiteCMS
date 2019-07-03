@@ -25,17 +25,11 @@ class InitHook extends Controller
         // 会员登录
         Hook::add('user_login',['app\\common\\behavior\\Score']);
 
-        // 会员文档创建
-        Hook::add('user_create_document',['app\\common\\behavior\\Score']);
-
-        // 会员文档更新
-        Hook::add('user_edit_document',['app\\common\\behavior\\Score']);
-
         // 会员发布评论
         Hook::add('user_comments',['app\\common\\behavior\\Score']);
 
         // 文档创建
-        Hook::add('create_document',['app\\common\\behavior\\Document']);
+        Hook::add('create_document',['app\\common\\behavior\\Document','app\\common\\behavior\\Score']);
 
         // 文档更新
         Hook::add('edit_document',['app\\common\\behavior\\Document']);

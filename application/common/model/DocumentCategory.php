@@ -28,7 +28,7 @@ class DocumentCategory extends Model
             ->field('c.*, m.name as model_name')
             ->alias('c')
             ->order('sort asc')
-            ->join('document_model m','c.model_id = m.id')
+            ->join('document_model m','c.model_id = m.id', 'left')
             ->select();
 
         return list_for_level($list);

@@ -17,11 +17,6 @@ class Passport extends IndexCommon
     // 登录
     public function login()
     {
-        // 已登录直接跳转到会员中心
-        if (is_login()) {
-            $this->redirect('member/index/index');
-        }
-
         if (Request::isPost()) {
             $request = Request::param();
 
@@ -81,8 +76,15 @@ class Passport extends IndexCommon
                 'ip'      => get_client_ip(),
             ];
             Hook::listen('user_login', $logData);
+            
+            $url = url('member/index/index');
+            $refererUrl = parse_url($_SERVER['HTTP_REFERER']);
+            if (!empty($refererUrl['query'])) {
+                $path = explode('=', $refererUrl['query']);
+                $url = urldecode($path[1]);
+            }
 
-            return $this->response(200, '登录成功');
+            return $this->response(200, '登录成功', ['url' => $url]);
         }
 
         $is_captcha = SiteConfig::getCofig($this->site_id, 'captcha_member_login');

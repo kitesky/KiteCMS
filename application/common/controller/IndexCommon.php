@@ -73,4 +73,9 @@ class IndexCommon extends Common
         View::share('role', $this->role);
     }
 
+    public function referer()
+    {
+        return url('member/passport/login') . '?referer=' . urlencode(Request::url(true));
+
+    }
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-07-03 09:51:19
+Date: 2019-07-03 14:43:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `kite_auth_role` (
 -- ----------------------------
 -- Records of kite_auth_role
 -- ----------------------------
-INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1', 'Administrator', '1');
+INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
 INSERT INTO `kite_auth_role` VALUES ('2', '编辑员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28', '', 'Editor', '2');
 INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', '10', '', 'Member', '2');
 
@@ -198,7 +198,7 @@ CREATE TABLE `kite_auth_user` (
 -- ----------------------------
 -- Records of kite_auth_user
 -- ----------------------------
-INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$YTKerqRFBLm8aiRvFgideePFmYVoM/vPGV5FBubtbeO3Yan6S9Lty', '18780221108', 'kite@kitesky.com', '0', '64', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1561568316', '1561989230');
+INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$YTKerqRFBLm8aiRvFgideePFmYVoM/vPGV5FBubtbeO3Yan6S9Lty', '18780221108', 'kite@kitesky.com', '0', '454', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1561568316', '1561989230');
 
 -- ----------------------------
 -- Table structure for kite_block
@@ -304,6 +304,7 @@ CREATE TABLE `kite_document_content` (
   `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '描述',
   `content` longtext COLLATE utf8_bin DEFAULT NULL COMMENT '文档内容',
   `image` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '文档封面',
+  `attach` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '文件',
   `album` text COLLATE utf8_bin DEFAULT NULL COMMENT '图片集合',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 待审 1通过',
   `image_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '图片类型标识',
@@ -630,7 +631,7 @@ CREATE TABLE `kite_site` (
 -- ----------------------------
 -- Records of kite_site
 -- ----------------------------
-INSERT INTO `kite_site` VALUES ('1', '默认站点', '', '', '0', '默认站点', '默认站点', '默认站点', 'clumb', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1541387367', '1562069099');
+INSERT INTO `kite_site` VALUES ('1', '默认站点', '/upload/20190702/61126f8e5831cadc75aacf845122c8a8.png', 'http://f.19981.com', '0', '默认站点', '默认站点', '默认站点', 'compact', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1541387367', '1562121505');
 
 -- ----------------------------
 -- Table structure for kite_site_config
@@ -667,7 +668,7 @@ INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_bucket', 0x6B697465736B79, '1
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_domain', 0x687474703A2F2F6F6E7872386D7438792E626B742E636C6F7564646E2E636F6D, '1530071701', '1530071701');
 INSERT INTO `kite_site_config` VALUES ('1', 'link_category', 0x5B7B226E616D65223A22E69687E5AD97E993BEE68EA5222C22736F7274223A2231222C226964223A317D5D, '1531141510', '1531141510');
 INSERT INTO `kite_site_config` VALUES ('1', 'slider_category', 0x5B5D, '1531147967', '1531147967');
-INSERT INTO `kite_site_config` VALUES ('1', 'field_category', 0x5B7B226E616D65223A22E9BB98E8AEA4E58886E7B1BB222C22736F7274223A2231222C226964223A317D5D, '1531147967', '1531147967');
+INSERT INTO `kite_site_config` VALUES ('1', 'field_category', 0x5B7B226E616D65223A22E6A8A1E69DBFE7B1BB222C22736F7274223A2231222C226964223A317D5D, '1531147967', '1531147967');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1531213657', '1531213657');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1531213657', '1531213657');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_fontSize', 0x3234, '1531213657', '1531213657');
@@ -701,7 +702,7 @@ INSERT INTO `kite_site_config` VALUES ('1', 'upload_image_ext', 0x6A70672C706E67
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_image_size', 0x32303438, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_video_ext', 0x726D2C726D76622C776D762C3367702C6D70342C6D6F762C6176692C666C76, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_video_size', 0x3130323430, '1532327020', '1532327020');
-INSERT INTO `kite_site_config` VALUES ('1', 'upload_attach_ext', 0x646F632C786C732C7261722C7A6970, '1532327020', '1532327020');
+INSERT INTO `kite_site_config` VALUES ('1', 'upload_attach_ext', 0x646F632C786C732C7261722C7A69702C377A, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'upload_attach_size', 0x3130323430, '1532327020', '1532327020');
 INSERT INTO `kite_site_config` VALUES ('1', 'navigation_category', 0x5B7B226E616D65223A22E9A1B6E983A8E5AFBCE888AA222C22736F7274223A2231222C226964223A317D2C7B226E616D65223A22E5BA95E983A8E5AFBCE888AA222C22736F7274223A2232222C226964223A327D5D, '1532675827', '1532675827');
 INSERT INTO `kite_site_config` VALUES ('1', 'email_code_template', 0xE5B08AE695ACE79A84E4BC9AE59198247B757365726E616D657D20EFBC8CE682A8E69CACE6ACA1E79A84E9AA8CE8AF81E7A081E4B8BAEFBC9A247B636F64657D20EFBC8CE9AA8CE8AF81E7A081E59CA835E58886E9929FE58685E69C89E69588E38082, '1532856848', '1532856848');
@@ -784,9 +785,9 @@ INSERT INTO `kite_site_config` VALUES ('2', 'member_allow_register', 0x31, '1562
 INSERT INTO `kite_site_config` VALUES ('2', 'member_allow_comment', 0x31, '1562063662', '1562063662');
 INSERT INTO `kite_site_config` VALUES ('2', 'list_rows', 0x3135, '1562065361', '1562065361');
 INSERT INTO `kite_site_config` VALUES ('2', 'list_row', 0x3135, '1562067176', '1562067176');
-INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_register', 0x31, '1562117199', '1562117199');
-INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_comment', 0x31, '1562117199', '1562117199');
-INSERT INTO `kite_site_config` VALUES ('1', 'list_rows', 0x3135, '1562117199', '1562117199');
+INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_register', 0x31, '1562122709', '1562122709');
+INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_comment', 0x31, '1562122709', '1562122709');
+INSERT INTO `kite_site_config` VALUES ('1', 'list_rows', 0x3135, '1562122709', '1562122709');
 
 -- ----------------------------
 -- Table structure for kite_site_file

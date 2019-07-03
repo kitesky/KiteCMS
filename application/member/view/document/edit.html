@@ -112,6 +112,19 @@
                               </div>
                               </div>
                             </div>
+                            <div class="form-group">
+                              <label>{:lang('Attach')}</label>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="input-group input-group-sm">
+                                  <input type="text" name="attach" value="{$info.attach}" class="form-control">
+                                    <span class="input-group-btn">
+                                      <button type="button" id="attach" class="btn btn-default btn-flat">{:lang('Upload')}</button>
+                                    </span>
+                                </div>
+                              </div>
+                              </div>
+                            </div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -175,7 +188,7 @@ layui.use('upload', function(){
     ,accept: 'file'
     ,multiple: false
     ,number: 1
-    ,url: "{:url('member/upload/uploadFile')}"
+    ,url: "{:url('member/upload/uploadImage')}"
     ,done: function(res){
       if (res.code == 200) {
         $("[name='image']").val(res.data.url);
@@ -192,7 +205,26 @@ layui.use('upload', function(){
       }
     }
   });
-  
+  upload.render({ //允许上传的文件后缀
+    elem: "#attach"
+    ,url: "{:url('member/upload/uploadAttach')}"
+    ,accept: "file" //普通文件
+    ,exts: "zip|rar|7z" //只允许上传压缩文件
+    ,done: function(res){
+      if (res.code == 200) {
+        $("[name='attach']").val(res.data.url);
+      } else {
+        swal({
+          position: 'center',
+          type: 'error',
+          title: res.msg,
+          showConfirmButton: false,
+          toast:false,
+          timer: 2000
+        });
+      }
+    }
+  });
 });
 </script>
 

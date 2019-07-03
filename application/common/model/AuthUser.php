@@ -30,6 +30,8 @@ class AuthUser extends Model
             foreach ($ids as $v) {
                 $role[] = AuthRole::get($v);
             }
+        } else {
+            return false;
         }
         $user['role'] = $role;
 

@@ -22,7 +22,7 @@ class Score extends Controller
     }
 
     // 发布文档增加积分
-    public function userCreateDocument($params)
+    public function CreateDocument($params)
     {
         return $this->setScore($params, 'publish_score');
     }
