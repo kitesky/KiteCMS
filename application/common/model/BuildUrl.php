@@ -39,7 +39,7 @@ class BuildUrl
     {
         $site = Site::get(self::$site_id);
         if (empty($site->domain)) {
-            return Url::build('index/index/index', ['site_alias' => $site->alias]);
+            return Url::build('index/index/index', ['id' => $site->id]);
         } else {
             return $site->domain;
         }
@@ -47,21 +47,7 @@ class BuildUrl
 
     public function categoryUrl($request)
     {
-        $params = [];
-        if (!empty($request['id'])) {
-            $cate = DocumentCategory::get($request['id']);
-            $params = [
-                'cate_alias' => $cate->alias,
-            ];
-        } else if (!empty($request['alias'])) {
-            $params = [
-                'cate_alias' => $request['alias'],
-            ];
-            unset( $request['alias']);
-        }
-
-        $params = array_merge($params, $request);
-        return Url::build('index/category/index', $params);
+        return Url::build('index/category/index', $request);
     }
 
     public function documentUrl($request)

@@ -48,10 +48,4 @@ class DocumentCategory extends Model
             ->find();
     }
 
-    public function getCategoryByAlias($site_id, $alias)
-    {
-        return self::where('site_id', '=', $site_id)
-            ->where('alias', $alias)
-            ->find();
-    }
 }
