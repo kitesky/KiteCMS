@@ -25,10 +25,10 @@ class Index extends Admin
     private function devoloper()
     {
         $data = [
-            'website'   => 'http://www.kitesky.com',
-            'community' => 'http://bbs.kitesky.com',
-            'version'   => 'v1.0',
-            'devoloper' => '风筝',
+            'website'   => '<a target="_blank" href="http://www.19981.com">http://www.19981.com</a>',
+            'community' => '<a target="_blank" href="http://www.19981.com">http://www.19981.com</a>',
+            'version'   => 'v1.1',
+            'devoloper' => '<a target="_blank" href="http://www.kitesky.com">风筝</a>',
         ];
         
         return $data;

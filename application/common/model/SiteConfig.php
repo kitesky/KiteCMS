@@ -20,9 +20,14 @@ class SiteConfig extends Model
 
     static public function getCofig($site_id, $k)
     {
-        return self::where('site_id', $site_id)
+        $value = self::where('site_id', $site_id)
             ->where('k', $k)
             ->value('v');
+        if (empty($value)) {
+            return config('site.' . $k);
+        }
+
+        return $value;
     }
 
     static public function setCofig($data)

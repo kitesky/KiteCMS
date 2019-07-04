@@ -1,0 +1,142 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class=""><a href="{:url('admin/feedback/index')}">{:lang('Feedback')}</a></li>
+      <li class="active"><a href="#">{:lang('Reply')}</a></li>
+      <li class="pull-right"><a href="javascript:history.back(-1);" class="text-muted"><i class="fa fa-chevron-circle-left"></i></a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <form role="form" id="operate">
+            <div class="form-group">
+              <label>{:lang('Title')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              {$info.title|default=""}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Name')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              {$info.username|default=""}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Email')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              {$info.email|default=""}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Phone')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              {$info.phone|default=""}
+              </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Content')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              {$info.content}
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Reply')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              <textarea class="form-control input-sm" name="reply" rows="10" placeholder="">{$info.reply}</textarea>
+              </div>
+              </div>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+                <label>{:lang('Status')}</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" {eq name="info.status" value="1"}checked{/eq} name="status" value="1"> {:lang('Approval')}
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" {eq name="info.status" value="0"}checked{/eq} name="status" value="0"> {:lang('Progress')}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+              <label>{:lang('Creation date')}</label>
+              <div class="row">
+              <div class="col-md-6">
+              <input type="hidden" name="id" value="{$info.id}">
+              {$info.create_at}
+              </div>
+              </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="btn-group">
+            <button class="btn btn-primary btn-flat" onclick="operate();" type="button"> {:lang('Save')}</button>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function operate(){
+        $.ajax({
+            url:"{:url('admin/feedback/edit')}",
+            data:$("#operate").serialize(),
+            type:'post',
+            dataType:'json',
+            success:function(xhr){
+                if(xhr.code == 200){
+                    swal({
+                      position: 'center',
+                      type: 'success',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                } else{
+                    swal({
+                      position: 'center',
+                      type: 'error',
+                      title: xhr.msg,
+                      showConfirmButton: false,
+                      toast:false,
+                      timer: 2000
+                    });
+                }
+            }
+        });
+    }
+
+</script>
+{/block}

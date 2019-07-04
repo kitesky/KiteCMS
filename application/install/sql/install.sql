@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-07-03 14:43:51
+Date: 2019-07-04 12:29:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `kite_auth_role` (
 -- ----------------------------
 -- Records of kite_auth_role
 -- ----------------------------
-INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
+INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,55,73,74,83,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
 INSERT INTO `kite_auth_role` VALUES ('2', '编辑员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28', '', 'Editor', '2');
 INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', '10', '', 'Member', '2');
 
@@ -133,7 +133,7 @@ INSERT INTO `kite_auth_rule` VALUES ('47', '42', 'admin', '插件配置', 'admin
 INSERT INTO `kite_auth_rule` VALUES ('48', '5', 'admin', '钩子管理', 'admin/hooks/index', '1', 'fa fa-gg-circle', '0', '', 'Hooks');
 INSERT INTO `kite_auth_rule` VALUES ('49', '48', 'admin', '钩子添加', 'admin/hooks/create', '0', '', '0', '', 'Create');
 INSERT INTO `kite_auth_rule` VALUES ('50', '48', 'admin', '钩子编辑', 'admin/hooks/edit', '0', '', '0', '', 'Edit');
-INSERT INTO `kite_auth_rule` VALUES ('51', '5', 'admin', '订单', 'admin/order/index', '1', 'fa fa-circle-o', '10', '', 'Order');
+INSERT INTO `kite_auth_rule` VALUES ('51', '5', 'admin', '订单', 'admin/order/index', '1', 'fa fa-shopping-cart', '10', '', 'Order');
 INSERT INTO `kite_auth_rule` VALUES ('52', '86', 'admin', '编辑评论', 'admin/comments/edit', '0', '', '0', '', 'Edit');
 INSERT INTO `kite_auth_rule` VALUES ('53', '51', 'admin', '订单详情', 'admin/order/edit', '0', 'fa fa-circle-o', '0', '', 'Detail');
 INSERT INTO `kite_auth_rule` VALUES ('54', '51', 'admin', '删除', 'admin/order/remove', '0', 'fa fa-circle-o', '0', '', 'Remove');
@@ -150,7 +150,7 @@ INSERT INTO `kite_auth_rule` VALUES ('65', '5', 'admin', '幻灯片', 'admin/sli
 INSERT INTO `kite_auth_rule` VALUES ('66', '65', 'admin', '创建幻灯片', 'admin/slider/create', '0', '', '0', '', 'Create');
 INSERT INTO `kite_auth_rule` VALUES ('67', '65', 'admin', '编辑幻灯片', 'admin/slider/edit', '0', '', '0', '', 'Edit');
 INSERT INTO `kite_auth_rule` VALUES ('68', '65', 'admin', '删除幻灯片', 'admin/slider/remove', '0', '', '0', '', 'Remove');
-INSERT INTO `kite_auth_rule` VALUES ('69', '65', 'admin', '幻灯片类别', 'admin/slider/category', '0', '', '0', '', 'Slider category');
+INSERT INTO `kite_auth_rule` VALUES ('69', '65', 'admin', '类别', 'admin/slider/category', '0', '', '0', '', 'Slider category');
 INSERT INTO `kite_auth_rule` VALUES ('70', '65', 'admin', '删除幻灯片分类', 'admin/slider/removeCategory', '0', '', '0', '', 'Remove');
 INSERT INTO `kite_auth_rule` VALUES ('71', '65', 'admin', '批量操作幻灯片分类', 'admin/slider/handleCategory', '0', '', '0', '', 'Handle');
 INSERT INTO `kite_auth_rule` VALUES ('72', '1', 'admin', '参数配置', 'admin/site/config', '1', 'fa fa-wrench', '5', '', 'Site config');
@@ -170,6 +170,10 @@ INSERT INTO `kite_auth_rule` VALUES ('90', '1', 'admin', '编辑菜单', 'admin/
 INSERT INTO `kite_auth_rule` VALUES ('91', '90', 'admin', '菜单管理', 'admin/navigation/category', '0', '', '0', '', 'Navigation category');
 INSERT INTO `kite_auth_rule` VALUES ('92', '90', 'admin', '删除菜单', 'admin/navigation/removeCategory', '0', '', '0', '', 'Remove');
 INSERT INTO `kite_auth_rule` VALUES ('93', '90', 'admin', '批量操作菜单', 'admin/navigation/handleCategory', '0', '', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('55', '5', 'admin', '留言反馈', 'admin/feedback/index', '1', 'fa fa-commenting-o', '0', '', 'Feedback');
+INSERT INTO `kite_auth_rule` VALUES ('73', '55', 'admin', '回复', 'admin/feedback/edit', '0', 'fa fa-circle-o', '0', '', 'Reply');
+INSERT INTO `kite_auth_rule` VALUES ('74', '55', 'admin', '删除', 'admin/feedback/remove', '0', 'fa fa-circle-o', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('83', '55', 'admin', '批量操作', 'admin/feedback/handle', '0', 'fa fa-circle-o', '0', '', 'Handle');
 
 -- ----------------------------
 -- Table structure for kite_auth_user
@@ -198,7 +202,7 @@ CREATE TABLE `kite_auth_user` (
 -- ----------------------------
 -- Records of kite_auth_user
 -- ----------------------------
-INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$YTKerqRFBLm8aiRvFgideePFmYVoM/vPGV5FBubtbeO3Yan6S9Lty', '18780221108', 'kite@kitesky.com', '0', '454', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1561568316', '1561989230');
+INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$KE/ykKz0fY.wXmJTz32B4.sIm.jw6vF86vjF8hd69RCa7O/DepqFq', '18780221108', 'kite@kitesky.com', '0', '494', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1562214393', '1562214393');
 
 -- ----------------------------
 -- Table structure for kite_block
@@ -432,6 +436,30 @@ CREATE TABLE `kite_document_model_field` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for kite_feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_feedback`;
+CREATE TABLE `kite_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+  `site_id` int(11) NOT NULL COMMENT '网站ID',
+  `uid` int(11) DEFAULT NULL COMMENT '评论人mid ',
+  `title` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '反馈标题',
+  `username` varchar(64) COLLATE utf8_bin DEFAULT '' COMMENT '反馈者姓名',
+  `email` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '反馈者邮箱',
+  `phone` varchar(64) COLLATE utf8_bin DEFAULT '' COMMENT '反馈者电话',
+  `content` text COLLATE utf8_bin NOT NULL COMMENT '反馈内容',
+  `reply` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 隐藏 1 显示',
+  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of kite_feedback
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for kite_hooks
 -- ----------------------------
 DROP TABLE IF EXISTS `kite_hooks`;
@@ -594,7 +622,7 @@ CREATE TABLE `kite_score` (
   `site_id` int(11) NOT NULL COMMENT '站点ID',
   `uid` int(11) NOT NULL COMMENT '会员ID',
   `sum` int(11) NOT NULL COMMENT '剩余总数',
-  `score` int(11) NOT NULL COMMENT '积分数量',
+  `score` int(11) DEFAULT 0 COMMENT '积分数量',
   `source` varchar(255) CHARACTER SET latin1 DEFAULT NULL COMMENT '获取原因',
   `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
@@ -626,12 +654,13 @@ CREATE TABLE `kite_site` (
   `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `site_name` (`name`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_site
 -- ----------------------------
-INSERT INTO `kite_site` VALUES ('1', '默认站点', '/upload/20190702/61126f8e5831cadc75aacf845122c8a8.png', 'http://f.19981.com', '0', '默认站点', '默认站点', '默认站点', 'compact', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1541387367', '1562121505');
+INSERT INTO `kite_site` VALUES ('1', '默认站点', '/upload/20190702/61126f8e5831cadc75aacf845122c8a8.png', 'http://www.test.com', '0', '默认站点', '默认站点', '默认站点', 'default', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1562214393', '1562214393');
+INSERT INTO `kite_site` VALUES ('2', '测试站点', '', 'http://doc.19981.com', '0', '', '', '', 'clumb', '', '', '0', '1562135923', '1562135923');
 
 -- ----------------------------
 -- Table structure for kite_site_config

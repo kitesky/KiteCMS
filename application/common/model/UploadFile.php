@@ -146,6 +146,7 @@ class UploadFile
                 }
                 break;
             case 'attach':
+
                 $result = $file->check(['ext' => $this->config['upload_attach_ext'], 'size' => $this->config['upload_attach_size']*1024]);
                 if(empty($result)){
                     // 上传失败获取错误信息

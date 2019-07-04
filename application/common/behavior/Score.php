@@ -37,6 +37,10 @@ class Score extends Controller
     {
         // 积分配置
         $score = SiteConfig::getCofig($params['site_id'], $type);
+        if (empty($score)) {
+            return false;
+        }
+
         // 设置会员表积分总数
         $memberObj = new AuthUser;
         $hasScore = $memberObj->getScore($params['uid']);

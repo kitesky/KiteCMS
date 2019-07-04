@@ -60,21 +60,22 @@ class Upload extends Base
             'status'      => 1,
         ];
         $order = $orederObj->where($map)->find();
-        if (!is_array($order) && $document['price'] > 0) {
+ 
+        if (empty($order) && $document['price'] > 0) {
             $buy_url = url('member/order/create', ['id' => $doc_id]);
             $this->error('您无权限下载', $buy_url);
         }
 
         $filePath = Env::get('root_path') . $document['attach'];
         $file = new \SplFileInfo($filePath);
-        if(file_exists($filePath)) {
+        if($file->isFile()) {
             header('Content-Transfer-Encoding: binary');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="' . $file->getFilename() . '"');
             header('Content-Transfer-Encoding: binary');
             readfile($filePath);
         }else{
-            header('HTTP/1.1 404 Not Found');
+            $this->error('没有可用附件供下载');
         }
 
     }

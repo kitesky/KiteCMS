@@ -19,3 +19,4 @@ truncate kite_order;
 truncate kite_score;
 truncate kite_site_file;
 truncate kite_slider;
+truncate kite_feedback;

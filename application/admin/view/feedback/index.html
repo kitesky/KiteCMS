@@ -1,0 +1,189 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">{:lang('Feedback')}</a></li>
+    </ul>
+
+    <div class="box box-solid">
+        <div class="box-header with-border">
+          <h3 class="box-title">{:lang('Filter')}</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form action="#" method="get" class="form-inline">
+              <div class="form-group">
+                  <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">{:lang('List')}</span>
+                  <select name="status" class="form-control">
+                    <option>--{:lang('Any')}--</option>
+                    <option {eq name="search.status" value="0"}selected{/eq} value="0">{:lang('Progress')}</option>
+                    <option {eq name="search.status" value="1"}selected{/eq} value="1">{:lang('Approval')}</option>
+                  </select>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-flat"> <i class="fa fa-search"></i> {:lang('Search')}</button>
+            </form>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active table-responsive no-padding">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th><input id="checkAll" type="checkbox"></th>
+                        <th>#ID</th>
+                        <th>{:lang('Content')}</th>
+                        <th>{:lang('Reply')}</th>
+                        <th>{:lang('Status')}</th>
+                        <th>{:lang('Creation date')}</th>
+                        <th>{:lang('Action')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name="list" id="vo"}
+                    <tr id = "tr_{$vo.id}">
+                        <td><input name="ids[]" value="{$vo.id}" type="checkbox"></td>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.content}</td>
+                        <td>{$vo.reply}</td>
+                        <td>
+                            {switch vo.status}
+                                {case 1}<small class="label bg-light-blue">{:lang('Approval')}</small>{/case}
+                                {case 0}<small class="label bg-gray">{:lang('Progress')}</small>{/case}
+                                {default /}
+                            {/switch}
+                        </td>
+                        <td>{$vo.create_at}</td>
+                        <td>
+                            <a href="{:url('admin/feedback/edit', ['id' => $vo.id])}"> {:lang('Reply')}</a>
+                            <a onclick="remove('{$vo.id}');" href="#"> {:lang('Delete')}</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                    {empty name="list"}
+                    <tr>
+                        <td colspan="6" class="text-center">{:lang("No record")}</td>
+                    </tr>
+                    {/empty}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <form method="post" class="form-inline">
+                <div class="input-group">
+                    <div><select id="type" class="form-control">
+                        <option value="approval">{:lang('Approval')}</option>
+                        <option value="progress">{:lang('Progress')}</option>
+                        <option value="delete">{:lang('Delete')}</option>
+                    </select>
+                    </div>
+                    <span class="input-group-btn"> 
+                        <button type="button" onclick="handle();" class="btn btn-primary btn-flat"> {:lang('Save')} </button> 
+                    </span>
+                </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right"> {$page} </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    //批量操作
+    function handle(){
+        var chk_value =[]; 
+        $('input[name="ids[]"]:checked').each(function(){ 
+            chk_value.push($(this).val()); 
+        }); 
+        var type = $('#type option:selected').val() ;
+        if(chk_value.length < 1){
+            swal({
+                title: "{:lang('No record selected')}",
+                text: "",
+                type: "warning"
+            });
+        }else{
+            swal({
+              title: "{:lang('Are you sure')}",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: "{:lang('Yes')}",
+              cancelButtonText: "{:lang('No')}",
+            }).then(function(result) { 
+                if (result.value) {
+                    $.ajax({
+                        url:"{:Url('admin/feedback/handle')}",
+                        data:{'ids':chk_value, 'type':type},
+                        type:'post',
+                        dataType:'json',
+                        success: function(xhr){
+                            if(xhr.code == 200){
+                                swal(xhr.msg, "","success").then(function(value){
+                                    window.location.reload();
+                                });
+                            }else{
+                                swal(xhr.msg, "", "error");
+                            }
+                        }
+                    })
+                }
+           })
+        }
+    }
+
+    function remove(id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/feedback/remove')}",
+                    data:{'id':id},
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success");
+                            $("#tr_" + id).remove();
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }
+        })
+    }
+</script>
+{/block}

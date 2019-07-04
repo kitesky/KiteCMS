@@ -4,6 +4,26 @@ ADD COLUMN `list_rows`  int(11) NOT NULL DEFAULT 10 COMMENT '列表显示条数'
 ALTER TABLE `kite_document_content`
 ADD COLUMN `attach`  varchar(255) NULL DEFAULT '' COMMENT '文件' AFTER `image`;
 
+-- ----------------------------
+-- Table structure for kite_feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_feedback`;
+CREATE TABLE `kite_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+  `site_id` int(11) NOT NULL COMMENT '网站ID',
+  `uid` int(11) DEFAULT NULL COMMENT '评论人mid ',
+  `title` varchar(255) COLLATE utf8_bin DEFAULT '' COMMENT '反馈标题',
+  `username` varchar(64) COLLATE utf8_bin DEFAULT '' COMMENT '反馈者姓名',
+  `email` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '反馈者邮箱',
+  `phone` varchar(64) COLLATE utf8_bin DEFAULT '' COMMENT '反馈者电话',
+  `content` text COLLATE utf8_bin NOT NULL COMMENT '反馈内容',
+  `reply` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 隐藏 1 显示',
+  `create_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `update_at` int(11) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 ALTER TABLE `kite_site`
 DROP COLUMN `city_id`;

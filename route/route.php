@@ -15,6 +15,8 @@ Route::get('/', 'index/index/index');
 
 Route::get('search', 'index/search/index');
 
+Route::get('feedback', 'index/feedback/index');
+
 // 栏目列表
 Route::get('channel-<cat_id>', 'index/category/index')
     ->pattern(['cat_id' => '\d+']);

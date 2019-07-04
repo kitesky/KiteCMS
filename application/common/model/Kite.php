@@ -371,6 +371,16 @@ class Kite
             array_push($tree, $cate);
         }
 
+        // 留言反馈
+        if (strtolower(Request::controller()) == 'feedback') {
+            $cate = [
+                'url'    =>  url('index/feedback/index'),
+                'title'  => '留言反馈',
+                'active' => 'active',
+            ];
+            array_push($tree, $cate);
+        }
+
         return array_filter($tree);
     }
 
