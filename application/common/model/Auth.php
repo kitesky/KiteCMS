@@ -2,10 +2,7 @@
 namespace app\common\model;
 
 use think\Model;
-use think\Db;
 use think\facade\Session;
-use think\facade\Request;
-use think\facade\Url;
 use app\common\model\AuthRole;
 use app\common\model\AuthUser;
 use app\common\model\AuthRule;
@@ -13,6 +10,7 @@ use app\common\model\Site;
 
 class Auth extends Model
 {
+
     /**
      * 检测登陆
      * @param $resource 资源名称/URL
@@ -21,22 +19,18 @@ class Auth extends Model
     static public function check($resource)
     {
         // 获取rule_id
-        $rule_id = Db::name('auth_rule')
-            ->where('url', 'like', $resource)
-            ->value('id');
+        $ruleObj = new AuthRule;
+        $rule_id = $ruleObj->where('url', $resource)->value('id');
 
         // 当rule_id在权限控制表中 进行权限校验
         $bool = false;
         if (is_numeric($rule_id)) {
             // 校验资源权限
             $session = Session::get('user_auth', 'admin');
-            $rule = self::getRule($session['uid']);
-            $ids = [];
+            $rule = $ruleObj->getUserRule($session['uid'], 'admin');
+
             if (!empty($rule)) {
-                foreach ($rule as $v) {
-                    array_push($ids, $v['id']);
-                }
-                if (in_array($rule_id, $ids)) {
+                if (in_array($rule_id, array_column($rule, 'id'))) {
                     $bool = true;
                 } else {
                     $bool = false;
@@ -71,12 +65,13 @@ class Auth extends Model
      */
     static public function breadcrumb()
     {
-        $rule = Db::name('auth_rule')
+        $ruleObj = new AuthRule;
+        $rule = $ruleObj
             ->field('id,pid,name,description,url,lang_var')
             ->where('url', get_path_url())
             ->find();
 
-        $rule_list = Db::name('auth_rule')
+        $rule_list = $ruleObj
             ->field('id,pid,name,description,url,lang_var')
             ->select();
 
@@ -90,7 +85,7 @@ class Auth extends Model
                     $v['active'] = 'active';
                 } else {
                     $v['active'] = '';
-                    $v['url'] = Url::build($v['url']);
+                    $v['url'] = url($v['url']);
                 }
                 array_push($breadcrumb, $v);
             }
@@ -106,7 +101,8 @@ class Auth extends Model
      */
     static public function menu()
     {
-        $rule_id = Db::name('auth_rule')
+        $ruleObj = new AuthRule;
+        $rule_id = $ruleObj
             ->where('url', get_path_url())
             ->value('id');
 
@@ -114,7 +110,9 @@ class Auth extends Model
         $session = Session::get('user_auth', 'admin');
 
         // 获取所有权限集合
-        $rule = self::getRule($session['uid']);
+        $ruleObj = new AuthRule;
+        $rule = $ruleObj->getUserRule($session['uid'], 'admin');
+
         if (empty($rule)) {
             return false;
         }
@@ -134,7 +132,7 @@ class Auth extends Model
 
             // 生成URL
             if ($v['url'] != '#' || $v['url'] != ''){
-                $v['url'] = Url::build($v['url']);
+                $v['url'] = url($v['url']);
             } else {
                 $v['url'] = '#';
             }
@@ -196,74 +194,17 @@ class Auth extends Model
     static public function getSite($uid)
     {
         $userObj = new AuthUser;
-        $user = $userObj->find($uid);
-        $siteList = [];
-        if (!empty($user['role'])) {
-            foreach ($user['role'] as $v) {
-                if (!empty($v['site_ids'])) {
-                    $ids = explode(',', $v['site_ids']);
-                    $siteList = array_merge($siteList, $ids);
-                }
-            }
-        }
-
-        $newSiteList = [];
-        $siteList = array_unique($siteList);
-        if (!empty($siteList)) {
-            foreach ($siteList as $v) {
-                $newSiteList[] = Site::get($v);
-            }
-        }
-
-        return $newSiteList;
+        return $userObj->getUserSite($uid);
     }
-    
+
     public function getSiteIds($uid)
     {
         $site_list = self::getSite($uid);
-
-        $ids = [];
-        if (is_array($site_list)) {
-            foreach ($site_list as $v) {
-                $ids[] = $v['id'];
-            }
+        if (!empty($site_list)) {
+            return array_column($site_list, 'id');
         }
 
-        return $ids;
-    }
-    
-    /**
-     * 获取用户所有权限集合
-     *
-     * @params $uid int 用户UID
-     * @return array
-     */
-    static public function getRule($uid)
-    {   
-        $userObj = new AuthUser;
-        $user = $userObj->find($uid);
-        $ruleList = [];
-        if (!empty($user['role'])) {
-            foreach ($user['role'] as $v) {
-                if (!empty($v['rule_ids'])) {
-                    $ids = explode(',', $v['rule_ids']);
-                    $ruleList = array_merge($ruleList, $ids);
-                }
-            }
-        }
-
-        $newRuleList = [];
-        $ruleList = array_unique($ruleList);
-        if (!empty($ruleList)) {
-            foreach ($ruleList as $v) {
-                $detail = AuthRule::get($v);
-                if (!empty($detail)) {
-                    $newRuleList[] = $detail;
-                }
-            }
-        }
-
-        return $newRuleList;
+        return false;
     }
 
 }

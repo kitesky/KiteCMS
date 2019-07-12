@@ -17,8 +17,8 @@ class Order extends Base
     {
         parent::__construct();
 
-        $this->alipay_config = $this->alipay();
-
+        $this->alipay_config = $this->alipayConfig();
+        $this->wxpay_config  = $this->wxpayConfig();
     }
 
     public function detail()
@@ -60,7 +60,7 @@ class Order extends Base
         return $this->fetch('my', $data);
     }
 
-    public function alipay()
+    public function alipayConfig()
     {
         $f_config = Config::get('site.payment');
         $db_config = [];
@@ -77,6 +77,27 @@ class Order extends Base
           'return_url'  => $db_config['ali_return_url'],
           'public_key'  => $db_config['ali_public_key'],
           'private_key' => $db_config['ali_private_key'],
+        ];
+
+        return $config;
+    }
+    
+    public function wxpayConfig()
+    {
+        $f_config = Config::get('site.payment');
+        $db_config = [];
+        foreach ($f_config as $k => $v) {
+
+            if (!empty(SiteConfig::getCofig($this->site_id, $k))) {
+                $db_config[$k] = SiteConfig::getCofig($this->site_id, $k);
+            }
+        }
+
+        $config = [
+          'appid'      => $db_config['wx_appid'],
+          'mch_id'     => $db_config['wx_mch_id'],
+          'notify_url' => $db_config['wx_notify_url'],
+          'key'        => $db_config['wx_key'],
         ];
 
         return $config;
@@ -142,34 +163,40 @@ class Order extends Base
         }
 
         $out_trade_no = make_order_no();
-        $order = [
+
+        $payment_type = isset($request['payment_type']) ? $request['payment_type'] : 1;
+
+        $orderData = [
+            'site_id'      => $this->site_id,
             'out_trade_no' => $out_trade_no,
+            'uid'          => $this->uid,
+            'document_id'  => $request['id'],
             'total_amount' => $document->price,
-            'subject'      => $document->title,
         ];
 
-      $payment_type = isset($request['payment_type']) ? $request['payment_type'] : 1;
+        $orderObj = new OrderModel;
+        $orderObj->allowField(true)->save($orderData);
 
-      $orderData = [
-          'site_id'      => $this->site_id,
-          'out_trade_no' => $out_trade_no,
-          'uid'          => $this->uid,
-          'document_id'  => $request['id'],
-          'total_amount' => $document->price,
-      ];
-
-      $orderObj = new OrderModel;
-      $orderObj->allowField(true)->save($orderData);
-
-      switch ($payment_type) {
-          case 1;
-              $obj = new \app\common\service\Alipay($this->alipay_config);
-              return $obj->webPay($order);
-              break;
-          case 2;
-
-              break;
-      }
+        switch ($payment_type) {
+            case 1;
+                $order = [
+                    'out_trade_no' => $out_trade_no,
+                    'total_amount' => $document->price,
+                    'subject'      => $document->title,
+                ];
+                $aliObj = new \app\common\service\Alipay($this->alipay_config);
+                return $aliObj->webPay($order);
+                break;
+            case 2;
+                $order = [
+                    'out_trade_no' => $out_trade_no,
+                    'total_fee'    => $document->price,
+                    'body'         => $document->title,
+                ];
+                $wxObj = new \app\common\service\Wxpay($this->wxpay_config);
+                var_dump($wxObj->webPay($order));
+                break;
+        }
     }
     
     public function test()

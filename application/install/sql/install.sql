@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : 本地
 Source Server Version : 50505
 Source Host           : localhost:3306
-Source Database       : kitecms
+Source Database       : test
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-07-04 12:29:45
+Date: 2019-07-12 23:56:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `kite_addons` (
 -- ----------------------------
 -- Records of kite_addons
 -- ----------------------------
-INSERT INTO `kite_addons` VALUES ('3', 'demo', '演示插件', '用于演示插件', '1', '{\"title\":\"\\u7cfb\\u7edf\\u4fe1\\u606f\",\"width\":\"6\",\"display\":\"1\"}', 'kitecms', '1.0', '1', null, null);
+INSERT INTO `kite_addons` VALUES ('3', 'demo', '演示插件', '用于演示插件', '1', '{\"title\":\"\\u7cfb\\u7edf\\u4fe1\\u606f\",\"width\":\"4\",\"display\":\"1\",\"id\":\"3\"}', 'kitecms', '1.0', '1', null, null);
 
 -- ----------------------------
 -- Table structure for kite_auth_role
@@ -56,9 +56,9 @@ CREATE TABLE `kite_auth_role` (
 -- ----------------------------
 -- Records of kite_auth_role
 -- ----------------------------
-INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,55,73,74,83,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
+INSERT INTO `kite_auth_role` VALUES ('1', '管理员', '10,97,108,107,98,99,100,101,109,110,111,112,113,114,102,103,104,105,106,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28,5,42,43,44,45,46,47,48,49,50,82,55,73,74,83,85,94,95,96,86,52,87,88,65,66,67,68,69,70,71,56,57,58,59,60,61,62,75,76,77,78,79,80,81,51,53,54,4,7,18,19,20,21,8,15,16,17,2,1,12,13,14,9,11,22,23,72,89,90,91,92,93,63,64', '1,2', 'Administrator', '1');
 INSERT INTO `kite_auth_role` VALUES ('2', '编辑员', '10,3,24,36,37,38,25,39,40,41,29,30,31,32,33,34,35,6,26,27,28', '', 'Editor', '2');
-INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', '10', '', 'Member', '2');
+INSERT INTO `kite_auth_role` VALUES ('3', '注册用户', '10,97,108,107,98,99,100,101,109,110,111,112,113,114,102,103,104,105,106', '', 'Member', '2');
 
 -- ----------------------------
 -- Table structure for kite_auth_rule
@@ -78,7 +78,7 @@ CREATE TABLE `kite_auth_rule` (
   PRIMARY KEY (`id`),
   KEY `permission_url` (`url`) USING BTREE,
   KEY `lang_var` (`lang_var`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_auth_rule
@@ -86,11 +86,11 @@ CREATE TABLE `kite_auth_rule` (
 INSERT INTO `kite_auth_rule` VALUES ('1', '0', 'admin', '系统管理', '#', '1', 'fa fa-laptop', '6', '', 'System');
 INSERT INTO `kite_auth_rule` VALUES ('2', '8', 'admin', '站点授权', 'admin/role/siteAuth', '0', '', '3', '', 'Site authorize');
 INSERT INTO `kite_auth_rule` VALUES ('3', '0', 'admin', '信息管理', '#', '1', 'fa fa-file-word-o', '2', '', 'Information');
-INSERT INTO `kite_auth_rule` VALUES ('4', '0', 'admin', '会员管理', '#', '1', 'fa fa-user', '4', '', 'Member');
+INSERT INTO `kite_auth_rule` VALUES ('4', '0', 'admin', '会员管理', '#', '0', 'fa fa-user', '4', '', 'User');
 INSERT INTO `kite_auth_rule` VALUES ('5', '0', 'admin', '功能扩展', '#', '1', 'fa fa-chrome', '3', '', 'Extended');
 INSERT INTO `kite_auth_rule` VALUES ('6', '3', 'admin', '模型管理', 'admin/documentModel/index', '1', 'fa fa-cube', '4', '', 'Document model');
-INSERT INTO `kite_auth_rule` VALUES ('7', '4', 'admin', '用户管理', 'admin/user/index', '1', 'fa fa-user-secret', '1', '', 'User');
-INSERT INTO `kite_auth_rule` VALUES ('8', '4', 'admin', '角色管理', 'admin/role/index', '1', 'fa fa-users', '2', '', 'Role');
+INSERT INTO `kite_auth_rule` VALUES ('7', '1', 'admin', '用户管理', 'admin/user/index', '1', 'fa fa-user', '1', '', 'User');
+INSERT INTO `kite_auth_rule` VALUES ('8', '1', 'admin', '角色管理', 'admin/role/index', '1', 'fa fa-users', '2', '', 'Role');
 INSERT INTO `kite_auth_rule` VALUES ('9', '1', 'admin', '站点管理', 'admin/site/index', '1', 'fa fa-globe', '4', '', 'Sites');
 INSERT INTO `kite_auth_rule` VALUES ('10', '0', 'admin', '站点首页', 'admin/index/index', '1', 'fa fa-dashboard ', '1', '', 'Control panel');
 INSERT INTO `kite_auth_rule` VALUES ('11', '9', 'admin', '创建站点', 'admin/site/create', '0', 'fa fa-circle-o', '0', '', 'Create site');
@@ -124,13 +124,13 @@ INSERT INTO `kite_auth_rule` VALUES ('38', '24', 'admin', '删除文档', 'admin
 INSERT INTO `kite_auth_rule` VALUES ('39', '25', 'admin', '创建文档', 'admin/category/create', '0', '', '0', '', 'Create');
 INSERT INTO `kite_auth_rule` VALUES ('40', '25', 'admin', '更新文档', 'admin/category/edit', '0', '', '0', '', 'Edit');
 INSERT INTO `kite_auth_rule` VALUES ('41', '25', 'admin', '删除文档', 'admin/category/remove', '0', '', '0', '', 'Remove');
-INSERT INTO `kite_auth_rule` VALUES ('42', '5', 'admin', '插件管理', 'admin/addons/index', '1', 'fa fa-plus-square', '0', '', 'Addons');
+INSERT INTO `kite_auth_rule` VALUES ('42', '1', 'admin', '插件管理', 'admin/addons/index', '1', 'fa fa-plus-square', '0', '', 'Addons');
 INSERT INTO `kite_auth_rule` VALUES ('43', '42', 'admin', '插件安装', 'admin/addons/install', '0', '', '0', '', 'Addons install');
 INSERT INTO `kite_auth_rule` VALUES ('44', '42', 'admin', '插件卸载', 'admin/addons/uninstall', '0', '', '0', '', 'Addons uninstall');
 INSERT INTO `kite_auth_rule` VALUES ('45', '42', 'admin', '插件启用', 'admin/addons/enable', '0', '', '0', '', 'Addons enable');
 INSERT INTO `kite_auth_rule` VALUES ('46', '42', 'admin', '插件禁用', 'admin/addons/disable', '0', '', '0', '', 'Addons disable');
 INSERT INTO `kite_auth_rule` VALUES ('47', '42', 'admin', '插件配置', 'admin/addons/config', '0', '', '0', '', 'Addons config');
-INSERT INTO `kite_auth_rule` VALUES ('48', '5', 'admin', '钩子管理', 'admin/hooks/index', '1', 'fa fa-gg-circle', '0', '', 'Hooks');
+INSERT INTO `kite_auth_rule` VALUES ('48', '1', 'admin', '钩子管理', 'admin/hooks/index', '1', 'fa fa-gg-circle', '0', '', 'Hooks');
 INSERT INTO `kite_auth_rule` VALUES ('49', '48', 'admin', '钩子添加', 'admin/hooks/create', '0', '', '0', '', 'Create');
 INSERT INTO `kite_auth_rule` VALUES ('50', '48', 'admin', '钩子编辑', 'admin/hooks/edit', '0', '', '0', '', 'Edit');
 INSERT INTO `kite_auth_rule` VALUES ('51', '5', 'admin', '订单', 'admin/order/index', '1', 'fa fa-shopping-cart', '10', '', 'Order');
@@ -174,6 +174,28 @@ INSERT INTO `kite_auth_rule` VALUES ('55', '5', 'admin', '留言反馈', 'admin/
 INSERT INTO `kite_auth_rule` VALUES ('73', '55', 'admin', '回复', 'admin/feedback/edit', '0', 'fa fa-circle-o', '0', '', 'Reply');
 INSERT INTO `kite_auth_rule` VALUES ('74', '55', 'admin', '删除', 'admin/feedback/remove', '0', 'fa fa-circle-o', '0', '', 'Remove');
 INSERT INTO `kite_auth_rule` VALUES ('83', '55', 'admin', '批量操作', 'admin/feedback/handle', '0', 'fa fa-circle-o', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('85', '5', 'admin', 'Tags', 'admin/tags/index', '1', 'fa fa-tags', '0', '', 'Tags');
+INSERT INTO `kite_auth_rule` VALUES ('94', '85', 'admin', '删除', 'admin/tags/remove', '0', 'fa fa-circle-o', '0', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('95', '85', 'admin', '编辑', 'admin/tags/edit', '0', 'fa fa-circle-o', '0', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('96', '85', 'admin', '操作', 'admin/tags/handle', '0', 'fa fa-circle-o', '0', '', 'Handle');
+INSERT INTO `kite_auth_rule` VALUES ('97', '0', 'member', '会员中心', 'member/index/index', '1', 'fa fa-laptop', '1', '', 'Member center');
+INSERT INTO `kite_auth_rule` VALUES ('98', '108', 'member', '发布信息', 'member/document/create', '1', 'fa fa-edit', '2', '', 'Create');
+INSERT INTO `kite_auth_rule` VALUES ('99', '108', 'member', '修改信息', 'member/document/edit', '0', 'fa fa-circle-o', '3', '', 'Edit');
+INSERT INTO `kite_auth_rule` VALUES ('100', '108', 'member', '删除信息', 'member/document/remove', '0', 'fa fa-circle-o', '4', '', 'Remove');
+INSERT INTO `kite_auth_rule` VALUES ('101', '97', 'member', '账户设置', '#', '1', 'fa fa-user', '5', '', 'Account setting');
+INSERT INTO `kite_auth_rule` VALUES ('102', '101', 'member', '个人资料', 'member/member/profile', '1', 'fa fa-circle-o text-red', '6', '', 'Member profile');
+INSERT INTO `kite_auth_rule` VALUES ('103', '101', 'member', '账户绑定', 'member/member/bind', '1', 'fa fa-circle-o text-yellow', '7', '', 'Member bind');
+INSERT INTO `kite_auth_rule` VALUES ('104', '101', 'member', '手机绑定', 'member/member/mobileBind', '0', 'fa fa-circle-o', '8', '', 'Mobile bind');
+INSERT INTO `kite_auth_rule` VALUES ('105', '101', 'member', '邮箱绑定', 'member/member/emailBind', '0', 'fa fa-circle-o', '9', '', 'Email bind');
+INSERT INTO `kite_auth_rule` VALUES ('106', '101', 'member', '密码修改', 'member/member/password', '1', 'fa fa-circle-o text-aqua', '10', '', 'Password update');
+INSERT INTO `kite_auth_rule` VALUES ('107', '108', 'member', '信息列表', 'member/document/index', '1', 'fa fa-book', '0', '', 'Document');
+INSERT INTO `kite_auth_rule` VALUES ('108', '97', 'member', '信息管理', '#', '1', 'fa fa-laptop', '1', '', 'My document');
+INSERT INTO `kite_auth_rule` VALUES ('109', '101', 'member', '手机解绑', 'member/member/mobileUnbind', '0', 'fa fa-circle-o', '0', '', 'Mobile unbind');
+INSERT INTO `kite_auth_rule` VALUES ('110', '101', 'member', '邮箱解绑', 'member/member/emailUnbind', '0', 'fa fa-circle-o', '0', '', 'Email unbind');
+INSERT INTO `kite_auth_rule` VALUES ('111', '101', 'member', '头像设置', 'member/member/avatar', '0', 'fa fa-circle-o', '0', '', 'Member avatar');
+INSERT INTO `kite_auth_rule` VALUES ('112', '101', 'member', '创建订单', 'member/order/create', '0', 'fa fa-circle-o', '0', '', 'Create order');
+INSERT INTO `kite_auth_rule` VALUES ('113', '101', 'member', '我的订单', 'member/order/my', '1', 'fa fa-circle-o', '0', '', 'My order');
+INSERT INTO `kite_auth_rule` VALUES ('114', '101', 'member', '订单详情', 'member/order/detail', '0', 'fa fa-circle-o', '0', '', 'Detail');
 
 -- ----------------------------
 -- Table structure for kite_auth_user
@@ -197,12 +219,13 @@ CREATE TABLE `kite_auth_user` (
   KEY `created` (`create_at`) USING BTREE,
   KEY `phone` (`phone`) USING BTREE,
   KEY `email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of kite_auth_user
 -- ----------------------------
-INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$KE/ykKz0fY.wXmJTz32B4.sIm.jw6vF86vjF8hd69RCa7O/DepqFq', '18780221108', 'kite@kitesky.com', '0', '494', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1562214393', '1562214393');
+INSERT INTO `kite_auth_user` VALUES ('1', '1,2,3', 'admin', '$2y$10$dnD7/4H7Wgxj.UY2I4nhQOZQL2P.jBaJONK00Oh9D3YFS3CMoe1ie', '18780221108', 'kite@kitesky.com', '0', '584', '/upload/20190627/aba796d04ef17b1862880b988a5b47d8.png', '1562946592', '1562946592');
+INSERT INTO `kite_auth_user` VALUES ('2', '3', 'kite', '$2y$10$99iZt/YBVSWHu.2wixnar.yjf8Ly1t9v337gVcaAv/1u6uBbdMTbS', '', 'kite@kitesky.com', '0', '50', '', '1562595397', '1562600544');
 
 -- ----------------------------
 -- Table structure for kite_block
@@ -481,7 +504,7 @@ CREATE TABLE `kite_hooks` (
 -- ----------------------------
 INSERT INTO `kite_hooks` VALUES ('1', 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', '1', '', '1', '1561561552', '1561561552');
 INSERT INTO `kite_hooks` VALUES ('2', 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', '1', '', '1', '1561561552', '1561561552');
-INSERT INTO `kite_hooks` VALUES ('3', 'AdminIndex', '首页小格子个性化显示', '2', 'demo', '1', '1561561552', '1561561552');
+INSERT INTO `kite_hooks` VALUES ('3', 'AdminIndex', '首页小格子个性化显示', '2', 'demo', '1', '1561561552', '1562602365');
 
 -- ----------------------------
 -- Table structure for kite_language
@@ -659,7 +682,7 @@ CREATE TABLE `kite_site` (
 -- ----------------------------
 -- Records of kite_site
 -- ----------------------------
-INSERT INTO `kite_site` VALUES ('1', '默认站点', '/upload/20190702/61126f8e5831cadc75aacf845122c8a8.png', 'http://www.test.com', '0', '默认站点', '默认站点', '默认站点', 'default', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1562214393', '1562214393');
+INSERT INTO `kite_site` VALUES ('1', '默认站点', '/upload/20190702/61126f8e5831cadc75aacf845122c8a8.png', 'http://www.test.com', '0', '默认站点', '默认站点', '默认站点', 'default', 'Copyright © 2019 19981.com. All Right Reserved.', '蜀ICP备12004586号-2', '0', '1562946592', '1562946592');
 INSERT INTO `kite_site` VALUES ('2', '测试站点', '', 'http://doc.19981.com', '0', '', '', '', 'clumb', '', '', '0', '1562135923', '1562135923');
 
 -- ----------------------------
@@ -695,7 +718,7 @@ INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_ak', 0x3956577A66316A69533367
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_sk', 0x54474E6432317877662D794847576E3346774E3337666B5257704F7A7A4D685843356A4566677238, '1530071701', '1530071701');
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_bucket', 0x6B697465736B79, '1530071701', '1530071701');
 INSERT INTO `kite_site_config` VALUES ('1', 'qiniu_domain', 0x687474703A2F2F6F6E7872386D7438792E626B742E636C6F7564646E2E636F6D, '1530071701', '1530071701');
-INSERT INTO `kite_site_config` VALUES ('1', 'link_category', 0x5B7B226E616D65223A22E69687E5AD97E993BEE68EA5222C22736F7274223A2231222C226964223A317D5D, '1531141510', '1531141510');
+INSERT INTO `kite_site_config` VALUES ('1', 'link_category', 0x5B7B226E616D65223A22E69687E5AD97E993BEE68EA5222C22736F7274223A2231222C226964223A317D2C7B226E616D65223A223232222C22736F7274223A223232222C226964223A327D2C7B226E616D65223A22333333222C22736F7274223A22333333222C226964223A337D5D, '1531141510', '1531141510');
 INSERT INTO `kite_site_config` VALUES ('1', 'slider_category', 0x5B5D, '1531147967', '1531147967');
 INSERT INTO `kite_site_config` VALUES ('1', 'field_category', 0x5B7B226E616D65223A22E6A8A1E69DBFE7B1BB222C22736F7274223A2231222C226964223A317D5D, '1531147967', '1531147967');
 INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1531213657', '1531213657');
@@ -817,6 +840,239 @@ INSERT INTO `kite_site_config` VALUES ('2', 'list_row', 0x3135, '1562067176', '1
 INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_register', 0x31, '1562122709', '1562122709');
 INSERT INTO `kite_site_config` VALUES ('1', 'member_allow_comment', 0x31, '1562122709', '1562122709');
 INSERT INTO `kite_site_config` VALUES ('1', 'list_rows', 0x3135, '1562122709', '1562122709');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562381353', '1562381353');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562381354', '1562381354');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562381354', '1562381354');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562381354', '1562381354');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562381354', '1562381354');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562381355', '1562381355');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562381367', '1562381367');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562381367', '1562381367');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562381367', '1562381367');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562381367', '1562381367');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562381369', '1562381369');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562381369', '1562381369');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562381369', '1562381369');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562381369', '1562381369');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562381369', '1562381369');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562381370', '1562381370');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562381370', '1562381370');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562381370', '1562381370');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562381370', '1562381370');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562381370', '1562381370');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562483152', '1562483152');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562483152', '1562483152');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562483152', '1562483152');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562483152', '1562483152');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562483161', '1562483161');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562483172', '1562483172');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562483172', '1562483172');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562483172', '1562483172');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562483172', '1562483172');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562483173', '1562483173');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562488885', '1562488885');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562488886', '1562488886');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562560385', '1562560385');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562560385', '1562560385');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562560385', '1562560385');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562560385', '1562560385');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562560401', '1562560401');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562560401', '1562560401');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562560401', '1562560401');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562560401', '1562560401');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562599', '1562562599');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562599', '1562562599');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562599', '1562562599');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562599', '1562562599');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562562608', '1562562608');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562610', '1562562610');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562610', '1562562610');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562610', '1562562610');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562610', '1562562610');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562562612', '1562562612');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562562613', '1562562613');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562562614', '1562562614');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562562614', '1562562614');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562562614', '1562562614');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562562614', '1562562614');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562562615', '1562562615');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562617', '1562562617');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562617', '1562562617');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562617', '1562562617');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562617', '1562562617');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562562652', '1562562652');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562562653', '1562562653');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562562653', '1562562653');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562562653', '1562562653');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562562653', '1562562653');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562562654', '1562562654');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562655', '1562562655');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562655', '1562562655');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562655', '1562562655');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562655', '1562562655');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562686', '1562562686');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562686', '1562562686');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562686', '1562562686');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562686', '1562562686');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_appid', 0x31, '1562562711', '1562562711');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_mch_id', 0x32, '1562562711', '1562562711');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_notify_url', 0x33, '1562562711', '1562562711');
+INSERT INTO `kite_site_config` VALUES ('1', 'wx_key', 0x34, '1562562711', '1562562711');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562562979', '1562562979');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562562979', '1562562979');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562587516', '1562587516');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562587516', '1562587516');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562587516', '1562587516');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562587516', '1562587516');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562587517', '1562587517');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562587517', '1562587517');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562587517', '1562587517');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562587517', '1562587517');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562587518', '1562587518');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562587552', '1562587552');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562587554', '1562587554');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562587557', '1562587557');
+INSERT INTO `kite_site_config` VALUES ('0', 'field_category', null, '1562597748', '1562597748');
+INSERT INTO `kite_site_config` VALUES ('0', 'member_allow_register', 0x31, '1562597917', '1562597917');
+INSERT INTO `kite_site_config` VALUES ('0', 'member_allow_comment', 0x31, '1562597917', '1562597917');
+INSERT INTO `kite_site_config` VALUES ('0', 'list_rows', 0x3135, '1562597917', '1562597917');
+INSERT INTO `kite_site_config` VALUES ('0', 'navigation_category', null, '1562597919', '1562597919');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562599086', '1562599086');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562599086', '1562599086');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562599086', '1562599086');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562599086', '1562599086');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562599086', '1562599086');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562599087', '1562599087');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_useZh', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_useImgBg', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_imageH', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_imageW', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_useCurve', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_useNoise', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_member_register', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_member_login', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_document', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_comment', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'captcha_publish_feedback', 0x30, '1562603284', '1562603284');
+INSERT INTO `kite_site_config` VALUES ('2', 'ali_appid', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'ali_private_key', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'ali_public_key', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'ali_notify_url', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'ali_return_url', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'wx_appid', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'wx_mch_id', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'wx_notify_url', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'wx_key', '', '1562603286', '1562603286');
+INSERT INTO `kite_site_config` VALUES ('2', 'send_email_register', 0x30, '1562603287', '1562603287');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562603290', '1562603290');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562769736', '1562769736');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562769737', '1562769737');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562769740', '1562769740');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562769740', '1562769740');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562769740', '1562769740');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562769740', '1562769740');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562769740', '1562769740');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562769741', '1562769741');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562769741', '1562769741');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562769741', '1562769741');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562769741', '1562769741');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562769741', '1562769741');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562946976', '1562946976');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562946981', '1562946981');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562946982', '1562946982');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562946983', '1562946983');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key', 0x4163636573734B6579204944, '1562946985', '1562946985');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_access_key_secret', 0x416363657373204B657920536563726574, '1562946985', '1562946985');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_sign_name', 0x31393938312E636F6D, '1562946985', '1562946985');
+INSERT INTO `kite_site_config` VALUES ('1', 'ali_template_code', 0x534D535F31323334, '1562946985', '1562946985');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useZh', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useImgBg', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useCurve', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_useNoise', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_register', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_member_login', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_document', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_comment', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'captcha_publish_feedback', 0x30, '1562946986', '1562946986');
+INSERT INTO `kite_site_config` VALUES ('1', 'water_status', 0x30, '1562946987', '1562946987');
+INSERT INTO `kite_site_config` VALUES ('1', 'send_email_register', 0x30, '1562946996', '1562946996');
 
 -- ----------------------------
 -- Table structure for kite_site_file
@@ -860,6 +1116,36 @@ CREATE TABLE `kite_slider` (
 
 -- ----------------------------
 -- Records of kite_slider
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for kite_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_tags`;
+CREATE TABLE `kite_tags` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Tag ID',
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `tag_name` varchar(64) NOT NULL COMMENT 'Tag 名称',
+  `count` int(11) DEFAULT 0 COMMENT 'Tag引用次数',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of kite_tags
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for kite_tags_mapping
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_tags_mapping`;
+CREATE TABLE `kite_tags_mapping` (
+  `tag_id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of kite_tags_mapping
 -- ----------------------------
 
 -- ----------------------------

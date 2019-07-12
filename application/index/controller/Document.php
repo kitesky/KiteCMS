@@ -12,6 +12,7 @@ use app\common\model\DocumentContentExtra;
 use app\common\model\DocumentComments;
 use app\common\model\DocumentContentLike;
 use app\common\model\DocumentCommentsLike;
+use app\common\model\Tags;
 
 class Document extends Base
 {
@@ -21,11 +22,9 @@ class Document extends Base
 
         // 文档信息
         $docObj = new DocumentContent;
-        $extraObj = new DocumentContentExtra;
         $commObj = new DocumentComments;
-        $likeObj = new DocumentContentLike;
         $commLikeObj = new DocumentCommentsLike;
-        $document = $docObj->getDocumentById($this->site_id, $id);
+        $document = $docObj->getDetail($id);
         if (!isset($document)) {
               $this->error(404);
         } else if($document->role_id !== 0) {
@@ -42,18 +41,8 @@ class Document extends Base
             $document->pv = $document->pv + 1;
             $document->save();
 
-            // 加载自定义扩展信息
-            $document->extra = $extraObj->getContentExtraFormatKeyValue($document->id);
-
-            // 图集
-            $document->album = !empty($document->album) ? explode(',', $document->album) : [];
-
             // 评论总数
             $document->comments_total = $commObj->getCommentsCount($document->id);
-            
-            // 喜欢次数
-            $document->like = $likeObj->likeCount($document->id);
-            $document->unlike = $likeObj->unlikeCount($document->id);
         }
 
         // 栏目信息

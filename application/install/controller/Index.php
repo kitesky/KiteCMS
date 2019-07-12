@@ -163,7 +163,6 @@ class Index extends Controller
             if ($fwrite == false) {
                 return json(['code' => 201, 'msg' => '数据库配置文件写入失败']);
             }
-            // sleep(1);
 
             // 验证数据库是否存在 并导入数据库文件
             $str1 = 'SELECT * FROM information_schema.schemata WHERE schema_name = "%s"';

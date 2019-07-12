@@ -11,6 +11,7 @@ use app\common\model\DocumentContentExtra;
 use app\admin\controller\Admin;
 use app\common\validate\DocumentContentValidate;
 use app\common\model\AuthRole;
+use app\common\model\Tags;
 
 class Document extends Admin
 {
@@ -106,6 +107,12 @@ class Document extends Admin
                 $extraObj->saveContentExtra($contentObj->id, $request['extra']);
             }
 
+            // tag关系映射
+            if (!empty($request['tag_id'])) {
+                $tagObj = new Tags;
+                $tagObj->createTagsMapp($contentObj->id, $request['tag_id']);
+            }
+
             // 文档创建监听钩子 Hook
             $docData = [
                 'document_id' => $contentObj->id,
@@ -131,9 +138,14 @@ class Document extends Admin
         $roleObj = new AuthRole;
         $role = $roleObj->select();
 
+        // 获取tags
+        $tagObj = new Tags;
+        $tags = $tagObj->select();
+
         $data = [
             'category' => $category,
             'role'     => $role,
+            'tags'     => $tags,
         ];
 
         return $this->fetch('create', $data);
@@ -198,6 +210,12 @@ class Document extends Admin
                 $extraObj->remove($this->site_id, $contentObj->id);
             }
 
+            // tag关系映射
+            if (!empty($request['tag_id'])) {
+                $tagObj = new Tags;
+                $tagObj->createTagsMapp($contentObj->id, $request['tag_id']);
+            }
+
             // 文档更新监听钩子 Hook
             $docData = [
                 'document_id' => $contentObj->id,
@@ -228,11 +246,17 @@ class Document extends Admin
         $roleObj = new AuthRole;
         $role = $roleObj->select();
 
+        // 获取tags
+        $tagObj = new Tags;
+        $tags = $tagObj->select();
+        $tagsMapp = $tagObj->getDocumentTags($info->id, true);
 
         $data = [
             'category' => $category,
             'info'     => $info,
             'role'     => $role,
+            'tags'     => $tags,
+            'tagsMapp' => $tagsMapp,
         ];
 
         return $this->fetch('edit', $data);

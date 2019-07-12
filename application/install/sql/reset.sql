@@ -20,3 +20,5 @@ truncate kite_score;
 truncate kite_site_file;
 truncate kite_slider;
 truncate kite_feedback;
+truncate kite_tags;
+truncate kite_tags_mapping;

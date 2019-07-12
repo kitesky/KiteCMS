@@ -7,7 +7,6 @@ use think\facade\Config;
 use think\facade\Session;
 use think\facade\Lang;
 use think\facade\Request;
-use app\common\model\BuildUrl;
 use app\common\model\Auth;
 use app\common\model\Site;
 use app\common\controller\Common;

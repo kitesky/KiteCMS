@@ -25,6 +25,29 @@ CREATE TABLE `kite_feedback` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
+-- ----------------------------
+-- Table structure for kite_tags
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_tags`;
+CREATE TABLE `kite_tags` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Tag ID',
+  `site_id` int(11) NOT NULL COMMENT '站点ID',
+  `tag_name` varchar(64) NOT NULL COMMENT 'Tag 名称',
+  `count` int(11) DEFAULT 0 COMMENT 'Tag引用次数',
+  `sort` int(11) DEFAULT 0 COMMENT '排序',
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for kite_tags_mapping
+-- ----------------------------
+DROP TABLE IF EXISTS `kite_tags_mapping`;
+CREATE TABLE `kite_tags_mapping` (
+  `tag_id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 ALTER TABLE `kite_site`
 DROP COLUMN `city_id`;
 

@@ -66,10 +66,6 @@ class Passport extends Common
             }
         }
 
-        if (Session::get('user_auth', 'admin')) {
-            $this->redirect('admin/index/index');
-        }
-
         return $this->fetch('login', ['lang' => Cookie::get('think_var')]);
     }
 }

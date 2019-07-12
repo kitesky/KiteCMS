@@ -29,7 +29,7 @@
                         <tr>
                           <td><img src="{$vo.image|default='__STATIC__/admin/dist/img/nopic.png'|thumb=50,50}"></td>
                           <td><a target="_blank" href="{$vo.url}">{$vo.title}</a></td>
-                          <td><a target="_blank" href="{$vo.cate_url}"><span class="label bg-blue">{$vo.cate_name}</span></a></td>
+                          <td><a target="_blank" href="{$vo.cate_url}">{$vo.cate_name}</a></td>
                           <td>{$vo.create_at}</td>
                           <td>
                             <a href="{:url('member/document/edit', ['id' => $vo.id])}">修改</a>

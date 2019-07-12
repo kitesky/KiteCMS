@@ -67,6 +67,18 @@
                               </div>
                               </div>
                             </div>
+                            <div class="form-group">
+                              <label>{:lang('Tags')}</label>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <select class="form-control select2" name="tag_id[]" multiple="multiple" style="width:100%">
+                                    {volist name="tags" id="vo"}
+                                    <option {in name="vo.tag_id" value="$tagsMapp"}selected{/in} value="{$vo.tag_id}">{$vo.tag_name}</option>
+                                    {/volist}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
                             <div class="" id="extra">
 
                             </div>
@@ -207,6 +219,10 @@
 <!-- 自定义js -->
 {block name="js"}
 <script>
+$('.select2').select2({
+    multiple: true,
+});
+
 layui.use('upload', function(){
   var $ = layui.jquery
   ,upload = layui.upload;

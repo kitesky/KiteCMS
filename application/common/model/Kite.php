@@ -13,6 +13,7 @@ use app\common\model\Slider;
 use app\common\model\Block;
 use app\common\model\District;
 use app\common\model\Navigation;
+use app\common\model\Tags;
 
 class Kite
 {
@@ -215,6 +216,7 @@ class Kite
 
         $cateObj = new DocumentCategory;
         $extraObj = new DocumentContentExtra;
+        $tagsObj = new tags;
 
         if (!empty($list)) {
             foreach ($list as $v) {
@@ -226,6 +228,7 @@ class Kite
                 $v->extra = $extraObj->getContentExtraFormatKeyValue($v->id);
                 $v->catname = $category->title;
                 $v->caturl = $category->url;
+                $v->tags = $tagsObj->getDocumentTags($v->id);
             }
         }
 
@@ -381,6 +384,16 @@ class Kite
             array_push($tree, $cate);
         }
 
+        // Tags
+        if (strtolower(Request::controller()) == 'tags') {
+            $cate = [
+                'url'    =>  url('index/tags/index'),
+                'title'  => 'Tags',
+                'active' => 'active',
+            ];
+            array_push($tree, $cate);
+        }
+
         return array_filter($tree);
     }
 
@@ -492,6 +505,20 @@ class Kite
         }
 
        return list_to_tree($list);
+    }
+
+    /**
+     * 标签列表
+     * @return array
+     */
+    public function getTagsList($order = 'tag_id desc')
+    {
+        $tagObj = new Tags;
+        $request = [
+            'order' => $order,
+        ];
+
+        return $tagObj->getList($request);
     }
 
     /**

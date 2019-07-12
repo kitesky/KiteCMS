@@ -19,6 +19,7 @@ class Kite extends TagLib{
         'navbar'      => ['attr' => 'var,cid,order', 'close' => 1], //导航列表
         'catlist'     => ['attr' => 'var,pid,order', 'close' => 1], // 分类列表
         'doclist'     => ['attr' => 'var,cid,image_flag,video_flag,attach_flag,hot_flag,recommend_flag,size,order', 'close' => 1],
+        'tags'        => ['attr' => 'var', 'close' => 1], //标签
         'select'      => ['attr' => 'var,sql', 'close' => 1], // sql语句
     ];
 
@@ -202,6 +203,25 @@ class Kite extends TagLib{
         $parse .= ',' . $top_flag;
         $parse .= ',' . $limit;
         $parse .= ',"' . $order .'"';
+        $parse .= '); ';
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="' . $var . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
+    /**
+     * 标签
+     *
+     */
+    public function tagTags($tag, $content)
+    {
+        $var    = $tag['var'];
+        $order  = isset($tag['order']) ? $tag['order'] : 'tag_id desc';
+        $parse  = '<?php ';
+        $parse .= '$__LIST__ = callback("app\\common\\model\\Kite@getTagsList"';
+        $parse .= ',"' . $order . '"';
         $parse .= '); ';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $var . '"}';

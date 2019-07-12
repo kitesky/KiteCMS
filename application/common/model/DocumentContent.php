@@ -4,7 +4,9 @@ namespace app\common\model;
 use think\Model;
 use think\Db;
 use app\common\model\DocumentContentExtra;
+use app\common\model\DocumentContentLike;
 use app\common\model\UploadFile;
+use app\common\model\Tags;
 
 class DocumentContent extends Model
 {
@@ -23,9 +25,36 @@ class DocumentContent extends Model
         return DocumentContent::where('cid', $cid)->count();
     }
 
-    public function find($docement_id)
+    public function getDetail($docement_id)
     {
-        
+        $document = $this->where('id', $docement_id)->find();
+        if (!empty($document)) {
+            $extraObj = new DocumentContentExtra;
+            $likeObj  = new DocumentContentLike;
+            $tagsObj  = new Tags;
+
+            // 自定义字段信息
+            $document->extra = $extraObj->getContentExtraFormatKeyValue($document->id);
+            // 图集
+            $document->album = !empty($document->album) ? explode(',', $document->album) : [];
+            // 喜欢次数
+            $document->like = $likeObj->likeCount($document->id);
+            $document->unlike = $likeObj->unlikeCount($document->id);
+            // Tags
+            $tags = $tagsObj->getDocumentTags($document->id);
+            $newTags = [];
+            if (!empty($tags)) {
+                foreach ($tags as $v) {
+                    $v['tag_url'] = url('index/tags/detail', ['tag_id' => $v['tag_id']]);
+                    $newTags[] = $v;
+                }
+            }
+            $document->tags = $newTags;
+            // URL
+            $document->url = url('index/document/index', ['id' => $document->id]);
+        }
+
+        return $document;
     }
 
     public function select($request)
@@ -107,9 +136,12 @@ class DocumentContent extends Model
                 }
             }
 
+            //删除tags
+            $tagObj = new Tags;
+            $tagObj->removeMapp($id);
+
             // 删除文档
             $document->delete(true);
-
         }
     }
 
@@ -153,9 +185,9 @@ class DocumentContent extends Model
         $categoryMap = [];
         // 分类参数 存在子栏目ID就查子栏目信息 否则查询当前栏目下所有子栏目
         $cateList = Db::name('document_category')->field('id,pid')->select();
-        if (isset($request['cat_id']) && is_numeric($request['cat_id'])) {
-            $catIds = get_childs_id($cateList, $request['cat_id']);
-            $catIds[] = $request['cat_id'];
+        if (isset($request['category']) && is_numeric($request['category'])) {
+            $catIds[] = $request['category'];
+            unset($request['cat_id']);
             $categoryMap = array(['cid', 'in', $catIds]);
         } else {
             $catIds = get_childs_id($cateList, $cid);

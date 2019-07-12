@@ -23,6 +23,11 @@ return [
         'ali_public_key'  => '',
         'ali_notify_url'  => '',
         'ali_return_url'  => '',
+
+        'wx_appid'       => '',
+        'wx_mch_id'      => '',
+        'wx_notify_url'  => '',
+        'wx_key'         => '',
     ],
 
 

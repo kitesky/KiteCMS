@@ -66,8 +66,6 @@ class IndexCommon extends Common
         $user = $obj->get($this->uid);
         $this->user = isset($user) ? $user : null;
 
-
-
         // 站点赋值
         View::share('member', $this->user);
         View::share('role', $this->role);

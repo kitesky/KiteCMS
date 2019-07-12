@@ -12,6 +12,7 @@ use app\common\model\DocumentContent;
 use app\common\model\DocumentContentExtra;
 use app\common\model\DocumentContentLike;
 use app\common\model\DocumentComments;
+use app\common\model\Tags;
 
 class Category extends Base
 {
@@ -36,6 +37,7 @@ class Category extends Base
         $extraObj = new DocumentContentExtra;
         $likeObj = new DocumentContentLike;
         $commObj = new DocumentComments;
+        $tagsObj = new Tags;
         
         $site_list_rows = !empty(SiteConfig::getCofig($this->site_id, 'list_rows')) ? SiteConfig::getCofig($this->site_id, 'list_rows') : 10;
         $list_rows      = !empty($category->list_rows) ? $category->list_rows : $site_list_rows;
@@ -58,6 +60,9 @@ class Category extends Base
                 // 喜欢次数
                 $v->like = $likeObj->likeCount($v->id);
                 $v->unlike = $likeObj->unlikeCount($v->id);
+
+                // Tags
+                $v->tags = $tagsObj->getDocumentTags($v->id);
             }
         }
 

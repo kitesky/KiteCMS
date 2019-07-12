@@ -4,7 +4,7 @@
 {block name="content"}
     <section class="content">
 
-      <div class="box box-primary">
+      <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title">订单支付</h3>
         </div>
@@ -33,14 +33,19 @@
                   <label>
                     <input type="radio" checked id="payment_type" name="payment_type" value="1" >支付宝
                   </label>
+                  <!--
+                  <label>
+                    <input type="radio" id="payment_type" name="payment_type" value="2" >微信
+                  </label>
+                  -->
                 </div>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-             <input type="hidden" class="form-control" id="id" name="id" value="{$id}">
-            <button type="button" onclick="operate();" class="btn btn-primary">付款</button>
+            <input type="hidden" class="form-control" id="id" name="id" value="{$id}">
+            <button type="button" onclick="operate();" class="btn btn-default">付款</button>
           </div>
           <!-- /.box-footer -->
           <div id="pay"></div>
@@ -54,7 +59,7 @@
 <script type="text/javascript">
     function operate(){
         var id = $("#id").val();
-        var payment_type = $("#payment_type").val();
+        var payment_type = $('input[name="payment_type"]:checked').val();
         window.location.href = "{:url('member/order/pay')}" + "?id=" + id + "&payment_type=" + payment_type;
     }
 </script>

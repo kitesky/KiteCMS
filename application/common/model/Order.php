@@ -19,7 +19,7 @@ class Order extends Model
 
     public function getPaymentTypeTextAttr($value, $data)
     {
-        $paymentType = [0=>'未支付', 1=>'已付款', 2=>'退款'];
+        $paymentType = [0=>'未支付', 1=>'支付宝', 2=>'微信'];
          return $paymentType[$data['status']];
     }
 

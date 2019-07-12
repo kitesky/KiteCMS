@@ -24,6 +24,10 @@ Route::get('channel-<cat_id>', 'index/category/index')
 // 文档详情
 Route::get('detail-<id>$', 'index/document/index')
     ->pattern(['id' => '\d+']);
+    
+// 标签
+Route::get('tags-<tag_id>$', 'index/tags/detail')
+    ->pattern(['tag_id' => '\d+']);
 
 return [
     

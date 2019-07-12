@@ -1,0 +1,230 @@
+<!-- 模板继承 -->
+{extend name="public:base" /}
+
+<!-- 页面标题 -->
+{block name="title"}Administrator{/block}
+
+<!-- 自定义css -->
+{block name="css"}{/block}
+
+<!-- 内容区域 -->
+{block name="content"}
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="{:url('admin/block/index')}">{:lang('Tags')}</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active table-responsive no-padding">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>{:lang('Name')}</th>
+                    <th>{:lang('Sort')}</th>
+                </tr>
+            </thead>
+            <tbody>
+                       {volist name="list" id="vo"}
+                        <tr id = "tr_{$vo.tag_id}">
+                            <td>{$vo.tag_id}</td>
+                            <td>
+                                <input name="tag_id[]" value="{$vo.tag_id}" type="hidden">
+                                <input class="form-control input-sm" name="tag_name[]" type="text" value="{$vo.tag_name}">
+                            </td>
+                            <td>
+                                <input class="form-control input-sm" name="sort[]" type="text" value="{$vo.sort}">
+                            </td>
+                            <td>
+                                <button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm">
+                                    <i class="fa fa-fw fa-plus-circle"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button onclick="remove({$vo.tag_id});" type="button" class="btn btn-block btn-default btn-flat input-sm">
+                                    <i class="fa fa-fw fa-minus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {empty name="list"}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input class="form-control input-sm" name="temp_tag_name[]" type="text">
+                            </td>
+                            <td>
+                                <input class="form-control input-sm" name="temp_sort[]" type="text">
+                            </td>
+                            <td>
+                                <button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm">
+                                    <i class="fa fa-fw fa-plus-circle"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button onclick="temp_del(this);" type="button" class="btn btn-block btn-default btn-flat input-sm">
+                                    <i class="fa fa-fw fa-minus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {/empty}
+            </tbody>
+        </table>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-sm-6 col-xs-6">
+                <form method="post" class="form-inline">
+                    <div class="input-group">
+                        <div><select id="type" class="form-control">
+                            <option value="save">{:lang('Update')}</option>
+                        </select>
+                        </div>
+                        <span class="input-group-btn"> 
+                            <button type="button" onclick="handle();" class="btn btn-primary btn-flat"> {:lang('Save')} </button> 
+                        </span>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-sm-6 col-xs-6">
+                <div class="pull-right">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+{/block}
+
+<!-- 自定义js -->
+{block name="js"}
+<script type="text/javascript">
+    function temp_add(obj){
+        var html = '<tr><td></td>';
+        html += '<td><input class="form-control input-sm" name="temp_tag_name[]" type="text"></td>';
+        html += '<td><input class="form-control input-sm" name="temp_sort[]" type="text"></td>';
+        html += '<td><button onclick="temp_add(this);" type="button" class="btn btn-block btn-default btn-flat input-sm"><i class="fa fa-fw fa-plus-circle"></i></button></td>';
+        html += '<td><button onclick="temp_del(this);" type="button" class="btn btn-block btn-default btn-flat input-sm"><i class="fa fa-fw fa-minus"></i></button>';
+        html += '</td></tr>';
+        $(obj).parents('tr').after(html);
+        <!-- alert(html); -->
+    }
+    function temp_del(obj){
+        var tr = $(obj).parents('tr');
+        var slen = tr.siblings().length;
+        // 如果同胞元素tr大于1个
+        if (slen >= 1) {
+            tr.remove();
+        } else {
+            console.log('last one')
+        }
+    }
+
+    //批量操作
+    function handle(){
+        var chk_id =[]; 
+        $('input[name="tag_id[]"]').each(function(){ 
+            chk_id.push($(this).val()); 
+        });
+        var chk_name =[]; 
+        $('input[name="tag_name[]"]').each(function(){ 
+            chk_name.push($(this).val()); 
+        });
+        var chk_sort =[]; 
+        $('input[name="sort[]"]').each(function(){ 
+            chk_sort.push($(this).val()); 
+        });
+        var temp_name =[]; 
+        $('input[name="temp_tag_name[]"]').each(function(){ 
+            temp_name.push($(this).val()); 
+        });
+        var temp_sort =[]; 
+        $('input[name="temp_sort[]"]').each(function(){ 
+            temp_sort.push($(this).val()); 
+        });
+        var type = $('#type option:selected').val() ;
+        if(chk_id.length < 1 && temp_name.length < 1){
+                swal({
+                  position: 'center',
+                  type: 'success',
+                  title: '未选择任何记录',
+                  showConfirmButton: false,
+                  toast:false,
+                  timer: 2000
+                });
+        }else{
+            swal({
+              title: '确定要进行操作吗?',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: "{:lang('Yes')}",
+              cancelButtonText: "{:lang('No')}",
+            }).then(function(result){
+              if (result.value) {
+                $.ajax({
+                    url:"{:Url('admin/tags/handle')}",
+                    data:{
+                        'type':type,
+                        'tag_id':chk_id,
+                        'tag_name':chk_name,
+                        'sort':chk_sort,
+                        'temp_tag_name':temp_name,
+                        'temp_sort':temp_sort
+                    },
+                    type:'post',
+                    dataType:'json',
+                    success: function(xhr){
+                        if(xhr.code == 200){
+                            swal(xhr.msg, "","success").then(function(value){
+                              window.location.reload();
+                            });
+                        }else{
+                            swal(xhr.msg, "", "error");
+                        }
+                    }
+                })
+              }else {
+                swal("取消操作", "", "error");
+              }
+            })
+        }
+    }
+
+
+    function remove(tag_id){
+        swal({
+          title: "{:lang('Are you sure')}",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: "{:lang('Yes')}",
+          cancelButtonText: "{:lang('No')}",
+        }).then(function(result){
+          if (result.value) {
+            $.ajax({
+                url:"{:Url('admin/tags/remove')}",
+                data:{'tag_id':tag_id},
+                type:'post',
+                dataType:'json',
+                success: function(xhr){
+                    if(xhr.code == 200){
+                        swal(xhr.msg, "","success").then(function(value){
+                          $("#tr_" + tag_id).remove();
+                        });
+                    }else{
+                        swal(xhr.msg, "", "error");
+                    }
+                }
+            })
+          }
+        })
+    }
+</script>
+{/block}

@@ -43,7 +43,7 @@ class Passport extends IndexCommon
 
             // 并查询用户信息
             $obj = new AuthUser;
-            $userInfo = $obj->find($request['username']);
+            $userInfo = $obj->getDetail($request['username']);
 
             // 用户不存在
             if (!$userInfo) {
