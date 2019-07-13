@@ -1,0 +1,43 @@
+{extend name="default:base" /}
+{block name="title"}tags - {kite:siteinfo var='title' /}{/block}
+{block name='keywords'}{/block}
+{block name='description'}{/block}
+{block name="content"}
+<div class="inner-content">
+    <div class="container">
+        <div class="section-head">
+            <ul class="bcrumbs">
+                {kite:crumb var="vo"}
+                <li><a href="{$vo.url}">{$vo.title}</a></li>
+                {/kite:crumb}
+            </ul>
+            <div class="clearfix"></div>
+
+            <h2>{$taginfo.tag_name}</h2>
+        </div>
+
+        <div class="row">
+          {volist name="doclist" id="vo"}
+          <div class="col-md-4 col-sm-4">
+            <article>
+              <a href="{$vo.url}">
+                <div class="article-thumb">
+                  <img src="{$vo.image|thumb=370,231|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="{$vo.title}"/>
+                </div>
+              </a>
+              <div class="post-excerpt">
+                <h4><a href="{$vo.url}">{$vo.title}</a></h4>
+                <div class="meta">
+                  <span><i class="fa fa-user-o"></i> {$vo.uid|get_username}</span>
+                  <span><i class="fa fa-th-list"></i> {$vo.cid|get_cat_title}</span>
+                  <span class="comment"><i class="fa fa-calendar-minus-o"></i> {$vo.create_at}</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          {/volist}
+
+        </div>
+    </div>
+</div>
+{/block}

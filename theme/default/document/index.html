@@ -46,6 +46,26 @@ p img{background-size:contain|cover;width:100%;}
 
                         {$docinfo.content}
 
+                        <div class="clearfix"></div>
+
+                        <div class="tags">
+                          <span>Tags:</span> &nbsp;
+                          {volist name="docinfo.tags" id="tag"}
+                          <a href="{$tag.tag_id|get_tag_url}">{$tag.tag_name}</a>
+                          {/volist}
+                        </div>
+
+
+                        <div class="clearfix"></div>
+
+                        <div class="about-author">
+                          <img src="{$docinfo.uid|get_user_avatar}" width="80" height="80"/>
+
+                          <h5>{$docinfo.uid|get_username}</h5>
+                          <p>{$docinfo.uid|get_user_resume|default="暂无简介"}</p>
+                        </div>
+
+
                         <!-- 幻灯片 -->
                         <!-- 
                         <div class="img-right caption">
@@ -65,7 +85,7 @@ p img{background-size:contain|cover;width:100%;}
 
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center margin-top-60">
                         <div class="btn-group" role="group" aria-label="...">
                           <button type="button" onclick="documentLike('like',{$docinfo.id});" class="btn btn-default"><i class="fa fa-thumbs-o-up"></i> <span id="like">{$docinfo.like}</span></button>
                           <button type="button" onclick="documentLike('unlike',{$docinfo.id});" class="btn btn-default"><i class="fa fa-thumbs-o-down"></i> <span id="unlike">{$docinfo.unlike}</span></button>
@@ -127,7 +147,7 @@ p img{background-size:contain|cover;width:100%;}
                                     <div class="margin-bottom-15">
                                         <a href="{$vo.url}">
                                             <div class="article-thumb">
-                                                <img src="{$vo.image|thumb=220,140}" class="img-responsive" alt="">
+                                                <img src="{$vo.image|thumb=220,140|default='__THEME__/default/static/img/category/1.jpg'}" class="img-responsive" alt="">
                                             </div>
                                         </a>
                                     </div>
@@ -231,7 +251,7 @@ p img{background-size:contain|cover;width:100%;}
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                                     <a href="{$vo.url}">
                                                         <div class="article-thumb">
-                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                            <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                         </div>
                                                     </a>
                                                 </div>
@@ -260,7 +280,7 @@ p img{background-size:contain|cover;width:100%;}
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                                     <a href="{$vo.url}">
                                                         <div class="article-thumb">
-                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                            <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                         </div>
                                                     </a>
                                                 </div>
@@ -289,7 +309,7 @@ p img{background-size:contain|cover;width:100%;}
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                                     <a href="{$vo.url}">
                                                         <div class="article-thumb">
-                                                            <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                            <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                         </div>
                                                     </a>
                                                 </div>

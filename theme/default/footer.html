@@ -1,21 +1,23 @@
     <footer class="margin-top-30">
         <div class="container">
             <div class="footer-head">
-                <div class="row center-content">
-                    <span class="text-white padding-left-10">友情链接</span>
-                {kite:link var="vo" cid="1" limit="10" order="id desc"}
-                    <a target="_blank" class="text-white padding-left-10" href="{$vo.url}">{$vo.name}</a>
-                {/kite:link}
-                </div>
+                <ul class="footer-social4">
+                    {kite:link var="vo" cid="1" limit="10" order="id desc"}
+                    <li><a target="_blank" href="{$vo.url}"><span><img src="{$vo.logo}"></span> {$vo.name}</a></li>
+                    {/kite:link}
+                </ul>
             </div>
+
             <div class="footer-bottom">
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <p>{kite:siteinfo var ='copyright' /}</p>
-                        <script type="text/javascript" src="https://s22.cnzz.com/z_stat.php?id=1271300655&web_id=1271300655"></script>
                     </div>
                     <div class="col-md-6 col-sm-6 text-right">
-                        <a href="http://www.miitbeian.gov.cn" target="_blank">{kite:siteinfo var ='icp' /}</a>
+                    <ul class="list-inline">
+                        <li><script type="text/javascript" src="https://s22.cnzz.com/z_stat.php?id=1271300655&web_id=1271300655"></script></li>
+                        <li><a target="_blank" href="http://www.miitbeian.gov.cn">{kite:siteinfo var ='icp' /}</a></li>
+                    </ul>
                     </div>
                 </div>
             </div>

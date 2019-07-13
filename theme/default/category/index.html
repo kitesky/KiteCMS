@@ -55,7 +55,7 @@
                         <div class="col-md-6 col-sm-6">
                             <a href="{$vo.url}">
                                 <div class="article-thumb">
-                                    <img src="{$vo.image|thumb=350,230}" class="img-responsive" alt="">
+                                    <img src="{$vo.image|thumb=350,230|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                 </div>
                             </a>
                         </div>
@@ -138,7 +138,7 @@
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <a href="{$vo.url}">
                                                     <div class="article-thumb">
-                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                     </div>
                                                 </a>
                                             </div>
@@ -167,7 +167,7 @@
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <a href="{$vo.url}">
                                                     <div class="article-thumb">
-                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                     </div>
                                                 </a>
                                             </div>
@@ -196,7 +196,7 @@
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <a href="{$vo.url}">
                                                     <div class="article-thumb">
-                                                        <img src="{$vo.image|thumb=120,75}" class="img-responsive" alt="">
+                                                        <img src="{$vo.image|thumb=120,75|default='__THEME__/default/static/img/category/3.jpg'}" class="img-responsive" alt="">
                                                     </div>
                                                 </a>
                                             </div>
@@ -219,6 +219,15 @@
                         </div>
                     </div>
                     <!-- TABS -->
+                </div>
+
+                <div class="side-widget">
+                  <h4>Tags</h4>
+                  <div class="tags">
+                    {kite:tags var='vo' order='sort asc' limit='30'}
+                    <a href="{$vo.tag_id|get_tag_url}">{$vo.tag_name}</a>
+                    {/kite:tags}
+                  </div>
                 </div>
 
             </aside>
