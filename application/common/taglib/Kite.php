@@ -218,9 +218,11 @@ class Kite extends TagLib{
     public function tagTags($tag, $content)
     {
         $var    = $tag['var'];
+        $limit  = isset($tag['limit']) ? $tag['limit'] : 10;
         $order  = isset($tag['order']) ? $tag['order'] : 'tag_id desc';
         $parse  = '<?php ';
         $parse .= '$__LIST__ = callback("app\\common\\model\\Kite@getTagsList"';
+        $parse .= ',' . $limit;
         $parse .= ',"' . $order . '"';
         $parse .= '); ';
         $parse .= ' ?>';

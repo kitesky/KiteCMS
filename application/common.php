@@ -18,11 +18,31 @@ use think\Loader;
 
 
     /**
+     * 获取用户头像
+     * @return strng
+     */
+if (!function_exists('get_user_avatar')) {
+    function get_user_avatar($uid){
+        return \app\common\model\AuthUser::where('uid', $uid)->value('avatar');
+    }
+}
+
+    /**
+     * 获取用户简介
+     * @return strng
+     */
+if (!function_exists('get_user_resume')) {
+    function get_user_resume($uid){
+        return \app\common\model\AuthUser::where('uid', $uid)->value('resume');
+    }
+}
+
+    /**
      * 获取tags链接
      * @return strng
      */
-if (!function_exists('get_tags_url')) {
-    function get_tags_url($tag_id){
+if (!function_exists('get_tag_url')) {
+    function get_tag_url($tag_id){
         return url('index/tags/detail', ['tag_id' => $tag_id]);
     }
 }

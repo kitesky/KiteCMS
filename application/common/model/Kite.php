@@ -511,11 +511,12 @@ class Kite
      * 标签列表
      * @return array
      */
-    public function getTagsList($order = 'tag_id desc')
+    public function getTagsList($limit = 10, $order = 'tag_id desc')
     {
         $tagObj = new Tags;
         $request = [
             'order' => $order,
+            'limit' => $limit,
         ];
 
         return $tagObj->getList($request);

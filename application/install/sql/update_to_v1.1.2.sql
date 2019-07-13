@@ -48,6 +48,10 @@ CREATE TABLE `kite_tags_mapping` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+ALTER TABLE `kite_auth_user`
+ADD COLUMN `resume`  varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '个人简介' AFTER `avatar`;
+
+
 ALTER TABLE `kite_site`
 DROP COLUMN `city_id`;
 
