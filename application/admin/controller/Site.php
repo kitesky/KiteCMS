@@ -44,7 +44,6 @@ class Site extends Admin
         $config_name = Request::param('config_name', 'base');
         $config = Config::get('site.' . $config_name);
         $config_option = SiteConfig::getAll($this->site_id, $config);
-
         $data = [
             'config_name'   => $config_name,
             'config_menu'   => $config_menu,

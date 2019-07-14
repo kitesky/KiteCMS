@@ -6,8 +6,6 @@ use think\Db;
 
 class SiteConfig extends Model
 {
-    protected $pk = 'id';
-
     protected $autoWriteTimestamp = true;
 
     protected $createTime = 'create_at';
@@ -47,9 +45,13 @@ class SiteConfig extends Model
         $data = [];
         if (!empty($config)) {
             foreach ($config as $k => $v) {
-                $value = self::getCofig($site_id, $k);
+                $map = [
+                    'site_id' => $site_id,
+                    'k'       => $k,
+                ];
+                $value = self::where($map)->find();
                 // 站点配置项为空 创建一个配置项
-                if (!isset($value)) {
+                if (empty($value)) {
                     $configData = [
                         'k' => $k,
                         'v' => $v,
@@ -59,7 +61,7 @@ class SiteConfig extends Model
                     // 获取最新设置的值
                     $data[$k] = self::getCofig($site_id, $k);
                 } else {
-                    $data[$k] = $value;
+                    $data[$k] = $value['v'];
                 }
             }
         }
