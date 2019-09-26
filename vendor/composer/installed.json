@@ -15,7 +15,7 @@
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -64,7 +64,7 @@
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -124,21 +124,21 @@
     },
     {
         "name": "qiniu/php-sdk",
-        "version": "v7.2.8",
-        "version_normalized": "7.2.8.0",
+        "version": "v7.2.9",
+        "version_normalized": "7.2.9.0",
         "source": {
             "type": "git",
             "url": "https://github.com/qiniu/php-sdk.git",
-            "reference": "464f3eb3b0f51586d274733aee67f372fc6276ef"
+            "reference": "afe7d8715d8a688b1d8d8cdf031240d2363dad90"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/464f3eb3b0f51586d274733aee67f372fc6276ef",
-            "reference": "464f3eb3b0f51586d274733aee67f372fc6276ef",
+            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/afe7d8715d8a688b1d8d8cdf031240d2363dad90",
+            "reference": "afe7d8715d8a688b1d8d8cdf031240d2363dad90",
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -147,10 +147,10 @@
             "php": ">=5.3.3"
         },
         "require-dev": {
-            "phpunit/phpunit": "~8.0",
+            "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~2.3"
         },
-        "time": "2019-06-21T06:22:05+00:00",
+        "time": "2019-07-09T07:55:07+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -183,21 +183,21 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.1.37.1",
-        "version_normalized": "5.1.37.1",
+        "version": "v5.1.38.1",
+        "version_normalized": "5.1.38.1",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "05eecd121d18d6705aaa10aa44fcdf7c14da4d0b"
+            "reference": "12d15c29d5d6a972fc8bfc8db005d64d4786028c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/05eecd121d18d6705aaa10aa44fcdf7c14da4d0b",
-            "reference": "05eecd121d18d6705aaa10aa44fcdf7c14da4d0b",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/12d15c29d5d6a972fc8bfc8db005d64d4786028c",
+            "reference": "12d15c29d5d6a972fc8bfc8db005d64d4786028c",
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -215,7 +215,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2019-05-28T06:57:29+00:00",
+        "time": "2019-08-12T00:58:30+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -256,7 +256,7 @@
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -303,7 +303,7 @@
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -351,7 +351,7 @@
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -391,16 +391,16 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zz-studio/think-addons.git",
-            "reference": "cd64646c2957a322bba6babd4e8667e335342d93"
+            "reference": "3703616320253813a3c60f67928a95c581bbc113"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zz-studio/think-addons/zipball/cd64646c2957a322bba6babd4e8667e335342d93",
-            "reference": "cd64646c2957a322bba6babd4e8667e335342d93",
+            "url": "https://api.github.com/repos/zz-studio/think-addons/zipball/3703616320253813a3c60f67928a95c581bbc113",
+            "reference": "3703616320253813a3c60f67928a95c581bbc113",
             "shasum": "",
             "mirrors": [
                 {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
                     "preferred": true
                 }
             ]
@@ -408,7 +408,7 @@
         "require": {
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-06-21T06:31:25+00:00",
+        "time": "2019-08-20T09:20:52+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
