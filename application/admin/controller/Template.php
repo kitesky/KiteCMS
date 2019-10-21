@@ -31,7 +31,7 @@ class Template extends Admin
                 $request['html'] = iconv($encode, 'UTF-8', $request['html']);
             }
 
-            if (file_exists($request['path'])) {
+            if (file_exists($request['path']) && preg_match("/theme/", $path)) {
                 if (is_writable($request['path'])) {
                     $html = file_put_contents($request['path'], htmlspecialchars_decode($request['html']));
                 } else {
@@ -50,7 +50,8 @@ class Template extends Admin
 
         $request = Request::param('path');
         $path = base64_decode($request);
-        if (file_exists($path)) {
+
+        if (file_exists($path) && preg_match("/theme/", $path)) {
             if (is_readable($path)) {
                 $html = file_get_contents($path);
             } else {
