@@ -31,7 +31,7 @@ class Template extends Admin
                 $request['html'] = iconv($encode, 'UTF-8', $request['html']);
             }
 
-            if (file_exists($request['path']) && preg_match("/theme/", $path)) {
+            if (file_exists($request['path']) && preg_match("/theme/", $request['path'])) {
                 if (is_writable($request['path'])) {
                     $html = file_put_contents($request['path'], htmlspecialchars_decode($request['html']));
                 } else {
