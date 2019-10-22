@@ -127,14 +127,15 @@ class Passport extends IndexCommon
             }
 
             // 默认会员组
-            $group_id = SiteConfig::getCofig($this->site_id, 'member_default_group');
+            $role_id = SiteConfig::getCofig($this->site_id, 'default_role');
 
             // 写入会员信息
             $memberData = [
                 'site_id'  => $this->site_id,
-                'group_id' => isset($group_id) ? $group_id : 0,
+                'role_ids' => isset($role_id) ? $role_id : 0,
                 'password' =>  password_hash($request['password'], PASSWORD_DEFAULT),
             ];
+
             $memberData = array_merge($request, $memberData);
             $memberObj->allowField(true)->save($memberData);
 

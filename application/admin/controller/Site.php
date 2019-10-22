@@ -44,10 +44,16 @@ class Site extends Admin
         $config_name = Request::param('config_name', 'base');
         $config = Config::get('site.' . $config_name);
         $config_option = SiteConfig::getAll($this->site_id, $config);
+
+
+        // 角色组
+        $role = Db::name('auth_role')->field('role_id,role_name')->select();
+
         $data = [
             'config_name'   => $config_name,
             'config_menu'   => $config_menu,
             'config_option' => $config_option,
+            'role'          => $role,
         ];
 
         return $this->fetch('config', $data);

@@ -171,6 +171,7 @@ return [
     'User does not exist'    => '查询不到此用户名',
     'The user was frozen'    => '用户被冻结',
     'Password error'         => '密码错误',
+    'Default role'           => '默认用户组',
     
     // Template
     'File'                   => '文件',

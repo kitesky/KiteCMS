@@ -65,10 +65,7 @@ class Order extends Base
         $f_config = Config::get('site.payment');
         $db_config = [];
         foreach ($f_config as $k => $v) {
-
-            if (!empty(SiteConfig::getCofig($this->site_id, $k))) {
-                $db_config[$k] = SiteConfig::getCofig($this->site_id, $k);
-            }
+            $db_config[$k] = SiteConfig::getCofig($this->site_id, $k);
         }
 
         $config = [
@@ -87,10 +84,7 @@ class Order extends Base
         $f_config = Config::get('site.payment');
         $db_config = [];
         foreach ($f_config as $k => $v) {
-
-            if (!empty(SiteConfig::getCofig($this->site_id, $k))) {
-                $db_config[$k] = SiteConfig::getCofig($this->site_id, $k);
-            }
+            $db_config[$k] = SiteConfig::getCofig($this->site_id, $k);
         }
 
         $config = [

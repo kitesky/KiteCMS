@@ -12,22 +12,23 @@ return [
     'base' => [
         'member_allow_register' => 1,
         'member_allow_comment'  => 1,
-        'list_rows'              => 15,
+        'list_rows'             => 15,
+        'default_role'          => 3,
     ],
 
 
     // 支付宝
     'payment' => [
-        'ali_appid'       => '',
-        'ali_private_key' => '',
-        'ali_public_key'  => '',
-        'ali_notify_url'  => '',
-        'ali_return_url'  => '',
+        'ali_appid'       => '1',
+        'ali_private_key' => '1',
+        'ali_public_key'  => '1',
+        'ali_notify_url'  => '1',
+        'ali_return_url'  => '1',
 
-        'wx_appid'       => '',
-        'wx_mch_id'      => '',
-        'wx_notify_url'  => '',
-        'wx_key'         => '',
+        'wx_appid'       => '1',
+        'wx_mch_id'      => '1',
+        'wx_notify_url'  => '1',
+        'wx_key'         => '1',
     ],
 
 

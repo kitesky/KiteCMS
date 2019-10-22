@@ -38,6 +38,18 @@
                 </div>
               </div>
               <div class="form-group">
+                <label>{:lang('Default role')} <span class="text-red">*</span></label>
+                <div class="row">
+                <div class="col-md-2">
+                  <select name="default_role" class="form-control">
+                      {volist name="role" id="vo"}
+                      <option {eq name="config_option.default_role" value="$vo.role_id"}selected{/eq} value="{$vo.role_id}">{$vo.role_name}</option>
+                      {/volist}
+                  </select>
+                </div>
+                </div>
+              </div>
+              <div class="form-group">
                 <label>{:lang('Member allow comment')}</label>
                 <div class="row">
                 <div class="col-md-4">
