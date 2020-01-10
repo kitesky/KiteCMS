@@ -38,7 +38,7 @@
                         <td>{$vo.fileatime}</td>
                         </td>
                         <td>
-                            <a href="{:url('admin/template/fileedit', ['path' => base64_encode($vo.fullpath), 'name' =>base64_encode($vo.path)])}"> {:lang('Edit')}</a>
+                            <a href="{:url('admin/template/fileedit', ['path' => $vo.path])}"> {:lang('Edit')}</a>
                         </td>
                     </tr>
                     {/volist}
