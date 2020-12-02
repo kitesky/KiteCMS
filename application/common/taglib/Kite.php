@@ -106,7 +106,7 @@ class Kite extends TagLib{
     {
         $var    = $tag['var'];
         $parse = '<?php ';
-        $parse .= 'echo callback("app\\common\\model\\Kite@getBlockContent","'.$var.'"); ';
+        $parse .= 'echo htmlspecialchars_decode(callback("app\\common\\model\\Kite@getBlockContent","'.$var.'")); ';
         $parse .= ' ?>';
         return $parse;
     }
