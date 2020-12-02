@@ -313,9 +313,10 @@ abstract class Builder
                     // 使用闭包查询
                     $newQuery = $query->newQuery()->setConnection($this->connection);
                     $value($newQuery);
-                    $whereClause = $this->buildWhere($query, $newQuery->getOptions('where'));
+                    $whereClause = $this->buildWhere($newQuery, $newQuery->getOptions('where'));
 
                     if (!empty($whereClause)) {
+                        $query->bind($newQuery->getBind(false));
                         $str[] = ' ' . $logic . ' ( ' . $whereClause . ' )';
                     }
                 } elseif (is_array($field)) {
@@ -683,7 +684,7 @@ abstract class Builder
      */
     protected function parseClosure(Query $query, $call, $show = true)
     {
-        $newQuery = $query->newQuery()->setConnection($this->connection);
+        $newQuery = $query->newQuery()->removeOption();
         $call($newQuery);
 
         return $newQuery->buildSql($show);
