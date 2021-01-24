@@ -311,7 +311,7 @@ class Kite
             }
         }
 
-       return list_to_tree($new_list, 'child', $pid);
+       return list_to_tree($new_list, 'child');
     }
 
     /**
