@@ -5,9 +5,9 @@ KiteCMS系统基于Thinkphp 5.1.37 版本开发，真正的开源免费，可以
 > PHP版本最低要求5.6+ ， 推荐使用PHP7.1.30, 7.2.19, 7.3.6等高版本
 
 ##### 推荐云服务器
-*  [阿里云服务器2.4折起](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=m5ak59ow)
+*  [阿里云服务器1.5折起](https://www.aliyun.com/activity?userCode=m5ak59ow)
 *  [腾讯云【数字生态，钜惠来袭】云服务器限时秒杀，首购1核1G 99元/年
-](https://cloud.tencent.com/redirect.php?redirect=1042&cps_key=5d4646d087591b0d6390848f1a6a7ba7&from=console)
+](https://curl.qcloud.com/Fj7PrZYe)
 
 ## 系统功能
 *   插件管理
