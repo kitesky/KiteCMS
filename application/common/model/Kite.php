@@ -299,6 +299,7 @@ class Kite
         // 栏目信息处理
         $new_list = [];
         if (!empty($list)) {
+			$childIds = [];
             foreach ($list as $v) {
                 $v['url'] = BuildUrl::instance($site_id)->categoryUrl(['cat_id' => $v->id]);
                 if (in_array($v->id, $ids)) {
@@ -306,12 +307,14 @@ class Kite
                 } else {
                     $v->active = '';
                 }
+				//$childIds = get_childs_id ($list, $v->id);
+				//$v['document_total'] = $docObj->where('cid', 'in', $childIds)->count();
                 $v['document_total'] = $docObj->getDocumentTotalByCid($v->id);
                 array_push($new_list, $v);
             }
         }
 
-       return list_to_tree($new_list, 'child');
+       return list_to_tree($new_list, 'child', $pid);
     }
 
     /**
@@ -324,7 +327,7 @@ class Kite
 
         // 默认首页
         $home = [
-            'title' => '首页',
+            'title' => 'Home',
             'active' => '',
             'url' => BuildUrl::instance($site_id)->siteUrl(),
         ];

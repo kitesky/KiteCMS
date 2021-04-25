@@ -568,30 +568,16 @@ if (!function_exists('get_cat_url')) {
      * @return array
      */
     if (!function_exists('list_to_tree')) {
-        function list_to_tree($items, $son = 'child', $pk = 'id', $pid = 'pid') {
-            $tree = [];
-            $items = json_decode(json_encode($items), true);
-            $items = array_column($items, null, $pk);
-            foreach ($items as &$item) {
-                if (isset($items[$item[$pid]])) {
-                    $items[$item[$pid]][$son][] = &$item;
-                } else {
-                    $tree[] = &$item;
+        function list_to_tree ($list, $name = 'child', $pid = 0) {
+            $arr = array();
+            foreach ($list as $v) {
+                if ($v['pid'] == $pid) {
+                    $v[$name] = list_to_tree($list, $name, $v['id']);
+                    $arr[] = $v;
                 }
             }
-            return $tree;
+            return $arr;
         }
-
-        // function list_to_tree ($list, $name = 'child', $pid = 0) {
-        //     $arr = array();
-        //     foreach ($list as $v) {
-        //         if ($v['pid'] == $pid) {
-        //             $v[$name] = list_to_tree($list, $name, $v['id']);
-        //             $arr[] = $v;
-        //         }
-        //     }
-        //     return $arr;
-        // }
     }
 
     /**

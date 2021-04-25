@@ -38,7 +38,7 @@ class Category extends Base
         $likeObj = new DocumentContentLike;
         $commObj = new DocumentComments;
         $tagsObj = new Tags;
-        
+
         $site_list_rows = !empty(SiteConfig::getCofig($this->site_id, 'list_rows')) ? SiteConfig::getCofig($this->site_id, 'list_rows') : 10;
         $list_rows      = !empty($category->list_rows) ? $category->list_rows : $site_list_rows;
         $list = $docObj->getDocmentPaginateByFilter($this->site_id, $category->id, $list_rows, $request);
@@ -47,7 +47,7 @@ class Category extends Base
             foreach ($list as $v) {
 
                 $v->url = BuildUrl::instance($this->site_id)->documentUrl(['id' => $v->id]);
-                $v->extra = $extraObj->getContentExtraFormatKeyValue($v->id);
+                // $v->extra = $extraObj->getContentExtraFormatKeyValue($v->id);
                 // 加载自定义扩展信息
                 $v->extra = $extraObj->getContentExtraFormatKeyValue($v->id);
 

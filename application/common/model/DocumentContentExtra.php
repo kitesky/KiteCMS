@@ -162,13 +162,16 @@ class DocumentContentExtra extends Model
             ->select();
         $newArr = [];
         if (!empty($extra)) {
-            foreach ($extra as $v) {
+            foreach ($extra as $k => $v) {
                 if ($v['type'] == 'multipleimageupload') {
                    $value = json_decode($v['value'], true);
                 } else {
                    $value = $v['value'];
                 }
-                $newArr[$v['variable']] = $value;
+                // $newArr[$v['variable']] = $value;
+                $newArr[$k]['name'] = $v['name'];
+                $newArr[$k]['variable'] = $v['variable'];
+                $newArr[$k]['value'] = $value;
             }
         }
 

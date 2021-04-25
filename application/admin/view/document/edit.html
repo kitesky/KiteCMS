@@ -253,7 +253,7 @@ layui.use('upload', function(){
     elem: "#attach"
     ,url: "{:url('admin/upload/uploadAttach')}"
     ,accept: "file" //普通文件
-    ,exts: "zip|rar|7z" //只允许上传压缩文件
+    //,exts: "zip|rar|7z" //只允许上传压缩文件
     ,done: function(res){
       if (res.code == 200) {
         $("[name='attach']").val(res.data.url);
