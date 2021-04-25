@@ -180,16 +180,16 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v5.1.38.1",
+            "version": "v5.1.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "12d15c29d5d6a972fc8bfc8db005d64d4786028c"
+                "reference": "7137741a323a4a60cfca334507cd1812fac91bb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/12d15c29d5d6a972fc8bfc8db005d64d4786028c",
-                "reference": "12d15c29d5d6a972fc8bfc8db005d64d4786028c",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/7137741a323a4a60cfca334507cd1812fac91bb2",
+                "reference": "7137741a323a4a60cfca334507cd1812fac91bb2",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -233,7 +233,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2019-08-12T00:58:30+00:00"
+            "time": "2021-01-11T02:51:29+00:00"
         },
         {
             "name": "topthink/think-captcha",
@@ -379,12 +379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zz-studio/think-addons.git",
-                "reference": "3703616320253813a3c60f67928a95c581bbc113"
+                "reference": "e269de522eaba0d820525b08344ea3702bd85dfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zz-studio/think-addons/zipball/3703616320253813a3c60f67928a95c581bbc113",
-                "reference": "3703616320253813a3c60f67928a95c581bbc113",
+                "url": "https://api.github.com/repos/zz-studio/think-addons/zipball/e269de522eaba0d820525b08344ea3702bd85dfc",
+                "reference": "e269de522eaba0d820525b08344ea3702bd85dfc",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -394,7 +394,10 @@
                 ]
             },
             "require": {
-                "topthink/framework": "5.1.*"
+                "php": ">=7.1.0",
+                "topthink/framework": "^6.0.3",
+                "topthink/think-helper": "^3.0.0",
+                "topthink/think-view": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -430,5 +433,6 @@
     "platform": {
         "php": ">=5.6.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
