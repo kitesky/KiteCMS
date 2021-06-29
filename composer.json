@@ -23,7 +23,7 @@
         "aliyuncs/oss-sdk-php": "^2.3",
         "qiniu/php-sdk": "^7.2",
         "phpmailer/phpmailer": "^6.0",
-        "zzstudio/think-addons": "dev-master"
+        "zzstudio/think-addons": "v1.0.4.2"
     },
     "autoload": {
         "psr-4": {
