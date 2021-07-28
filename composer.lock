@@ -141,16 +141,16 @@
         },
         {
             "name": "qiniu/php-sdk",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/qiniu/php-sdk.git",
-                "reference": "0a461e13b09545b23df361843c6a65fdd3a26426"
+                "reference": "1c6bc89166e524a40ee42bf516fb99ffc6401c82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/0a461e13b09545b23df361843c6a65fdd3a26426",
-                "reference": "0a461e13b09545b23df361843c6a65fdd3a26426",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/1c6bc89166e524a40ee42bf516fb99ffc6401c82",
+                "reference": "1c6bc89166e524a40ee42bf516fb99ffc6401c82",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -164,7 +164,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.3"
+                "squizlabs/php_codesniffer": "~3.6"
             },
             "type": "library",
             "autoload": {
@@ -194,11 +194,7 @@
                 "sdk",
                 "storage"
             ],
-            "support": {
-                "issues": "https://github.com/qiniu/php-sdk/issues",
-                "source": "https://github.com/qiniu/php-sdk/tree/v7.3.0"
-            },
-            "time": "2020-09-24T07:31:29+00:00"
+            "time": "2021-07-19T07:41:36+00:00"
         },
         {
             "name": "topthink/framework",
@@ -471,5 +467,5 @@
         "php": ">=5.6.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "1.1.0"
 }
