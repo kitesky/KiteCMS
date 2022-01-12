@@ -260,6 +260,7 @@ CREATE TABLE `kite_document_category`  (
   `model_id` int(11) NOT NULL COMMENT '模型ID',
   `sort` int(11) NULL DEFAULT 0 COMMENT '权重排序',
   `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档标题',
+  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '图片图标',
   `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '文档关键词',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '描述',
   `content` text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT '文档内容',
