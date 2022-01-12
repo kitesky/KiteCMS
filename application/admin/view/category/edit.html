@@ -135,6 +135,24 @@
                     </div>
                     <div class="box box-solid no-border">
                         <div class="box-body">
+                          <div class="form-group">
+                            <label>{:lang('Image')}</label>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="layui-upload-drag" id="image">
+                                  <input type="hidden" name="image" value="{$info.image}">
+                                  <div class="layui-upload-list" id="preview">
+                                  {empty name="info.image"}
+                                  <p>{:lang('Upload')}</p>
+                                  {else /}
+                                  <img class="layui-upload-img img-responsive" src="{$info.image}" />
+                                  {/empty}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
                             <div class="form-group">
                               <label>{:lang('List rows')}</label>
                               <div class="row">
@@ -202,6 +220,34 @@ var ue = UE.getEditor('editor', {
 });
 </script>
 <script type="text/javascript">
+  layui.use('upload', function(){
+    var $ = layui.jquery
+    ,upload = layui.upload;
+    //拖拽上传
+    upload.render({
+      elem: "#image"
+      ,accept: 'file'
+      ,multiple: false
+      ,number: 1
+      ,url: "{:url('admin/upload/uploadFile')}"
+      ,done: function(res){
+        if (res.code == 200) {
+          $("[name='image']").val(res.data.url);
+          $("#preview").html("<img class=\'layui-upload-img img-responsive\' src=\'"+res.data.url+"\'>");
+        } else {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: res.msg,
+            showConfirmButton: false,
+            toast:false,
+            timer: 2000
+          });
+        }
+      }
+    });
+  });
+
     function operate(){
         $.ajax({
             url:"{:url('admin/category/edit')}",

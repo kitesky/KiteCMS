@@ -20,6 +20,10 @@ class Navigation extends Admin
     {
         $request = Request::param();
 
+
+        // 获取导航分类列表
+        $category = SiteConfig::getCategoryConfig($this->site_id, $this->category);
+
         $nav = new NavigationModel;
 
         $map    = [];
@@ -39,8 +43,14 @@ class Navigation extends Admin
             $search['cid'] = $request['cid'];
             array_push($map, $cid);
         }else {
-            $cid = [];
-            $search['cid'] = '';
+            if (!empty($category)) {
+                $cid = ['cid', '=', $category[0]['id']];
+                $search['cid'] = $category[0]['id'];
+                array_push($map, $cid);
+            } else {
+                $cid = [];
+                $search['cid'] = '';
+            }
         }
 
         // 列表
@@ -66,9 +76,6 @@ class Navigation extends Admin
                 $doc_cate[] = $vdata;
             }
         }
-
-        // 获取导航分类列表
-        $category = SiteConfig::getCategoryConfig($this->site_id, $this->category);
 
         // 菜单详情
         if (!empty($request['cid'])) {
