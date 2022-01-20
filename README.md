@@ -1,13 +1,12 @@
-KiteCMS系统基于Thinkphp 5.1.37 版本开发，真正的开源免费，可以用于商业目的，无需任何授权。后续会不断的完善优化系统，开发更多实用的模块，插件，模板。。
+KiteCMS系统基于Thinkphp框架开发，开源免费，可以用于商业目的，无需任何授权。
 
 ##### 运行环境
 > 运行环境 Apache/Nginx + PHP + MySQL
 > PHP版本最低要求5.6+ ， 推荐使用PHP7.1.30, 7.2.19, 7.3.6等高版本
 
 ##### 推荐云服务器
-*  [阿里云服务器1.5折起](https://www.aliyun.com/activity?userCode=m5ak59ow)
-*  [腾讯云【数字生态，钜惠来袭】云服务器限时秒杀，首购1核1G 99元/年
-](https://curl.qcloud.com/Fj7PrZYe)
+*  [【阿里云】云服务器ECS年终特惠，云服务器低至38元/年起，更有老用户续费及回归权益，福利多多，快来参与！](https://www.aliyun.com/daily-act/ecs/fy22-12-yure?userCode=m5ak59ow)
+*  [【腾讯云】热门云产品首单特惠秒杀，1核2G云服务器首年38元 ](https://curl.qcloud.com/Ixshi9cI)
 
 ## 系统功能
 *   插件管理
